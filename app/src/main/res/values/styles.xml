@@ -1,0 +1,10 @@
+<resources>
+
+  <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="homeAsUpIndicator">@drawable/navigation_btn</item>
+  </style>
+
+  <style name="BackTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="homeAsUpIndicator">@drawable/ic_arrow_back</item>
+  </style>
+</resources>

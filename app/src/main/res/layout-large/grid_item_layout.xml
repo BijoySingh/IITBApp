@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/card"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/card_background"
+    android:orientation="vertical">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+
+    <ImageView
+        android:id="@+id/card_image"
+        android:layout_width="225dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:adjustViewBounds="true"
+        android:src="@drawable/image_placeholder"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/category_logo"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8sp"
+            android:adjustViewBounds="true"
+            android:padding="4sp"
+            android:src="@drawable/category_dance"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/category_logo"
+            android:orientation="vertical"
+            android:padding="16sp">
+
+          <TextView
+              android:id="@+id/title"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textColor="@color/primary_text"
+              android:textSize="24sp"/>
+
+          <TextView
+              android:id="@+id/source"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textColor="@color/hint_text"
+              android:textSize="14sp"/>
+
+        </LinearLayout>
+      </RelativeLayout>
+
+      <RelativeLayout
+          android:id="@+id/event_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="4sp"
+          android:visibility="gone">
+
+        <TextView
+            android:id="@+id/event_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="16sp"
+            android:textColor="@color/hint_text"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/event_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="16sp"
+            android:textColor="@color/hint_text"
+            android:textSize="14sp"/>
+      </RelativeLayout>
+
+      <TextView
+          android:id="@+id/description"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingBottom="16sp"
+          android:paddingLeft="16sp"
+          android:paddingRight="16sp"
+          android:textColor="@color/secondary_text"
+          android:textSize="16sp"/>
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="4sp"
+          android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/like_logo"
+            android:layout_width="32sp"
+            android:layout_height="32sp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8sp"
+            android:adjustViewBounds="true"
+            android:padding="4sp"
+            android:src="@drawable/like_icon"/>
+
+        <TextView
+            android:id="@+id/likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/like_logo"
+            android:padding="2sp"
+            android:textColor="@color/hint_text"
+            android:textSize="18sp"/>
+
+        <ImageView
+            android:id="@+id/view_logo"
+            android:layout_width="32sp"
+            android:layout_height="32sp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8sp"
+            android:adjustViewBounds="true"
+            android:padding="4sp"
+            android:src="@drawable/views_icon"/>
+
+        <TextView
+            android:id="@+id/views"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/view_logo"
+            android:padding="2sp"
+            android:textColor="@color/hint_text"
+            android:textSize="18sp"/>
+      </RelativeLayout>
+    </LinearLayout>
+  </LinearLayout>
+
+  <View
+      android:id="@+id/emphasis_panel"
+      android:layout_width="match_parent"
+      android:layout_height="5dp"
+      android:visibility="gone"
+      />
+</LinearLayout>

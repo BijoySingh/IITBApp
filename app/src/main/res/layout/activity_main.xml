@@ -1,0 +1,32 @@
+<android.support.v4.widget.DrawerLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/page_fragment"
+        android:layout_width="match_parent"
+        android:background="@color/gray_background"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+    </RelativeLayout>
+  </RelativeLayout>
+
+  <fragment
+      android:id="@+id/fragment_navigation_bar"
+      android:layout_width="280dp"
+      android:layout_height="match_parent"
+      android:layout_gravity="start"
+      android:name="com.iitblive.iitblive.fragment.DrawerFragment"
+      tools:layout="@layout/drawer_layout"/>
+
+</android.support.v4.widget.DrawerLayout>

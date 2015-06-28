@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="#ffffff"
+                android:paddingLeft="16dp">
+
+  <ImageView
+      android:id="@+id/lv_image"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      android:layout_centerVertical="true"
+      android:src="@drawable/abc_ab_share_pack_holo_light"/>
+
+  <TextView
+      android:id="@+id/lv_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="14sp"
+      android:paddingLeft="72dp"
+      android:layout_centerVertical="true"
+      android:textStyle="bold"
+      android:textColor="@color/secondary_text"
+      android:text="Inbox"/>
+</RelativeLayout>

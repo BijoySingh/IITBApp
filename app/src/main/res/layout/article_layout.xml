@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_above="@+id/panel">
+
+    <LinearLayout
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+        <HorizontalScrollView
+            android:id="@+id/horizontal_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="320dp">
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="320dp"
+              android:orientation="horizontal"
+              android:id="@+id/image_scroll_view">
+
+          </LinearLayout>
+        </HorizontalScrollView>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            android:padding="16sp"
+            android:textSize="32sp"
+            android:background="@color/title_dark_background"/>
+      </RelativeLayout>
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/category_logo"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:padding="4sp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/category_dance"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8sp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+        <LinearLayout
+            android:layout_toRightOf="@+id/category_logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16sp">
+
+          <TextView
+              android:id="@+id/source"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textColor="@color/secondary_text"
+              android:textSize="18sp"/>
+
+          <TextView
+              android:id="@+id/source_designation"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textColor="@color/hint_text"
+              android:textSize="14sp"/>
+
+        </LinearLayout>
+      </RelativeLayout>
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textColor="@color/secondary_text"
+          android:textSize="16sp"
+          android:paddingTop="6sp"
+          android:paddingLeft="21sp"
+          android:paddingRight="21sp"
+          android:paddingBottom="21sp"
+          android:id="@+id/description"/>
+
+      <RelativeLayout
+          android:id="@+id/time_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="4sp">
+
+        <TextView
+            android:paddingLeft="16sp"
+            android:id="@+id/article_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/hint_text"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:paddingRight="16sp"
+            android:id="@+id/article_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/hint_text"
+            android:textSize="14sp"/>
+      </RelativeLayout>
+
+      <RelativeLayout
+          android:id="@+id/event_layout"
+          android:visibility="gone"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/panel_background"
+          android:layout_marginTop="4sp">
+
+        <ImageView
+            android:id="@+id/event_logo"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:padding="4sp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/events_color_icon"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8sp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+        <LinearLayout
+            android:layout_toRightOf="@+id/event_logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/add_event_logo"
+            android:orientation="vertical"
+            android:padding="16sp">
+
+          <TextView
+              android:id="@+id/event_date"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textColor="@color/primary_text"
+              android:textSize="22sp"/>
+
+          <TextView
+              android:id="@+id/event_time"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textColor="@color/hint_text"
+              android:textSize="16sp"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/add_event_logo"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/add_icon"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8sp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+      </RelativeLayout>
+    </LinearLayout>
+
+  </ScrollView>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:id="@+id/panel"
+      android:background="@drawable/panel_background"
+      android:visibility="gone">
+
+    <ImageView
+        android:id="@+id/like_logo"
+        android:layout_width="48sp"
+        android:layout_height="48sp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/like_icon"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8sp"
+        android:padding="4sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:padding="4sp"
+        android:id="@+id/likes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/like_logo"
+        android:textColor="@color/hint_text"
+        android:textSize="21sp"/>
+
+    <ImageView
+        android:id="@+id/view_logo"
+        android:layout_width="48sp"
+        android:layout_height="48sp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/views_icon"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8sp"
+        android:padding="4sp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:padding="4sp"
+        android:id="@+id/views"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/view_logo"
+        android:textColor="@color/hint_text"
+        android:textSize="21sp"/>
+  </RelativeLayout>
+</RelativeLayout>

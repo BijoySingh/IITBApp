@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="toast_no_connection">Could Not Connect</string>
+  <string name="toast_no_data">Could Not Fetch Data</string>
+  <string name="toast_timetable_deleted">Timetable Cleared</string>
+  <string name="toast_item_removed">Item Removed</string>
+</resources>

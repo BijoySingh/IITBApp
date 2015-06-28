@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/loginpage_500"
+              android:orientation="vertical">
+
+  <RelativeLayout
+      android:id="@+id/relativeLayout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/ripple_material_light"
+      android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/iitbapp_logo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="4dp"
+        android:src="@drawable/user_icon"/>
+
+    <TextView
+        android:id="@+id/login_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/iitbapp_logo"
+        android:padding="8dp"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="24dp"/>
+  </RelativeLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_gravity="right"
+        android:background="@color/transparent"
+        android:hint="@string/login_input_ldap"
+        android:padding="16dp"
+        android:textColor="@color/white"
+        android:textColorHint="#aaffffff"
+        android:textSize="48dp"
+        android:inputType="textNoSuggestions"/>
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input"
+        android:layout_gravity="right"
+        android:background="@color/transparent"
+        android:hint="@string/login_input_password"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        android:textColor="@color/white"
+        android:textColorHint="#aaffffff"
+        android:textSize="48dp"/>
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:background="@color/ripple_material_light"
+      android:gravity="bottom"
+      android:orientation="horizontal"
+      android:padding="6sp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:orientation="vertical"
+        >
+
+      <ImageView
+          android:id="@+id/login_left_btn"
+          android:layout_width="64dp"
+          android:layout_height="64dp"
+          android:padding="6dp"
+          android:src="@drawable/link_icon"/>
+
+      <TextView
+          android:id="@+id/login_left_txt"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:padding="6dp"
+          android:text="@string/login_iitb_home"
+          android:textColor="@color/white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+      <ImageView
+          android:id="@+id/login_center_btn"
+          android:layout_width="64dp"
+          android:layout_height="64dp"
+          android:padding="6dp"
+          android:src="@drawable/login_icon"/>
+
+      <TextView
+          android:id="@+id/login_center_txt"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:padding="6dp"
+          android:text="@string/login_request_code"
+          android:textColor="@color/white"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:orientation="vertical"
+        >
+
+      <ImageView
+          android:id="@+id/login_right_btn"
+          android:layout_width="64dp"
+          android:layout_height="64dp"
+          android:padding="6dp"
+          android:src="@drawable/offline_icon"/>
+
+      <TextView
+          android:id="@+id/login_right_txt"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:padding="6dp"
+          android:text="@string/login_offline"
+          android:textColor="@color/white"/>
+    </LinearLayout>
+  </LinearLayout>
+</LinearLayout>
