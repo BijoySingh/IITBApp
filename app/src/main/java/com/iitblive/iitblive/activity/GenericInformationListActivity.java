@@ -16,50 +16,50 @@ import com.iitblive.iitblive.util.Functions;
 @SuppressLint("NewApi")
 public class GenericInformationListActivity extends ActionBarActivity {
 
-  private Context mContext;
-  public static String mLink;
-  public static String mFileName = null;
-  public static Integer mIconResource;
+    public static String mLink;
+    public static String mFileName = null;
+    public static Integer mIconResource;
+    private Context mContext;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.listview_layout);
-    mContext = this;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.listview_layout);
+        mContext = this;
 
-    Functions.setActionBar(this);
-    getSupportActionBar().setHomeButtonEnabled(true);
+        Functions.setActionBar(this);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
-    ListView listView = (ListView) findViewById(R.id.list);
+        ListView listView = (ListView) findViewById(R.id.list);
 
-    if (mFileName != null) {
-      String json = Functions.offlineDataReader(mContext, mFileName);
-      if (json == null || json.isEmpty()) {
-        DownloadJsonUtil.onGetInformationResult(json, mContext, mIconResource, listView);
-      }
+        if (mFileName != null) {
+            String json = Functions.offlineDataReader(mContext, mFileName);
+            if (json == null || json.isEmpty()) {
+                DownloadJsonUtil.onGetInformationResult(json, mContext, mIconResource, listView);
+            }
+        }
+
+        DownloadJson downloadJson = new DownloadJson(
+                mLink,
+                mContext,
+                Constants.DATA_TYPE_INFORMATION,
+                Constants.DATA_COUNT_MULTIPLE,
+                listView
+        );
+        downloadJson.mIconResource = mIconResource;
+        downloadJson.setStorageFile(mFileName);
+        downloadJson.execute();
     }
 
-    DownloadJson downloadJson = new DownloadJson(
-        mLink,
-        mContext,
-        Constants.DATA_TYPE_INFORMATION,
-        Constants.DATA_COUNT_MULTIPLE,
-        listView
-    );
-    downloadJson.mIconResource = mIconResource;
-    downloadJson.setStorageFile(mFileName);
-    downloadJson.execute();
-  }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+        }
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    int id = item.getItemId();
-    if (id == android.R.id.home) {
-      onBackPressed();
+        return super.onOptionsItemSelected(item);
     }
-
-    return super.onOptionsItemSelected(item);
-  }
 
 }

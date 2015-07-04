@@ -21,23 +21,23 @@ import java.util.List;
 @SuppressLint("NewApi")
 public class GenericListFragment extends Fragment {
 
-  private Context mContext;
-  public static List<GenericListViewItem> mList = new ArrayList<>();
-  public static AdapterView.OnItemClickListener mOnItemClickListener;
+    public static List<GenericListViewItem> mList = new ArrayList<>();
+    public static AdapterView.OnItemClickListener mOnItemClickListener;
+    private Context mContext;
 
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.listview_layout, container, false);
-    ListView listView = (ListView) rootView.findViewById(R.id.list);
-    listView.setOnItemClickListener(mOnItemClickListener);
-    Functions.setupList(mList, listView, mContext);
-    return rootView;
-  }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.listview_layout, container, false);
+        ListView listView = (ListView) rootView.findViewById(R.id.list);
+        listView.setOnItemClickListener(mOnItemClickListener);
+        Functions.setupList(mList, listView, mContext);
+        return rootView;
+    }
 
-  @Override
-  public void onAttach(Activity activity) {
-    super.onAttach(activity);
-    mContext = activity;
-  }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mContext = activity;
+    }
 }

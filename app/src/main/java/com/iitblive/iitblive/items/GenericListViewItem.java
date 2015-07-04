@@ -6,31 +6,31 @@ package com.iitblive.iitblive.items;
  * the list views for all the lists
  */
 public class GenericListViewItem {
-  public Integer img_res, img_right_res, tag = 0;
-  public String title, subtitle;
-  public Boolean show_subtext = false, show_right_icon = false;
-  public static final Integer IS_URGENT = 1;
+    public static final Integer IS_URGENT = 1;
+    public Integer img_res, img_right_res, tag = 0;
+    public String title, subtitle;
+    public Boolean show_subtext = false, show_right_icon = false;
 
-  public GenericListViewItem(Integer img_res, String title, Integer tag) {
-    this.title = title;
-    this.img_res = img_res;
-    this.tag = tag;
-  }
+    public GenericListViewItem(Integer img_res, String title, Integer tag) {
+        this.title = title;
+        this.img_res = img_res;
+        this.tag = tag;
+    }
 
-  public GenericListViewItem(Integer img_res, String title, String subtitle) {
-    this.title = title;
-    this.subtitle = subtitle;
-    this.img_res = img_res;
-    this.show_subtext = true;
-  }
+    public GenericListViewItem(Integer img_res, String title, String subtitle) {
+        this.title = title;
+        this.subtitle = subtitle;
+        this.img_res = img_res;
+        this.show_subtext = true;
+    }
 
-  public GenericListViewItem(Integer img_res, String title, String subtitle, Integer img_right_res) {
-    this.title = title;
-    this.subtitle = subtitle;
-    this.img_res = img_res;
-    this.show_subtext = true;
-    this.img_right_res = img_right_res;
-    this.show_right_icon = true;
-  }
+    public GenericListViewItem(Integer img_res, String title, String subtitle, Integer img_right_res) {
+        this.title = title;
+        this.subtitle = subtitle;
+        this.img_res = img_res;
+        this.show_subtext = true;
+        this.img_right_res = img_right_res;
+        this.show_right_icon = true;
+    }
 
 }
