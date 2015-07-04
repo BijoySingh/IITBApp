@@ -48,7 +48,7 @@
         android:padding="16dp"
         android:textColor="@color/white"
         android:textColorHint="#aaffffff"
-        android:textSize="48dp"
+        android:textSize="32dp"
         android:inputType="textNoSuggestions"/>
 
     <EditText
@@ -63,7 +63,7 @@
         android:padding="16dp"
         android:textColor="@color/white"
         android:textColorHint="#aaffffff"
-        android:textSize="48dp"/>
+        android:textSize="32dp"/>
   </LinearLayout>
 
   <LinearLayout
@@ -85,8 +85,8 @@
 
       <ImageView
           android:id="@+id/login_left_btn"
-          android:layout_width="64dp"
-          android:layout_height="64dp"
+          android:layout_width="@dimen/login_footer_icon"
+          android:layout_height="@dimen/login_footer_icon"
           android:padding="6dp"
           android:src="@drawable/link_icon"/>
 
@@ -109,8 +109,8 @@
 
       <ImageView
           android:id="@+id/login_center_btn"
-          android:layout_width="64dp"
-          android:layout_height="64dp"
+          android:layout_width="@dimen/login_footer_icon"
+          android:layout_height="@dimen/login_footer_icon"
           android:padding="6dp"
           android:src="@drawable/login_icon"/>
 
@@ -134,8 +134,8 @@
 
       <ImageView
           android:id="@+id/login_right_btn"
-          android:layout_width="64dp"
-          android:layout_height="64dp"
+          android:layout_width="@dimen/login_footer_icon"
+          android:layout_height="@dimen/login_footer_icon"
           android:padding="6dp"
           android:src="@drawable/offline_icon"/>
 
