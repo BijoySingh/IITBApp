@@ -7,7 +7,8 @@ import android.graphics.Color;
  * This class contains all the core static variables in the app
  */
 public class Constants {
-    public static String BASE_URL = "http://bijoysingh.com/iitbapp_test/";
+    public static String BASE_URL = "http://iitbapp.herokuapp.com/api/";
+    public static String BASE_URL_OPEN = "http://iitbapp.herokuapp.com/api";
     public static String SERVER_REFERER = "Referer";
     public static String LDAP_AUTH_URL = "http://www.cse.iitb.ac.in/~bijoy/authenticate.php";
     public static String IITB_HOME_URL = "http://www.iitb.ac.in/";
@@ -24,9 +25,9 @@ public class Constants {
     public static String SP_OFFLINE = "OFFLINE";
     public static String SP_EMPTY = "";
 
-    public static String URL_NEWS = "news.php";
-    public static String URL_EVENTS = "events.php";
-    public static String URL_ANY = "both.php";
+    public static String URL_NEWS = "news";
+    public static String URL_EVENTS = "event";
+    public static String URL_NOTICES = "notice";
 
     public static String JSON_DATA_TYPE_EVENT = "E";
     public static String JSON_DATA_TYPE_NEWS = "N";
@@ -43,20 +44,38 @@ public class Constants {
 
     public static Integer DESCRIPTION_CROP_SIZE = 60;
 
-    public static String JSON_KEY_TITLE = "title";
-    public static String JSON_KEY_DESCRIPTION = "description";
-    public static String JSON_KEY_IMAGE_LIST = "images";
-    public static String JSON_KEY_TIMESTAMP = "timestamp";
-    public static String JSON_KEY_EVENT_TIMESTAMP = "event_timestamp";
-    public static String JSON_KEY_SOURCE_JSON = "source";
+    // Json Total Data
+    public static String JSON_KEY_RESULTS = "results";
+    public static String JSON_KEY_COUNT = "count";
+    public static String JSON_KEY_NEXT = "next";
+    public static String JSON_KEY_PREVIOUS = "previous";
+
+    // News Json
     public static String JSON_KEY_ID = "id";
     public static String JSON_KEY_LIKES = "likes";
     public static String JSON_KEY_VIEWS = "views";
-    public static String JSON_KEY_TYPE = "type";
+    public static String JSON_KEY_IMAGE_LIST = "images";
+    public static String JSON_KEY_TIMESTAMP = "time";
     public static String JSON_KEY_CATEGORY = "category";
+    public static String JSON_KEY_PUBLISHED = "published";
+    public static String JSON_KEY_TITLE = "title";
+    public static String JSON_KEY_DESCRIPTION = "description";
+
+    // Source Json
+    public static String JSON_KEY_SOURCE_JSON = "posted_by";
     public static String JSON_KEY_SOURCE_NAME = "name";
-    public static String JSON_KEY_SOURCE_DESIGNATION = "designation";
-    public static String JSON_KEY_LOCATION = "location";
+    public static String JSON_KEY_SOURCE_DESIGNATION = "post";
+    public static String JSON_KEY_SOURCE_EMAIL = "email";
+
+    // Events Json
+    public static String JSON_KEY_EVENT_TIMESTAMP = "event_time";
+    public static String JSON_KEY_LOCATION = "event_place";
+
+    // Notice Json
+    public static String JSON_KEY_ISSUE_DATE = "issue_date";
+    public static String JSON_KEY_PRIORITY = "priority";
+    public static String JSON_KEY_EXPIRATION = "expiration_date";
+
     public static String JSON_KEY_PHONE = "phone";
     public static String JSON_KEY_FACEBOOK = "facebook";
     public static String JSON_KEY_LINK = "link";
@@ -90,9 +109,16 @@ public class Constants {
     public static String LDAP_AUTH_USERNAME_PARAM = "ldap_username";
     public static String LDAP_AUTH_PASSWORD_PARAM = "ldap_password";
 
-    public static int EVENT_EMPHASIS_COLOR = Color.rgb(159, 209, 167);
-    public static int NEWS_EMPHASIS_COLOR = Color.rgb(252, 210, 135);
-    public static int NOTICE_EMPHASIS_COLOR = Color.rgb(250, 127, 138);
-    public static int NO_IMAGE_EMPHASIS_COLOR = Color.rgb(91, 163, 222);
+    public static int ACCENT_COLOR = Color.rgb(30, 136, 229);
+    public static int ACCENT_COLOR_TEAL = Color.rgb(0, 150, 136);
+    public static int NOTICE_EMPHASIS_COLOR_LOW = Color.rgb(124, 179, 66);
+    public static int NOTICE_EMPHASIS_COLOR_MEDIUM = Color.rgb(255, 193, 7);
+    public static int NOTICE_EMPHASIS_COLOR_HIGH = Color.rgb(244, 81, 30);
+    public static int NOTICE_EMPHASIS_COLOR_URGENT = Color.rgb(211, 47, 47);
+
+    public static String NOTICE_PRIORITY_LOW = "0";
+    public static String NOTICE_PRIORITY_MEDIUM = "1";
+    public static String NOTICE_PRIORITY_HIGH = "2";
+    public static String NOTICE_PRIORITY_URGENT = "3";
 
 }

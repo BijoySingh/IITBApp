@@ -1,59 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:orientation="vertical">
 
-  <View
-      android:layout_width="match_parent"
-      android:layout_height="100dp"
-      android:background="@color/accent_material_light"/>
-
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
-      android:orientation="vertical"
-      android:padding="16dp">
-
-    <TextView
-        android:id="@+id/title"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="32dp"
-        android:padding="8dp"
-        android:textColor="@color/primary_text"/>
+        app:cardCornerRadius="4sp"
+        app:cardElevation="4sp">
 
-    <TextView
-        android:id="@+id/subtitle"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textSize="28dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:textColor="@color/primary_text"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
 
-  </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-  <TextView
-      android:id="@+id/footer"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="10:20"
-      android:textSize="28dp"
-      android:padding="16dp"
-      android:background="@drawable/panel_background"
-      android:textColor="@color/hint_text"/>
+                <View
+                    android:id="@+id/color_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:background="@color/material_dialog_primary" />
 
-  <Button
-      android:id="@+id/button"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="@drawable/panel_background"
-      android:textSize="32dp"
-      android:padding="8dp"
-      android:textColor="@color/accent_material_light"/>
+                <com.rey.material.widget.FloatingActionButton
+                    android:id="@+id/fab_logo"
+                    android:layout_width="48sp"
+                    android:layout_height="48sp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="16sp"
+                    android:layout_marginTop="32sp"
+                    app:fab_backgroundColor="@color/material_dialog_accent"
+                    app:fab_elevation="1sp"
+                    app:fab_iconSrc="@drawable/ic_audiotrack_white_48dp"
+                    app:fab_radius="@dimen/fab_radius" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="@color/primary_text"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="@color/secondary_text"
+                android:textSize="21dp" />
+
+            <TextView
+                android:id="@+id/footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="16dp"
+                android:text="10:20"
+                android:textColor="@color/hint_text"
+                android:textSize="16dp" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16sp"
+                android:background="@color/transparent"
+                android:textColor="@color/material_dialog_accent"
+                android:textSize="21sp" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 </LinearLayout>

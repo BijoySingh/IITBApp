@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.CalendarContract.Events;
 import android.util.DisplayMetrics;
@@ -21,8 +22,10 @@ import android.widget.TextView;
 import com.iitblive.iitblive.R;
 import com.iitblive.iitblive.items.EventListViewItem;
 import com.iitblive.iitblive.items.TimestampItem;
+import com.iitblive.iitblive.util.CategoryImageMapping;
 import com.iitblive.iitblive.util.Constants;
 import com.iitblive.iitblive.util.Functions;
+import com.rey.material.widget.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 @SuppressLint("NewApi")
@@ -54,7 +57,7 @@ public class ArticleFragment extends Fragment {
         viewHolder.likes = (TextView) rootView.findViewById(R.id.likes);
         viewHolder.views = (TextView) rootView.findViewById(R.id.views);
         viewHolder.scrollLayout = (LinearLayout) rootView.findViewById(R.id.image_scroll_view);
-        viewHolder.categoryImage = (ImageView) rootView.findViewById(R.id.category_logo);
+        viewHolder.categoryImage = (FloatingActionButton) rootView.findViewById(R.id.category_logo);
         viewHolder.addToCalendar = (ImageView) rootView.findViewById(R.id.add_event_logo);
         viewHolder.eventTime = (TextView) rootView.findViewById(R.id.event_time);
         viewHolder.eventDate = (TextView) rootView.findViewById(R.id.event_date);
@@ -66,8 +69,9 @@ public class ArticleFragment extends Fragment {
 
         viewHolder.title.setText(mArticle.title);
         viewHolder.description.setText(mArticle.description);
-        viewHolder.categoryImage.setImageResource(
-                Functions.getCategoryResource(mArticle.category)
+        viewHolder.categoryImage.setIcon(
+                mContext.getDrawable(CategoryImageMapping.getDrawable(mArticle.category)),
+                false
         );
         viewHolder.likes.setText("" + mArticle.likes);
         viewHolder.views.setText("" + mArticle.views);
@@ -81,13 +85,14 @@ public class ArticleFragment extends Fragment {
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     (int) convertDpToPixel(320, mContext)
             ));
-            Picasso.with(mContext).load(Constants.BASE_URL + link).into(imageView);
+            Picasso.with(mContext).load(link).into(imageView);
             viewHolder.scrollLayout.addView(imageView);
         }
 
-        if (mArticle.image_links.size() == 0) {
+        if (mArticle.image_links == null || mArticle.image_links.isEmpty()) {
             viewHolder.scrollLayout.setVisibility(View.GONE);
             viewHolder.horizontalScrollView.setVisibility(View.GONE);
+            viewHolder.title.setBackgroundColor(getResources().getColor(R.color.actionbar_700));
         }
 
         if (mArticle.type.contentEquals("E")) {
@@ -127,7 +132,7 @@ public class ArticleFragment extends Fragment {
     }
 
     public class EventViewHolder {
-        ImageView categoryImage;
+        FloatingActionButton categoryImage;
         ImageView addToCalendar;
         TextView title, description, sourceName, sourceDesignation, likes, views;
         TextView eventTime, eventDate;

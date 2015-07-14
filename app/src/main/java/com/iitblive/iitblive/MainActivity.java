@@ -30,14 +30,15 @@ import com.iitblive.iitblive.util.LoginFunctions;
 public class MainActivity extends ActionBarActivity implements DrawerFragment.OnFragmentInteractionListener {
 
     public static String FRAME_TYPE_KEY = "FRAME_TYPE";
-    public static Integer SHOW_MENU = 0;
-    public static Integer SHOW_ARTICLE = 1;
-    public static Integer SHOW_EVENTS = 2;
-    public static Integer SHOW_NEWS = 3;
-    public static Integer SHOW_TIMETABLE = 4;
-    public static Integer SHOW_ABOUT = 5;
-    public static Integer SHOW_INFORMATION = 6;
-    public static Integer SHOW_DEVELOPERS = 7;
+    public static Integer SHOW_ARTICLE = 0;
+    public static Integer SHOW_EVENTS = 1;
+    public static Integer SHOW_NEWS = 2;
+    public static Integer SHOW_TIMETABLE = 3;
+    public static Integer SHOW_ABOUT = 4;
+    public static Integer SHOW_INFORMATION = 5;
+    public static Integer SHOW_DEVELOPERS = 6;
+    public static Integer SHOW_NOTICES = 7;
+
     private Context mContext;
     private DrawerFragment mDrawerFragment;
     private Integer mFragmentPosition;
@@ -62,10 +63,10 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GenericListViewItem glvi = (GenericListViewItem) parent.getItemAtPosition(position);
 
-                if (glvi.tag == DrawerFragment.DRAWER_TAG_HOME) {
-                    displayFragment(SHOW_MENU);
-                } else if (glvi.tag == DrawerFragment.DRAWER_TAG_NEWS) {
+                if (glvi.tag == DrawerFragment.DRAWER_TAG_NEWS) {
                     displayFragment(SHOW_NEWS);
+                } else if (glvi.tag == DrawerFragment.DRAWER_TAG_NOTICES) {
+                    displayFragment(SHOW_NOTICES);
                 } else if (glvi.tag == DrawerFragment.DRAWER_TAG_EVENTS) {
                     displayFragment(SHOW_EVENTS);
                 } else if (glvi.tag == DrawerFragment.DRAWER_TAG_INFORMATION) {
@@ -88,7 +89,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
         });
 
         if (LoginFunctions.isUserLoggedIn(mContext)) {
-            displayFragment(MainActivity.SHOW_MENU);
+            displayFragment(MainActivity.SHOW_NEWS);
         } else {
             displayFragment(MainActivity.SHOW_INFORMATION);
         }
@@ -99,15 +100,15 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
         Bundle bundle = new Bundle();
         mFragmentPosition = position;
 
-        if (position == SHOW_MENU) {
-            fragment = new MenuFragment();
-            bundle.putInt(FRAME_TYPE_KEY, SHOW_MENU);
-        } else if (position == SHOW_NEWS) {
+        if (position == SHOW_NEWS) {
             fragment = new MenuFragment();
             bundle.putInt(FRAME_TYPE_KEY, SHOW_NEWS);
         } else if (position == SHOW_EVENTS) {
             fragment = new MenuFragment();
             bundle.putInt(FRAME_TYPE_KEY, SHOW_EVENTS);
+        } else if (position == SHOW_NOTICES) {
+            fragment = new MenuFragment();
+            bundle.putInt(FRAME_TYPE_KEY, SHOW_NOTICES);
         } else if (position == SHOW_INFORMATION) {
             FragmentListViewData.InformationFragmentData(mContext);
             GenericListFragment.mList = FragmentListViewData.mInformationList;
@@ -140,7 +141,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
         if (fragment != null) {
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.page_fragment, fragment).commit();
+                    .replace(R.id.page_fragment, fragment)
+                    .commit();
             mDrawerFragment.mDrawerLayout.closeDrawers();
         } else {
             Log.e("MainActivity", "Error in creating fragment");
@@ -152,8 +154,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
         //super.onBackPressed();
         if (mFragmentPosition == SHOW_DEVELOPERS) {
             displayFragment(SHOW_ABOUT);
-        } else if (mFragmentPosition != SHOW_MENU) {
-            displayFragment(SHOW_MENU);
+        } else if (mFragmentPosition != SHOW_NEWS) {
+            displayFragment(SHOW_NEWS);
         } else {
             finish();
         }

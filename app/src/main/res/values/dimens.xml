@@ -4,4 +4,6 @@
   <dimen name="activity_vertical_margin">16dp</dimen>
 
   <dimen name="login_footer_icon">48dp</dimen>
+  <dimen name="fab_radius">24dp</dimen>
+
 </resources>

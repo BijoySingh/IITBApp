@@ -284,8 +284,9 @@ public class IitbTimetableActivity extends ActionBarActivity {
                             mContext,
                             mData.get(mDataKey).mName,
                             mData.get(mDataKey).mLocation,
-                            mData.get(mDataKey).mSlotTag,
+                            getString(R.string.slot) + " " + mData.get(mDataKey).mSlotTag,
                             getString(R.string.remove),
+                            R.drawable.ic_today_white_48dp,
                             new Callable<Void>() {
                                 public Void call() {
                                     mCourseDBHandler.deleteItem(mData.get(mDataKey).mSlotTag);
@@ -302,6 +303,7 @@ public class IitbTimetableActivity extends ActionBarActivity {
                             mTimings.get(tag)[1],
                             getString(R.string.slot) + " " + mDataKey,
                             getString(R.string.set),
+                            R.drawable.ic_today_white_48dp,
                             new Callable<Void>() {
                                 public Void call() {
                                     createCourseDialog(mDataKey);

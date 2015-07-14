@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class ListViewItemCreator {
     public static EventListViewItem createEventItem(Context context, JSONObject json) throws Exception {
         EventListViewItem e = new EventListViewItem();
-        e.type = json.getString(Constants.JSON_KEY_TYPE);
+        e.type = Constants.JSON_DATA_TYPE_EVENT;
         e.title = json.getString(Constants.JSON_KEY_TITLE);
         e.description = json.getString(Constants.JSON_KEY_DESCRIPTION);
         e.timestamp = json.getString(Constants.JSON_KEY_TIMESTAMP);
@@ -29,20 +29,23 @@ public class ListViewItemCreator {
         e.id = json.getInt(Constants.JSON_KEY_ID);
         e.likes = json.getInt(Constants.JSON_KEY_LIKES);
         e.views = json.getInt(Constants.JSON_KEY_VIEWS);
-        JSONArray image_links = json.getJSONArray(Constants.JSON_KEY_IMAGE_LIST);
+        e.image_links = new ArrayList<>();
+        e.image_links.add(json.getString("image"));
+        /*JSONArray image_links = json.getJSONArray(Constants.JSON_KEY_IMAGE_LIST);
         e.image_links = new ArrayList<>();
         for (int i = 0; i < image_links.length(); i++) {
             e.image_links.add(image_links.getString(i));
-        }
+        }*/
         JSONObject source_json = json.getJSONObject(Constants.JSON_KEY_SOURCE_JSON);
         e.source_name = source_json.getString(Constants.JSON_KEY_SOURCE_NAME);
+        e.source_email = source_json.getString(Constants.JSON_KEY_SOURCE_EMAIL);
         e.source_designation = source_json.getString(Constants.JSON_KEY_SOURCE_DESIGNATION);
         return e;
     }
 
     public static EventListViewItem createNewsItem(Context context, JSONObject json) throws Exception {
         EventListViewItem e = new EventListViewItem();
-        e.type = json.getString(Constants.JSON_KEY_TYPE);
+        e.type = Constants.JSON_DATA_TYPE_NEWS;
         e.title = json.getString(Constants.JSON_KEY_TITLE);
         e.description = json.getString(Constants.JSON_KEY_DESCRIPTION);
         e.timestamp = json.getString(Constants.JSON_KEY_TIMESTAMP);
@@ -58,26 +61,30 @@ public class ListViewItemCreator {
         }
         JSONObject source_json = json.getJSONObject(Constants.JSON_KEY_SOURCE_JSON);
         e.source_name = source_json.getString(Constants.JSON_KEY_SOURCE_NAME);
+        e.source_email = source_json.getString(Constants.JSON_KEY_SOURCE_EMAIL);
         e.source_designation = source_json.getString(Constants.JSON_KEY_SOURCE_DESIGNATION);
         return e;
     }
 
-    public static EventListViewItem createNoticeItem(Context context, JSONObject json) {
-        return null;
-    }
+    public static EventListViewItem createNoticeItem(Context context, JSONObject json) throws Exception {
+        EventListViewItem e = new EventListViewItem();
+        e.type = Constants.JSON_DATA_TYPE_NOTICE;
+        e.title = json.getString(Constants.JSON_KEY_TITLE);
+        e.description = json.getString(Constants.JSON_KEY_DESCRIPTION);
+        e.timestamp = json.getString(Constants.JSON_KEY_ISSUE_DATE);
+        e.article_time = new TimestampItem(context, e.timestamp);
+        e.id = json.getInt(Constants.JSON_KEY_ID);
+        e.notice_timestamp = json.getString(Constants.JSON_KEY_EXPIRATION);
+        e.expiration_time = new TimestampItem(context, e.notice_timestamp);
+        e.notice_priority = json.getString(Constants.JSON_KEY_PRIORITY);
+        e.category = CategoryImageMapping.Category.NOTICE;
+        e.image_links = new ArrayList<>();
 
-    public static EventListViewItem createAnyItem(Context context, JSONObject json) throws Exception {
-        String type = json.getString(Constants.JSON_KEY_TYPE);
-        if (type.contentEquals(Constants.JSON_DATA_TYPE_EVENT)) {
-            return createEventItem(context, json);
-        } else if (type.contentEquals(Constants.JSON_DATA_TYPE_NEWS)) {
-            return createNewsItem(context, json);
-        } else if (type.contentEquals(Constants.JSON_DATA_TYPE_NOTICE)) {
-            return createNoticeItem(context, json);
-        } else {
-            Exception exception = new Exception("Invalid Data Type");
-            throw exception;
-        }
+        JSONObject source_json = json.getJSONObject(Constants.JSON_KEY_SOURCE_JSON);
+        e.source_name = source_json.getString(Constants.JSON_KEY_SOURCE_NAME);
+        e.source_email = source_json.getString(Constants.JSON_KEY_SOURCE_EMAIL);
+        e.source_designation = source_json.getString(Constants.JSON_KEY_SOURCE_DESIGNATION);
+        return e;
     }
 
     public static InformationListViewItem createInformationItem(Context context, JSONObject json, int icon_resource) throws Exception {

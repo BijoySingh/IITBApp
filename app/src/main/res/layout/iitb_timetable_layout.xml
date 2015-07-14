@@ -1,450 +1,450 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-
-  <LinearLayout
-      android:id="@+id/tt_monday"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
-      android:orientation="horizontal">
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t1A"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t2A"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t3A"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t4A"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="3">
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1">
+        android:id="@+id/tt_monday"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <include
+            android:id="@+id/t1A"
             layout="@layout/timetable_unit_layout"
-            android:id="@+id/t8A"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"/>
+            android:layout_weight="1" />
 
         <include
+            android:id="@+id/t2A"
             layout="@layout/timetable_unit_layout"
-            android:id="@+id/t9A"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"/>
-      </LinearLayout>
+            android:layout_weight="1" />
 
-      <include
-          layout="@layout/timetable_unit_layout"
-          android:id="@+id/tL1"
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1"/>
+        <include
+            android:id="@+id/t3A"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/t4A"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <include
+                    android:id="@+id/t8A"
+                    layout="@layout/timetable_unit_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5" />
+
+                <include
+                    android:id="@+id/t9A"
+                    layout="@layout/timetable_unit_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/tL1"
+                layout="@layout/timetable_unit_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/t12A"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5" />
+
+        <include
+            android:id="@+id/t13A"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5" />
+
     </LinearLayout>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t12A"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t13A"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"/>
-
-  </LinearLayout>
-
-  <LinearLayout
-      android:id="@+id/tt_tuesday"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
-      android:orientation="horizontal">
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t4B"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t1B"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t2B"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t3B"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="3">
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1">
+        android:id="@+id/tt_tuesday"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <include
+            android:id="@+id/t4B"
             layout="@layout/timetable_unit_layout"
-            android:id="@+id/t10A"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"/>
+            android:layout_weight="1" />
 
         <include
+            android:id="@+id/t1B"
             layout="@layout/timetable_unit_layout"
-            android:id="@+id/t11A"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"/>
-      </LinearLayout>
+            android:layout_weight="1" />
 
-      <include
-          layout="@layout/timetable_unit_layout"
-          android:id="@+id/tL2"
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1"/>
+        <include
+            android:id="@+id/t2B"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/t3B"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <include
+                    android:id="@+id/t10A"
+                    layout="@layout/timetable_unit_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5" />
+
+                <include
+                    android:id="@+id/t11A"
+                    layout="@layout/timetable_unit_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/tL2"
+                layout="@layout/timetable_unit_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/t14A"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5" />
+
+        <include
+            android:id="@+id/t15A"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5" />
+
     </LinearLayout>
 
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t14A"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t15A"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"/>
-
-  </LinearLayout>
-
-
-  <LinearLayout
-      android:id="@+id/tt_wednesday"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
-      android:orientation="horizontal">
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t7A"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t5A"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t6A"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"/>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="3">
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1">
+        android:id="@+id/tt_wednesday"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <include
+            android:id="@+id/t7A"
             layout="@layout/timetable_unit_layout"
-            android:id="@+id/tX1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <include
+            android:id="@+id/t5A"
             layout="@layout/timetable_unit_layout"
-            android:id="@+id/tX2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1.5" />
 
         <include
+            android:id="@+id/t6A"
             layout="@layout/timetable_unit_layout"
-            android:id="@+id/tX3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
-      </LinearLayout>
+            android:layout_weight="1.5" />
 
-      <include
-          layout="@layout/timetable_unit_layout"
-          android:id="@+id/tLX"
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <include
+                    android:id="@+id/tX1"
+                    layout="@layout/timetable_unit_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/tX2"
+                    layout="@layout/timetable_unit_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/tX3"
+                    layout="@layout/timetable_unit_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/tLX"
+                layout="@layout/timetable_unit_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/tXC"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5" />
+
+        <include
+            android:id="@+id/tXD"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5" />
+
     </LinearLayout>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/tXC"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/tXD"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"/>
-
-  </LinearLayout>
-
-  <LinearLayout
-      android:id="@+id/tt_thursday"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
-      android:orientation="horizontal">
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t3C"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t4C"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t1C"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t2C"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="3">
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1">
+        android:id="@+id/tt_thursday"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <include
+            android:id="@+id/t3C"
             layout="@layout/timetable_unit_layout"
-            android:id="@+id/t8B"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"/>
+            android:layout_weight="1" />
 
         <include
+            android:id="@+id/t4C"
             layout="@layout/timetable_unit_layout"
-            android:id="@+id/t9B"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"/>
-      </LinearLayout>
+            android:layout_weight="1" />
 
-      <include
-          layout="@layout/timetable_unit_layout"
-          android:id="@+id/tL3"
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1"/>
+        <include
+            android:id="@+id/t1C"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/t2C"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <include
+                    android:id="@+id/t8B"
+                    layout="@layout/timetable_unit_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5" />
+
+                <include
+                    android:id="@+id/t9B"
+                    layout="@layout/timetable_unit_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/tL3"
+                layout="@layout/timetable_unit_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/t12B"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5" />
+
+        <include
+            android:id="@+id/t13B"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5" />
+
     </LinearLayout>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t12B"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t13B"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"/>
-
-  </LinearLayout>
-
-  <LinearLayout
-      android:id="@+id/tt_friday"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
-      android:orientation="horizontal">
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t7B"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t5B"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t6B"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"/>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="3">
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1">
+        android:id="@+id/tt_friday"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <include
+            android:id="@+id/t7B"
             layout="@layout/timetable_unit_layout"
-            android:id="@+id/t10B"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"/>
+            android:layout_weight="1" />
 
         <include
+            android:id="@+id/t5B"
             layout="@layout/timetable_unit_layout"
-            android:id="@+id/t11B"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"/>
-      </LinearLayout>
+            android:layout_weight="1.5" />
 
-      <include
-          layout="@layout/timetable_unit_layout"
-          android:id="@+id/tL4"
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1"/>
+        <include
+            android:id="@+id/t6B"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <include
+                    android:id="@+id/t10B"
+                    layout="@layout/timetable_unit_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5" />
+
+                <include
+                    android:id="@+id/t11B"
+                    layout="@layout/timetable_unit_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/tL4"
+                layout="@layout/timetable_unit_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/t14B"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5" />
+
+        <include
+            android:id="@+id/t15B"
+            layout="@layout/timetable_unit_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5" />
+
     </LinearLayout>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t14B"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"/>
-
-    <include
-        layout="@layout/timetable_unit_layout"
-        android:id="@+id/t15B"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"/>
-
-  </LinearLayout>
 </LinearLayout>

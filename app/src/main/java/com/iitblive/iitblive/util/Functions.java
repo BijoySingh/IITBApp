@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,6 +25,7 @@ import com.iitblive.iitblive.items.EventListViewItem;
 import com.iitblive.iitblive.items.GenericListViewItem;
 import com.iitblive.iitblive.items.InformationListViewItem;
 import com.iitblive.iitblive.lvadapter.LVAdapterGeneric;
+import com.rey.material.widget.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -151,10 +153,6 @@ public class Functions {
         }
     }
 
-    public static Integer getCategoryResource(String category) {
-        return R.drawable.category_dance;
-    }
-
     public static EventListViewItem getEventItem(
             Context context,
             JSONObject json,
@@ -166,8 +164,6 @@ public class Functions {
             return ListViewItemCreator.createNewsItem(context, json);
         } else if (data_type == Constants.DATA_TYPE_NOTICE) {
             return ListViewItemCreator.createNoticeItem(context, json);
-        } else if (data_type == Constants.DATA_TYPE_ANY) {
-            return ListViewItemCreator.createAnyItem(context, json);
         }
         return null;
     }
@@ -186,7 +182,7 @@ public class Functions {
                                 json.getJSONObject(i),
                                 data_type));
             } catch (Exception e) {
-                ;
+                Log.e("PARSE_JSON_IITBAPP", "Error", e);
             }
         }
         return listViewItems;
@@ -215,6 +211,7 @@ public class Functions {
             String subtitleStr,
             String footerStr,
             String buttonText,
+            int fabIcon,
             final Callable<Void> callable) {
         final Dialog dialog = getTransparentDialog(context, R.layout.material_dialog, Color.TRANSPARENT);
 
@@ -226,6 +223,9 @@ public class Functions {
 
         TextView footer = (TextView) dialog.findViewById(R.id.footer);
         footer.setText(footerStr);
+
+        FloatingActionButton fabLogo = (FloatingActionButton) dialog.findViewById(R.id.fab_logo);
+        fabLogo.setIcon(context.getDrawable(fabIcon), false);
 
         Button button = (Button) dialog.findViewById(R.id.button);
         button.setText(buttonText);

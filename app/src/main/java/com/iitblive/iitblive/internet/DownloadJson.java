@@ -29,6 +29,8 @@ import java.io.IOException;
 
 public class DownloadJson extends AsyncTask<String, Integer, String> {
 
+    public static String LOG_KEY = "DOWNLOAD_JSON_IITBAPP";
+
     public Integer mIconResource = null;
     private String mLink, mMessage;
     private Context mContext;
@@ -80,17 +82,18 @@ public class DownloadJson extends AsyncTask<String, Integer, String> {
                 } else {
                     HttpEntity e = response.getEntity();
                     String data = EntityUtils.toString(e);
-                    // Functions.makeToast(mContext, R.string.toast_no_connection);
+                    mMessage = data;
+                    Log.d(LOG_KEY, mMessage);
                 }
             } catch (Exception e) {
-                // Functions.makeToast(mContext, R.string.toast_no_data);
+                Log.d(LOG_KEY, mMessage, e);
             }
         } catch (ClientProtocolException e) {
-            //  Functions.makeToast(mContext, R.string.toast_no_data);
+            Log.d(LOG_KEY, mMessage, e);
         } catch (IOException e) {
-            // Functions.makeToast(mContext, R.string.toast_no_data);
+            Log.d(LOG_KEY, mMessage, e);
         } catch (Exception e) {
-            // Functions.makeToast(mContext, R.string.toast_no_data);
+            Log.d(LOG_KEY, mMessage, e);
         }
         return null;
     }

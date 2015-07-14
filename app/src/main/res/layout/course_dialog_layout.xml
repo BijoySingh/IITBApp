@@ -1,72 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-  <View
-      android:layout_width="match_parent"
-      android:layout_height="100dp"
-      android:background="@color/accent_material_light"/>
-
-  <EditText
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@+id/relativeLayout"
-      android:id="@+id/course_name"
-      android:textSize="32dp"
-      android:textColor="@color/secondary_text"
-      android:textColorHint="@color/hint_text"
-      android:hint="@string/input_course_name"
-      android:padding="16dp"
-      android:layout_marginTop="8dp"
-      android:layout_marginLeft="8dp"
-      android:layout_marginRight="8dp"
-      android:layout_gravity="right"/>
-
-
-  <EditText
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@+id/relativeLayout"
-      android:id="@+id/course_location"
-      android:textSize="32dp"
-      android:textColor="@color/secondary_text"
-      android:textColorHint="@color/hint_text"
-      android:hint="@string/input_course_location"
-      android:padding="16dp"
-      android:layout_marginTop="8dp"
-      android:layout_marginLeft="8dp"
-      android:layout_marginRight="8dp"
-      android:layout_gravity="right"/>
-
-  <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/cancel"
-        android:padding="16dp"
-        android:layout_margin="8dp"
-        android:layout_alignParentLeft="true"
-        android:textColor="@color/secondary_text"
-        android:background="@color/material_card_shadow_outer"
-        android:id="@+id/cancel"/>
+        app:cardCornerRadius="4sp"
+        app:cardElevation="4sp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/done"
-        android:padding="16dp"
-        android:layout_margin="8dp"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/white"
-        android:background="@color/accent_material_light"
-        android:id="@+id/done"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
 
-  </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/color_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:background="@color/material_dialog_primary" />
+
+                <com.rey.material.widget.FloatingActionButton
+                    android:id="@+id/fab_logo"
+                    android:layout_width="48sp"
+                    android:layout_height="48sp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="16sp"
+                    android:layout_marginTop="32sp"
+                    app:fab_backgroundColor="@color/material_dialog_accent"
+                    app:fab_elevation="1sp"
+                    app:fab_iconSrc="@drawable/ic_today_white_48dp"
+                    app:fab_radius="@dimen/fab_radius" />
+
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/course_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayout"
+                android:layout_gravity="right"
+                android:layout_marginLeft="16sp"
+                android:layout_marginRight="16sp"
+                android:background="@color/transparent"
+                android:hint="@string/input_course_name"
+                android:padding="4dp"
+                android:textColor="@color/secondary_text"
+                android:textColorHint="@color/hint_text"
+                android:textSize="24dp" />
+
+
+            <EditText
+                android:id="@+id/course_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayout"
+                android:layout_gravity="right"
+                android:layout_marginLeft="16sp"
+                android:layout_marginRight="16sp"
+                android:background="@color/transparent"
+                android:hint="@string/input_course_location"
+                android:padding="4dp"
+                android:textColor="@color/secondary_text"
+                android:textColorHint="@color/hint_text"
+                android:textSize="21dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/cancel"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:text="@string/cancel"
+                    android:textColor="@color/hint_text"
+                    android:textSize="21sp" />
+
+                <View
+                    android:layout_width="1sp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="16sp"
+                    android:layout_marginTop="16sp"
+                    android:background="@color/dialog_border" />
+
+                <TextView
+                    android:id="@+id/done"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:text="@string/done"
+                    android:textColor="@color/material_dialog_accent"
+                    android:textSize="21sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 </LinearLayout>

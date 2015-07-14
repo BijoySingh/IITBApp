@@ -46,13 +46,9 @@ public class MenuFragment extends Fragment {
         Integer dataType = null;
 
         Bundle bundle = this.getArguments();
-        mMode = bundle.getInt(MainActivity.FRAME_TYPE_KEY, MainActivity.SHOW_MENU);
+        mMode = bundle.getInt(MainActivity.FRAME_TYPE_KEY, MainActivity.SHOW_NEWS);
 
-        if (mMode == MainActivity.SHOW_MENU) {
-            link = Constants.URL_ANY;
-            dataType = Constants.DATA_TYPE_ANY;
-            fileName = Constants.FILENAME_HOME;
-        } else if (mMode == MainActivity.SHOW_NEWS) {
+        if (mMode == MainActivity.SHOW_NEWS) {
             link = Constants.URL_NEWS;
             dataType = Constants.DATA_TYPE_NEWS;
             fileName = Constants.FILENAME_NEWS;
@@ -60,6 +56,10 @@ public class MenuFragment extends Fragment {
             link = Constants.URL_EVENTS;
             dataType = Constants.DATA_TYPE_EVENT;
             fileName = Constants.FILENAME_EVENT;
+        } else if (mMode == MainActivity.SHOW_NOTICES) {
+            link = Constants.URL_NOTICES;
+            dataType = Constants.DATA_TYPE_NOTICE;
+            fileName = Constants.FILENAME_NOTICE;
         }
 
         if (fileName != null) {

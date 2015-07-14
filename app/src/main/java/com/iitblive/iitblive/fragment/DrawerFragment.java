@@ -26,12 +26,13 @@ import java.util.List;
 public class DrawerFragment extends Fragment {
     public static int DRAWER_TAG_LOGIN = 0;
     public static int DRAWER_TAG_LOGOUT = 1;
-    public static int DRAWER_TAG_HOME = 2;
-    public static int DRAWER_TAG_NEWS = 3;
-    public static int DRAWER_TAG_EVENTS = 4;
-    public static int DRAWER_TAG_TIMETABLE = 5;
-    public static int DRAWER_TAG_INFORMATION = 6;
-    public static int DRAWER_TAG_ABOUT = 7;
+    public static int DRAWER_TAG_NEWS = 2;
+    public static int DRAWER_TAG_EVENTS = 3;
+    public static int DRAWER_TAG_TIMETABLE = 4;
+    public static int DRAWER_TAG_INFORMATION = 5;
+    public static int DRAWER_TAG_ABOUT = 6;
+    public static int DRAWER_TAG_NOTICES = 7;
+
     public DrawerLayout mDrawerLayout;
     public ListView mListView = null;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -133,10 +134,6 @@ public class DrawerFragment extends Fragment {
                     DRAWER_TAG_LOGIN));
         } else {
             mDrawerListView.add(new GenericListViewItem(
-                    R.drawable.drawer_icon_home,
-                    getString(R.string.drawer_home),
-                    DRAWER_TAG_HOME));
-            mDrawerListView.add(new GenericListViewItem(
                     R.drawable.drawer_icon_news,
                     getString(R.string.drawer_news),
                     DRAWER_TAG_NEWS));
@@ -144,6 +141,10 @@ public class DrawerFragment extends Fragment {
                     R.drawable.drawer_icon_events,
                     getString(R.string.drawer_events),
                     DRAWER_TAG_EVENTS));
+            mDrawerListView.add(new GenericListViewItem(
+                    R.drawable.drawer_icon_notice,
+                    getString(R.string.drawer_notices),
+                    DRAWER_TAG_NOTICES));
             mDrawerListView.add(new GenericListViewItem(
                     R.drawable.drawer_icon_information,
                     getString(R.string.drawer_information),

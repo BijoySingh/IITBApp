@@ -17,8 +17,10 @@ import android.widget.TextView;
 
 import com.iitblive.iitblive.R;
 import com.iitblive.iitblive.items.EventListViewItem;
+import com.iitblive.iitblive.util.CategoryImageMapping;
 import com.iitblive.iitblive.util.Constants;
 import com.iitblive.iitblive.util.Functions;
+import com.rey.material.widget.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -55,7 +57,7 @@ public class LVAdapterMain extends ArrayAdapter<EventListViewItem> {
             viewHolder.likes = (TextView) convertView.findViewById(R.id.likes);
             viewHolder.views = (TextView) convertView.findViewById(R.id.views);
             viewHolder.eventImage = (ImageView) convertView.findViewById(R.id.card_image);
-            viewHolder.categoryImage = (ImageView) convertView.findViewById(R.id.category_logo);
+            viewHolder.categoryImage = (FloatingActionButton) convertView.findViewById(R.id.category_logo);
             viewHolder.eventTime = (TextView) convertView.findViewById(R.id.event_time);
             viewHolder.eventDate = (TextView) convertView.findViewById(R.id.event_date);
             viewHolder.eventLayout = (RelativeLayout) convertView.findViewById(R.id.event_layout);
@@ -73,49 +75,60 @@ public class LVAdapterMain extends ArrayAdapter<EventListViewItem> {
                     Functions.cropString(data.description,
                             Constants.DESCRIPTION_CROP_SIZE)
             );
-            viewHolder.categoryImage.setImageResource(
-                    Functions.getCategoryResource(data.category)
+            viewHolder.categoryImage.setIcon(
+                    mContext.getResources().getDrawable(CategoryImageMapping.getDrawable(data.category)),
+                    false
             );
             viewHolder.likes.setText("" + data.likes);
             viewHolder.views.setText("" + data.views);
             viewHolder.sourceName.setText(data.source_name);
             viewHolder.emphasisView.setVisibility(View.VISIBLE);
 
-            if (!data.image_links.isEmpty()) {
+            if (data.image_links != null && !data.image_links.isEmpty()) {
+                viewHolder.eventImage.setVisibility(View.VISIBLE);
                 Picasso.with(mContext)
-                        .load(
-                                Constants.BASE_URL +
-                                        data.image_links.get(0)
-                        ).into(viewHolder.eventImage);
+                        .load(data.image_links.get(0))
+                        .into(viewHolder.eventImage);
+            } else {
+                viewHolder.eventImage.setVisibility(View.GONE);
             }
 
-            if (data.type.contentEquals("E")) {
+            if (data.type.contentEquals(Constants.JSON_DATA_TYPE_EVENT)) {
                 viewHolder.eventLayout.setVisibility(View.VISIBLE);
                 viewHolder.eventTime.setText(data.event_time.time);
                 viewHolder.eventDate.setText(data.event_time.date);
                 viewHolder.emphasisView.setVisibility(View.VISIBLE);
-                viewHolder.emphasisView.setBackgroundColor(Constants.EVENT_EMPHASIS_COLOR);
-            } else if (data.type.contentEquals("N")) {
-                viewHolder.emphasisView.setBackgroundColor(Constants.NEWS_EMPHASIS_COLOR);
-            }
-
-            if (data.image_links.isEmpty()) {
-                viewHolder.eventImage.setImageResource(R.drawable.image_placeholder);
-                viewHolder.emphasisView.setBackgroundColor(Constants.NO_IMAGE_EMPHASIS_COLOR);
+                viewHolder.emphasisView.setBackgroundColor(Constants.ACCENT_COLOR);
+            } else if (data.type.contentEquals(Constants.JSON_DATA_TYPE_NEWS)) {
+                viewHolder.emphasisView.setBackgroundColor(Constants.ACCENT_COLOR_TEAL);
+            } else if (data.type.contentEquals(Constants.JSON_DATA_TYPE_NOTICE)) {
+                viewHolder.emphasisView.setBackgroundColor(getPriorityColor(data.notice_priority));
             }
         }
         return convertView;
     }
 
     public class EventViewHolder {
-        ImageView eventImage, categoryImage;
+        ImageView eventImage;
         TextView title, description, sourceName, likes, views;
         TextView eventTime, eventDate;
         RelativeLayout eventLayout;
         View emphasisView;
+        FloatingActionButton categoryImage;
     }
 
-
+    public int getPriorityColor(String priority) {
+        if (priority.contentEquals(Constants.NOTICE_PRIORITY_LOW)) {
+            return Constants.NOTICE_EMPHASIS_COLOR_LOW;
+        } else if (priority.contentEquals(Constants.NOTICE_PRIORITY_MEDIUM)) {
+            return Constants.NOTICE_EMPHASIS_COLOR_MEDIUM;
+        } else if (priority.contentEquals(Constants.NOTICE_PRIORITY_HIGH)) {
+            return Constants.NOTICE_EMPHASIS_COLOR_HIGH;
+        } else if (priority.contentEquals(Constants.NOTICE_PRIORITY_URGENT)) {
+            return Constants.NOTICE_EMPHASIS_COLOR_URGENT;
+        }
+        return Constants.ACCENT_COLOR;
+    }
 }
 
 

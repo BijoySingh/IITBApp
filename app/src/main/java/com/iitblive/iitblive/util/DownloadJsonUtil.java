@@ -14,6 +14,7 @@ import com.iitblive.iitblive.lvadapter.LVAdapterInformation;
 import com.iitblive.iitblive.lvadapter.LVAdapterMain;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,8 @@ public class DownloadJsonUtil {
 
     public static void onGetDataResult(String data, Integer dataType, Context context, View adapterView) {
         try {
-            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject = new JSONObject(data);
+            JSONArray jsonArray = jsonObject.getJSONArray(Constants.JSON_KEY_RESULTS);
             List<EventListViewItem> lst =
                     Functions.getEventItemList(context, jsonArray, dataType);
 
