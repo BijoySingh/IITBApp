@@ -13,7 +13,6 @@ import android.widget.GridView;
 
 import com.iitblive.iitblive.MainActivity;
 import com.iitblive.iitblive.R;
-import com.iitblive.iitblive.internet.DownloadJson;
 import com.iitblive.iitblive.items.EventListViewItem;
 import com.iitblive.iitblive.util.Constants;
 import com.iitblive.iitblive.util.DownloadJsonUtil;
@@ -26,6 +25,7 @@ public class MenuFragment extends Fragment {
     private Context mContext;
     private MainActivity mActivity;
     private Integer mMode;
+    private boolean mFileExists = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,19 +65,21 @@ public class MenuFragment extends Fragment {
         if (fileName != null) {
             String json = Functions.offlineDataReader(mContext, fileName);
             if (json != null || !json.isEmpty()) {
+                mFileExists = true;
                 DownloadJsonUtil.onGetDataResult(json, dataType, mContext, gridView);
             }
         }
 
-        DownloadJson downloadJson = new DownloadJson(
-                link,
+        DownloadJsonUtil.makeApiCall(
+                Constants.BASE_URL + link,
                 mContext,
                 dataType,
                 Constants.DATA_COUNT_MULTIPLE,
-                gridView
+                gridView,
+                null,
+                fileName,
+                mFileExists
         );
-        downloadJson.setStorageFile(fileName);
-        downloadJson.execute();
 
         return rootView;
     }

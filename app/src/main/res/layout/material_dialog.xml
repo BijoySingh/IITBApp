@@ -63,9 +63,9 @@
                 android:id="@+id/footer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:paddingBottom="16dp"
                 android:text="10:20"
                 android:textColor="@color/hint_text"
                 android:textSize="16dp" />
@@ -74,8 +74,8 @@
                 android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16sp"
                 android:background="@color/transparent"
+                android:padding="16sp"
                 android:textColor="@color/material_dialog_accent"
                 android:textSize="21sp" />
         </LinearLayout>

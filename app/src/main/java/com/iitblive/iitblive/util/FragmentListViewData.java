@@ -175,25 +175,25 @@ public class FragmentListViewData {
                         break;
                     case 0:
                         intent = new Intent(context, GenericInformationListActivity.class);
-                        GenericInformationListActivity.mLink = "departments.txt";
+                        GenericInformationListActivity.mLink = "information/department/";
                         GenericInformationListActivity.mIconResource = R.drawable.information_department;
                         GenericInformationListActivity.mFileName = Constants.FILENAME_INFO_DEPARTMENT;
                         break;
                     case 1:
                         intent = new Intent(context, GenericInformationListActivity.class);
-                        GenericInformationListActivity.mLink = "clubs.txt";
+                        GenericInformationListActivity.mLink = "information/club/";
                         GenericInformationListActivity.mIconResource = R.drawable.information_groups;
                         GenericInformationListActivity.mFileName = Constants.FILENAME_INFO_GROUPS;
                         break;
                     case 2:
                         intent = new Intent(context, GenericInformationListActivity.class);
-                        GenericInformationListActivity.mLink = "contacts.txt";
+                        GenericInformationListActivity.mLink = "information/contact/";
                         GenericInformationListActivity.mIconResource = R.drawable.information_contacts;
                         GenericInformationListActivity.mFileName = Constants.FILENAME_INFO_CONTACTS;
                         break;
                     case 3:
                         intent = new Intent(context, GenericInformationListActivity.class);
-                        GenericInformationListActivity.mLink = "emergency.txt";
+                        GenericInformationListActivity.mLink = "information/emergency_contact/";
                         GenericInformationListActivity.mIconResource = R.drawable.information_emergency;
                         GenericInformationListActivity.mFileName = Constants.FILENAME_INFO_EMERGENCY;
                         break;

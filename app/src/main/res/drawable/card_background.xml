@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <item>
-    <shape>
-      <padding
-          android:bottom="2dp"
-          android:left="2dp"
-          android:right="2dp"
-          android:top="2dp"/>
+    <item>
+        <shape>
+            <padding
+                android:bottom="2dp"
+                android:left="2dp"
+                android:right="2dp"
+                android:top="2dp" />
 
-      <solid android:color="@color/transparent"/>
-    </shape>
-  </item>
-  <item>
-    <shape>
-      <padding
-          android:bottom="1dp"
-          android:left="0dp"
-          android:right="0dp"
-          android:top="0dp"/>
+            <solid android:color="@color/transparent" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="1dp"
+                android:left="0dp"
+                android:right="0dp"
+                android:top="0dp" />
 
-      <solid android:color="@color/card_shadow_1"/>
+            <solid android:color="@color/card_shadow_1" />
 
-      <corners android:radius="2dp"/>
-    </shape>
-  </item>
-  <item>
-    <shape>
-      <padding
-          android:bottom="1dp"
-          android:left="0dp"
-          android:right="0dp"
-          android:top="0dp"/>
+            <corners android:radius="2dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding
+                android:bottom="1dp"
+                android:left="0dp"
+                android:right="0dp"
+                android:top="0dp" />
 
-      <solid android:color="@color/card_shadow_2"/>
+            <solid android:color="@color/card_shadow_2" />
 
-      <corners android:radius="2dp"/>
-    </shape>
-  </item>
-  <!-- Background -->
-  <item>
-    <shape>
-      <padding
-          android:bottom="0dp"
-          android:left="0dp"
-          android:right="0dp"
-          android:top="0dp"/>
+            <corners android:radius="2dp" />
+        </shape>
+    </item>
+    <!-- Background -->
+    <item>
+        <shape>
+            <padding
+                android:bottom="0dp"
+                android:left="0dp"
+                android:right="0dp"
+                android:top="0dp" />
 
-      <solid android:color="@color/card_background"/>
+            <solid android:color="@color/card_background" />
 
-      <corners android:radius="2dp"/>
-    </shape>
-  </item>
+            <corners android:radius="2dp" />
+        </shape>
+    </item>
 
 </layer-list>

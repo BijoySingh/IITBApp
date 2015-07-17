@@ -5,6 +5,11 @@ import android.view.View;
 import android.widget.GridView;
 import android.widget.ListView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.iitblive.iitblive.R;
 import com.iitblive.iitblive.items.EventListViewItem;
 import com.iitblive.iitblive.items.GenericListViewItem;
@@ -23,26 +28,76 @@ import java.util.List;
  * Created by Bijoy on 6/21/2015.
  */
 public class DownloadJsonUtil {
-    public static void onGetInformationResult(String data,
-                                              Context context,
-                                              Integer iconResource,
-                                              View adapterView) {
+
+    public static void makeApiCall(String link,
+                                   final Context context,
+                                   final int dataType,
+                                   final int dataCount,
+                                   final View adapterView,
+                                   final Integer iconResource,
+                                   final String storeFile,
+                                   final boolean fileExists) {
+        StringRequest jsonRequest = new StringRequest
+                (Request.Method.GET, link, new Response
+                        .Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        boolean writeFile = false;
+
+                        if (dataCount == Constants.DATA_COUNT_MULTIPLE) {
+                            if (dataType == Constants.DATA_TYPE_NEWS ||
+                                    dataType == Constants.DATA_TYPE_EVENT ||
+                                    dataType == Constants.DATA_TYPE_NOTICE ||
+                                    dataType == Constants.DATA_TYPE_ANY) {
+                                writeFile = onGetDataResult(response, dataType, context,
+                                        adapterView);
+                            } else if (dataType == Constants.DATA_TYPE_INFORMATION) {
+                                writeFile = onGetInformationResult(response,
+                                        context, iconResource, adapterView, fileExists);
+                            }
+                        }
+                        if (writeFile && storeFile != null) {
+                            Functions.offlineDataWriter(context, storeFile, response);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        if (!fileExists) {
+                            onCreateEmptyList(context, adapterView);
+                        }
+                    }
+                });
+
+        Volley.newRequestQueue(context).add(jsonRequest);
+    }
+
+    public static boolean onGetInformationResult(String data,
+                                                 Context context,
+                                                 Integer iconResource,
+                                                 View adapterView,
+                                                 boolean fileExists) {
         try {
-            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject = new JSONObject(data);
+            JSONArray jsonArray = jsonObject.getJSONArray(Constants.JSON_KEY_RESULTS);
             List<InformationListViewItem> lst =
                     Functions.getInformationItemList(context, jsonArray, iconResource);
             if (lst.isEmpty()) {
-                onCreateEmptyList(context, adapterView);
-                return;
+                return onCreateEmptyList(context, adapterView);
             }
             LVAdapterInformation lvAdapterInformation = new LVAdapterInformation(context, lst);
             ((ListView) adapterView).setAdapter(lvAdapterInformation);
+            return true;
         } catch (Exception e) {
-            onCreateEmptyList(context, adapterView);
+            if (!fileExists)
+                onCreateEmptyList(context, adapterView);
         }
+        return false;
     }
 
-    public static void onGetDataResult(String data, Integer dataType, Context context, View adapterView) {
+    public static boolean onGetDataResult(String data, Integer dataType, Context context, View
+            adapterView) {
         try {
             JSONObject jsonObject = new JSONObject(data);
             JSONArray jsonArray = jsonObject.getJSONArray(Constants.JSON_KEY_RESULTS);
@@ -50,17 +105,18 @@ public class DownloadJsonUtil {
                     Functions.getEventItemList(context, jsonArray, dataType);
 
             if (lst.isEmpty()) {
-                onCreateEmptyList(context, adapterView);
-                return;
+                return onCreateEmptyGrid(context, adapterView);
             }
             LVAdapterMain lvAdapterMain = new LVAdapterMain(context, lst);
             ((GridView) adapterView).setAdapter(lvAdapterMain);
+            return true;
         } catch (Exception e) {
-            onCreateEmptyList(context, adapterView);
+            return onCreateEmptyGrid(context, adapterView);
         }
     }
 
-    public static void onCreateEmptyList(Context context, View adapterView) {
+
+    public static boolean onCreateEmptyView(Context context, View adapterView, boolean isGrid) {
         try {
             List<GenericListViewItem> emptyList = new ArrayList<>();
 
@@ -72,9 +128,22 @@ public class DownloadJsonUtil {
             emptyList.add(emptyButton);
 
             LVAdapterGeneric lvAdapterGeneric = new LVAdapterGeneric(context, emptyList);
-            ((GridView) adapterView).setAdapter(lvAdapterGeneric);
+            if (isGrid)
+                ((GridView) adapterView).setAdapter(lvAdapterGeneric);
+            else
+                ((ListView) adapterView).setAdapter(lvAdapterGeneric);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return false;
+    }
+
+    public static boolean onCreateEmptyGrid(Context context, View adapterView) {
+        return onCreateEmptyView(context, adapterView, true);
+    }
+
+    public static boolean onCreateEmptyList(Context context, View adapterView) {
+        return onCreateEmptyView(context, adapterView, false);
     }
 }

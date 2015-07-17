@@ -10,6 +10,24 @@ import java.util.Map;
  */
 public class CategoryImageMapping {
 
+    public static int getDrawable(String type) {
+        Map<String, Integer> mResourceMapping = new HashMap<>();
+        mResourceMapping.put(Category.MUSIC, Resource.MUSIC);
+        mResourceMapping.put(Category.PHOTO, Resource.PHOTO);
+        mResourceMapping.put(Category.ART, Resource.ART);
+        mResourceMapping.put(Category.SPORTS, Resource.SPORTS);
+        mResourceMapping.put(Category.ACTIVITY, Resource.ACTIVITY);
+        mResourceMapping.put(Category.TECH, Resource.TECH);
+        mResourceMapping.put(Category.FOOD, Resource.FOOD);
+        mResourceMapping.put(Category.LITERATURE, Resource.LITERATURE);
+        mResourceMapping.put(Category.NOTICE, Resource.NOTICE);
+
+        if (mResourceMapping.containsKey(type)) {
+            return mResourceMapping.get(type);
+        }
+        return Resource.DEFAULT;
+    }
+
     public static class Category {
         public static String MUSIC = "music";
         public static String PHOTO = "photo";
@@ -33,23 +51,5 @@ public class CategoryImageMapping {
         public static int LITERATURE = R.drawable.ic_local_library_white_48dp;
         public static int DEFAULT = R.drawable.ic_people_white_48dp;
         public static int NOTICE = R.drawable.ic_chrome_reader_mode_white_48dp;
-    }
-
-    public static int getDrawable(String type) {
-        Map<String, Integer> mResourceMapping = new HashMap<>();
-        mResourceMapping.put(Category.MUSIC, Resource.MUSIC);
-        mResourceMapping.put(Category.PHOTO, Resource.PHOTO);
-        mResourceMapping.put(Category.ART, Resource.ART);
-        mResourceMapping.put(Category.SPORTS, Resource.SPORTS);
-        mResourceMapping.put(Category.ACTIVITY, Resource.ACTIVITY);
-        mResourceMapping.put(Category.TECH, Resource.TECH);
-        mResourceMapping.put(Category.FOOD, Resource.FOOD);
-        mResourceMapping.put(Category.LITERATURE, Resource.LITERATURE);
-        mResourceMapping.put(Category.NOTICE, Resource.NOTICE);
-
-        if (mResourceMapping.containsKey(type)) {
-            return mResourceMapping.get(type);
-        }
-        return Resource.DEFAULT;
     }
 }

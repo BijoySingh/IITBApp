@@ -4,8 +4,10 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.iitblive.iitblive.service.GcmUtility;
 import com.iitblive.iitblive.util.Constants;
 import com.iitblive.iitblive.util.FormTaskUtil;
+import com.iitblive.iitblive.util.Functions;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -99,6 +101,8 @@ public class FormTask extends AsyncTask<String, Integer, String> {
                     String ldap = lines[1];
                     String name = lines[2];
                     FormTaskUtil.loginUtil(mContext, ldap, name);
+                    GcmUtility.registerInBackground(mContext, Functions.loadSharedPreference
+                            (mContext, ldap + Constants.IITB_EMAIL_EXTENSION));
                 }
             }
         }

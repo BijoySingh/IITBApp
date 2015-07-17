@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="timetable_weekly_title">Timetable</string>
-  <string name="timetable_weekly_department">View your timetable</string>
+    <string name="timetable_weekly_title">Timetable</string>
+    <string name="timetable_weekly_department">View your timetable</string>
 
-  <string name="timetable_acad_cal_title">Academic Calendar</string>
-  <string name="timetable_acad_cal_department">View the Academic Calendar</string>
+    <string name="timetable_acad_cal_title">Academic Calendar</string>
+    <string name="timetable_acad_cal_department">View the Academic Calendar</string>
 
-  <string name="timetable_delete_title">Clear Timetable</string>
-  <string name="timetable_delete_department">Refresh your timetable every semester</string>
+    <string name="timetable_delete_title">Clear Timetable</string>
+    <string name="timetable_delete_department">Refresh your timetable every semester</string>
 
-  <string name="urgent_data_title">Nothing To Show</string>
+    <string name="urgent_data_title">Nothing To Show</string>
   <string name="urgent_data_description">Hey! It seems there\'s nothing to display
     in this section!</string>
 
-  <string name="urgent_login_title">Login</string>
+    <string name="urgent_login_title">Login</string>
   <string name="urgent_login_description">Hey! It seems you are not logged in!
     Log in to get news and events.</string>
 
-  <string name="information_department_title">Department</string>
-  <string name="information_department_description">Info and links to departments in IIT Bombay</string>
+    <string name="information_department_title">Department</string>
+    <string name="information_department_description">Info and links to departments in IIT Bombay</string>
 
-  <string name="information_groups_title">Clubs</string>
-  <string name="information_groups_description">Groups and clubs in IIT Bombay</string>
+    <string name="information_groups_title">Clubs</string>
+    <string name="information_groups_description">Groups and clubs in IIT Bombay</string>
 
-  <string name="information_contacts_title">Contacts</string>
-  <string name="information_contacts_description">Important contacts in IIT Bombay for everyone</string>
+    <string name="information_contacts_title">Contacts</string>
+    <string name="information_contacts_description">Important contacts in IIT Bombay for everyone</string>
 
-  <string name="information_emergency_title">Emergency</string>
-  <string name="information_emergency_description">Emergency information and contacts for residents</string>
+    <string name="information_emergency_title">Emergency</string>
+    <string name="information_emergency_description">Emergency information and contacts for residents</string>
 
-  <string name="information_maps_title">InstiMap</string>
-  <string name="information_maps_description">The awesome map app for IIT Bombay</string>
+    <string name="information_maps_title">InstiMap</string>
+    <string name="information_maps_description">The awesome map app for IIT Bombay</string>
 
-  <string name="settings_about_iitbapp_title">About IITBApp</string>
+    <string name="settings_about_iitbapp_title">About IITBApp</string>
   <string name="settings_about_iitbapp_description">IITBApp is an initiative to provide information
     right at the fingers of students at IITB. It is a medium to connects groups and event managers,
     with those who are looking for information about the latest news and events happening in and
     around IIT Bombay.</string>
 
-  <string name="settings_about_us_title">About Us</string>
-  <string name="settings_about_us_description">About IITBApp project developers</string>
+    <string name="settings_about_us_title">About Us</string>
+    <string name="settings_about_us_description">About IITBApp project developers</string>
 
-  <string name="settings_rate_title">Rate Us</string>
-  <string name="settings_rate_description">Give us your valuable feedback</string>
+    <string name="settings_rate_title">Rate Us</string>
+    <string name="settings_rate_description">Give us your valuable feedback</string>
 
-  <string name="developer_bijoy">Bijoy Singh</string>
-  <string name="developer_dheerendra">Dheerendra Rathore</string>
-  <string name="developer_aman">Aman Gour</string>
-  <string name="developer_ranveer">Ranveer Aggarwal</string>
-  <string name="developer_cse_iitb_4">C.S.E. IIT Bombay (B.Tech. IV)</string>
-  <string name="developer_cse_iitb_3">C.S.E. IIT Bombay (B.Tech. III)</string>
-  <string name="developer_cse_iitb_2">C.S.E. IIT Bombay (B.Tech. II)</string>
-  <string name="developer_cse_iitb_1">C.S.E. IIT Bombay (B.Tech. I)</string>
+    <string name="developer_bijoy">Bijoy Singh</string>
+    <string name="developer_dheerendra">Dheerendra Rathore</string>
+    <string name="developer_aman">Aman Gour</string>
+    <string name="developer_ranveer">Ranveer Aggarwal</string>
+    <string name="developer_cse_iitb_4">C.S.E. IIT Bombay (B.Tech. IV)</string>
+    <string name="developer_cse_iitb_3">C.S.E. IIT Bombay (B.Tech. III)</string>
+    <string name="developer_cse_iitb_2">C.S.E. IIT Bombay (B.Tech. II)</string>
+    <string name="developer_cse_iitb_1">C.S.E. IIT Bombay (B.Tech. I)</string>
 
 </resources>

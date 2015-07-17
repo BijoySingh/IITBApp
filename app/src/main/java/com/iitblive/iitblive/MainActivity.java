@@ -22,6 +22,7 @@ import com.iitblive.iitblive.fragment.DrawerFragment;
 import com.iitblive.iitblive.fragment.GenericListFragment;
 import com.iitblive.iitblive.fragment.MenuFragment;
 import com.iitblive.iitblive.items.GenericListViewItem;
+import com.iitblive.iitblive.service.GcmUtility;
 import com.iitblive.iitblive.util.Constants;
 import com.iitblive.iitblive.util.FragmentListViewData;
 import com.iitblive.iitblive.util.Functions;
@@ -81,6 +82,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
                     ((Activity) mContext).finish();
                 } else if (glvi.tag == DrawerFragment.DRAWER_TAG_LOGOUT) {
                     LoginFunctions.logoutUser(mContext);
+                    GcmUtility.unregistrationIdOnServer(mContext);
                     Intent loginIntent = new Intent(mContext, LoginActivity.class);
                     startActivity(loginIntent);
                     ((Activity) mContext).finish();

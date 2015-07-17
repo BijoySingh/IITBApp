@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 
-  <color name="text_gray">#7c7c7c</color>
-  <color name="gray_background">#EAEAEA</color>
-  <color name="transparent">#00000000</color>
-  <color name="dialog_border">#607d8b</color>
+    <color name="text_gray">#7c7c7c</color>
+    <color name="gray_background">#EAEAEA</color>
+    <color name="transparent">#00000000</color>
+    <color name="dialog_border">#607d8b</color>
 
-  <color name="card_background">#ffffff</color>
-  <color name="card_shadow_1">#cdcdcd</color>
-  <color name="card_shadow_2">#dadada</color>
+    <color name="card_background">#ffffff</color>
+    <color name="card_shadow_1">#cdcdcd</color>
+    <color name="card_shadow_2">#dadada</color>
 
-  <color name="card_shadow_dark_1">#55000000</color>
-  <color name="card_shadow_dark_2">#99000000</color>
+    <color name="card_shadow_dark_1">#55000000</color>
+    <color name="card_shadow_dark_2">#99000000</color>
 
 
-  <color name="primary_text">#DE000000</color>
-  <color name="secondary_text">#DA000000</color>
-  <color name="hint_text">#65000000</color>
-  <color name="box_border">#33000000</color>
+    <color name="primary_text">#DE000000</color>
+    <color name="secondary_text">#DA000000</color>
+    <color name="hint_text">#65000000</color>
+    <color name="box_border">#33000000</color>
 
-  <!--     <color name="material_card_shadow_inner">#ffcdcdcd</color>
-      <color name="material_card_shadow_middle">#aadadada</color>
-      <color name="material_card_shadow_outer">#66dedede</color>
-   -->
-  <color name="material_card_shadow_inner">#88212121</color>
-  <color name="material_card_shadow_middle">#22212121</color>
-  <color name="material_card_shadow_outer">#11212121</color>
-  <color name="material_card_shadow_even_outer">#07212121</color>
+    <!--     <color name="material_card_shadow_inner">#ffcdcdcd</color>
+        <color name="material_card_shadow_middle">#aadadada</color>
+        <color name="material_card_shadow_outer">#66dedede</color>
+     -->
+    <color name="material_card_shadow_inner">#88212121</color>
+    <color name="material_card_shadow_middle">#22212121</color>
+    <color name="material_card_shadow_outer">#11212121</color>
+    <color name="material_card_shadow_even_outer">#07212121</color>
 
-  <color name="white">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
 
-  <color name="title_dark_background">#BB6B0000</color>
-  <color name="loginpage_500">#C62828</color>
-  <color name="loginpage_700">#B71C1C</color>
+    <color name="title_dark_background">#BB6B0000</color>
+    <color name="loginpage_500">#C62828</color>
+    <color name="loginpage_700">#B71C1C</color>
 
-  <color name="fab_primary">#B71C1C</color>
+    <color name="fab_primary">#B71C1C</color>
 
-  <color name="material_dialog_primary">#F44336</color>
-  <color name="material_dialog_accent">#D32F2F</color>
+    <color name="material_dialog_primary">#F44336</color>
+    <color name="material_dialog_accent">#D32F2F</color>
 
-  <color name="actionbar_500">#F44336</color>
-  <color name="actionbar_700">#D32F2F</color>
-  <color name="buttoncolor_500">#263238</color>
-  <color name="buttoncolor_500_translucent">#aa263238</color>
+    <color name="actionbar_500">#F44336</color>
+    <color name="actionbar_700">#D32F2F</color>
+    <color name="buttoncolor_500">#263238</color>
+    <color name="buttoncolor_500_translucent">#aa263238</color>
 
-  <color name="timetable_selected">#AED581</color>
+    <color name="timetable_selected">#AED581</color>
 
 </resources>

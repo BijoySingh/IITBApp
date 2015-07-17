@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.iitblive.iitblive.R;
-import com.iitblive.iitblive.internet.DownloadJson;
 import com.iitblive.iitblive.util.Constants;
 import com.iitblive.iitblive.util.DownloadJsonUtil;
 import com.iitblive.iitblive.util.Functions;
@@ -20,6 +19,7 @@ public class GenericInformationListActivity extends ActionBarActivity {
     public static String mFileName = null;
     public static Integer mIconResource;
     private Context mContext;
+    private boolean mFileExists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,24 +31,28 @@ public class GenericInformationListActivity extends ActionBarActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         ListView listView = (ListView) findViewById(R.id.list);
+        mFileExists = false;
 
         if (mFileName != null) {
             String json = Functions.offlineDataReader(mContext, mFileName);
-            if (json == null || json.isEmpty()) {
-                DownloadJsonUtil.onGetInformationResult(json, mContext, mIconResource, listView);
+            if (json != null && !json.isEmpty()) {
+                DownloadJsonUtil.onGetInformationResult(json, mContext, mIconResource, listView,
+                        false);
+                mFileExists = true;
             }
         }
 
-        DownloadJson downloadJson = new DownloadJson(
-                mLink,
+        DownloadJsonUtil.makeApiCall(
+                Constants.PUBLIC_BASE_URL + mLink,
                 mContext,
                 Constants.DATA_TYPE_INFORMATION,
                 Constants.DATA_COUNT_MULTIPLE,
-                listView
+                listView,
+                mIconResource,
+                mFileName,
+                mFileExists
         );
-        downloadJson.mIconResource = mIconResource;
-        downloadJson.setStorageFile(mFileName);
-        downloadJson.execute();
+
     }
 
 

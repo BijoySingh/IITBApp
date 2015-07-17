@@ -1,39 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-  <ImageView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentTop="true"
-      android:scaleType="fitXY"
-      android:src="@drawable/iitb_material_background"
-      android:layout_alignBottom="@+id/name"
-      android:id="@+id/backdrop"/>
+    <ImageView
+        android:id="@+id/backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/name"
+        android:layout_alignParentTop="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/iitb_material_background" />
 
-  <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text=""
-      android:id="@+id/name"
-      android:textColor="@color/abc_primary_text_material_dark"
-      android:layout_below="@+id/face"
-      android:textStyle="bold"
-      android:textSize="24sp"
-      android:layout_alignParentLeft="true"
-      android:paddingLeft="16dp"
-      android:paddingBottom="16dp"
-      android:layout_marginTop="16dp"/>
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/face"
+        android:layout_marginTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:text=""
+        android:textColor="@color/abc_primary_text_material_dark"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
-  <ImageView
-      android:layout_width="64dp"
-      android:layout_height="64dp"
-      android:id="@+id/face"
-      android:layout_marginTop="48dp"
-      android:layout_marginLeft="16dp"
-      android:src="@drawable/user_icon"
-      />
+    <ImageView
+        android:id="@+id/face"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="48dp"
+        android:src="@drawable/user_icon" />
 
 </RelativeLayout>

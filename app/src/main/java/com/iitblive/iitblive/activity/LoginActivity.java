@@ -53,6 +53,7 @@ public class LoginActivity extends ActionBarActivity {
 
         if (mMode == Constants.LOGIN_LDAP_LOGIN) {
             mInput.setHint(getString(R.string.login_input_ldap));
+            mInput.setText(Functions.loadSharedPreference(mContext, Constants.SP_USERNAME));
             mPassword.setHint(getString(R.string.login_input_password));
 
             mLeftImage.setImageResource(R.drawable.link_icon);

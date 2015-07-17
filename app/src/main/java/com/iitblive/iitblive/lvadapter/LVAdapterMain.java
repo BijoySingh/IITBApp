@@ -108,15 +108,6 @@ public class LVAdapterMain extends ArrayAdapter<EventListViewItem> {
         return convertView;
     }
 
-    public class EventViewHolder {
-        ImageView eventImage;
-        TextView title, description, sourceName, likes, views;
-        TextView eventTime, eventDate;
-        RelativeLayout eventLayout;
-        View emphasisView;
-        FloatingActionButton categoryImage;
-    }
-
     public int getPriorityColor(String priority) {
         if (priority.contentEquals(Constants.NOTICE_PRIORITY_LOW)) {
             return Constants.NOTICE_EMPHASIS_COLOR_LOW;
@@ -128,6 +119,15 @@ public class LVAdapterMain extends ArrayAdapter<EventListViewItem> {
             return Constants.NOTICE_EMPHASIS_COLOR_URGENT;
         }
         return Constants.ACCENT_COLOR;
+    }
+
+    public class EventViewHolder {
+        ImageView eventImage;
+        TextView title, description, sourceName, likes, views;
+        TextView eventTime, eventDate;
+        RelativeLayout eventLayout;
+        View emphasisView;
+        FloatingActionButton categoryImage;
     }
 }
 

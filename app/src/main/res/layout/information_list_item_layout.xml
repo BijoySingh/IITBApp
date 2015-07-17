@@ -1,135 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/card_background"
-              android:padding="16dp"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/card_background"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-  <RelativeLayout
-      android:id="@+id/start_video"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginRight="48dp">
-
-    <ImageView
-        android:padding="5dp"
-        android:id="@+id/logo"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_centerVertical="true"/>
-
-    <TextView
-        android:id="@+id/title"
+    <RelativeLayout
+        android:id="@+id/start_video"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="21dp"
-        android:padding="4dp"
-        android:layout_toRightOf="@+id/logo"
-        android:textColor="@color/secondary_text"
-        android:layout_centerVertical="true"/>
+        android:layout_marginRight="48dp">
 
-  </RelativeLayout>
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:padding="5dp" />
 
-  <TextView
-      android:id="@+id/description"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textSize="16sp"
-      android:layout_marginLeft="42dp"
-      android:textColor="@color/hint_text"
-      android:layout_below="@+id/start_video"/>
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/logo"
+            android:padding="4dp"
+            android:textColor="@color/secondary_text"
+            android:textSize="21dp" />
 
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:padding="8dp">
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/start_video"
+        android:layout_marginLeft="42dp"
+        android:textColor="@color/hint_text"
+        android:textSize="16sp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:padding="8dp">
 
-      <ImageView
-          android:id="@+id/phone_icon"
-          android:layout_width="42dp"
-          android:layout_height="42dp"
-          android:src="@drawable/info_icon_phone_disabled"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="CALL"
-          android:padding="2sp"
-          android:textColor="@color/hint_text"/>
+            <ImageView
+                android:id="@+id/phone_icon"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@drawable/info_icon_phone_disabled" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2sp"
+                android:text="CALL"
+                android:textColor="@color/hint_text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/email_icon"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@drawable/info_icon_email_disabled" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2sp"
+                android:text="MAIL"
+                android:textColor="@color/hint_text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/website_icon"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@drawable/info_icon_website_disabled" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2sp"
+                android:text="LINK"
+                android:textColor="@color/hint_text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/facebook_icon"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@drawable/info_icon_facebook_disabled" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2sp"
+                android:text="PAGE"
+                android:textColor="@color/hint_text" />
+        </LinearLayout>
+
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
-
-      <ImageView
-          android:id="@+id/email_icon"
-          android:layout_width="42dp"
-          android:layout_height="42dp"
-          android:src="@drawable/info_icon_email_disabled"/>
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="MAIL"
-          android:padding="2sp"
-          android:textColor="@color/hint_text"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
-
-      <ImageView
-          android:id="@+id/website_icon"
-          android:layout_width="42dp"
-          android:layout_height="42dp"
-          android:src="@drawable/info_icon_website_disabled"/>
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="LINK"
-          android:padding="2sp"
-          android:textColor="@color/hint_text"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
-
-      <ImageView
-          android:id="@+id/facebook_icon"
-          android:layout_width="42dp"
-          android:layout_height="42dp"
-          android:src="@drawable/info_icon_facebook_disabled"/>
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="PAGE"
-          android:padding="2sp"
-          android:textColor="@color/hint_text"/>
-    </LinearLayout>
-
-  </LinearLayout>
 
 </LinearLayout>

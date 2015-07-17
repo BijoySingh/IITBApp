@@ -30,12 +30,11 @@ public class ListViewItemCreator {
         e.likes = json.getInt(Constants.JSON_KEY_LIKES);
         e.views = json.getInt(Constants.JSON_KEY_VIEWS);
         e.image_links = new ArrayList<>();
-        e.image_links.add(json.getString("image"));
-        /*JSONArray image_links = json.getJSONArray(Constants.JSON_KEY_IMAGE_LIST);
+        JSONArray image_links = json.getJSONArray(Constants.JSON_KEY_IMAGE_LIST);
         e.image_links = new ArrayList<>();
         for (int i = 0; i < image_links.length(); i++) {
             e.image_links.add(image_links.getString(i));
-        }*/
+        }
         JSONObject source_json = json.getJSONObject(Constants.JSON_KEY_SOURCE_JSON);
         e.source_name = source_json.getString(Constants.JSON_KEY_SOURCE_NAME);
         e.source_email = source_json.getString(Constants.JSON_KEY_SOURCE_EMAIL);
@@ -71,7 +70,7 @@ public class ListViewItemCreator {
         e.type = Constants.JSON_DATA_TYPE_NOTICE;
         e.title = json.getString(Constants.JSON_KEY_TITLE);
         e.description = json.getString(Constants.JSON_KEY_DESCRIPTION);
-        e.timestamp = json.getString(Constants.JSON_KEY_ISSUE_DATE);
+        e.timestamp = json.getString(Constants.JSON_KEY_TIMESTAMP);
         e.article_time = new TimestampItem(context, e.timestamp);
         e.id = json.getInt(Constants.JSON_KEY_ID);
         e.notice_timestamp = json.getString(Constants.JSON_KEY_EXPIRATION);

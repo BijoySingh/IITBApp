@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="login_input_ldap">LDAP ID</string>
-  <string name="login_input_password">PASSWORD</string>
-  <string name="login_input_request">Request Code</string>
-  <string name="login_request_code">REQUEST CODE</string>
-  <string name="login_login">LOGIN</string>
-  <string name="login_change_ldap">CHANGE LDAP</string>
-  <string name="login_resend_code">RESEND CODE</string>
-  <string name="login_iitb_home">IITB HOME</string>
-  <string name="login_offline">OFFLINE</string>
+    <string name="login_input_ldap">LDAP ID</string>
+    <string name="login_input_password">PASSWORD</string>
+    <string name="login_input_request">Request Code</string>
+    <string name="login_request_code">REQUEST CODE</string>
+    <string name="login_login">LOGIN</string>
+    <string name="login_change_ldap">CHANGE LDAP</string>
+    <string name="login_resend_code">RESEND CODE</string>
+    <string name="login_iitb_home">IITB HOME</string>
+    <string name="login_offline">OFFLINE</string>
 </resources>

@@ -6,7 +6,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.CalendarContract.Events;
 import android.util.DisplayMetrics;
@@ -23,8 +22,6 @@ import com.iitblive.iitblive.R;
 import com.iitblive.iitblive.items.EventListViewItem;
 import com.iitblive.iitblive.items.TimestampItem;
 import com.iitblive.iitblive.util.CategoryImageMapping;
-import com.iitblive.iitblive.util.Constants;
-import com.iitblive.iitblive.util.Functions;
 import com.rey.material.widget.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
