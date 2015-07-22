@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by Bijoy on 2/7/2015.
  * database for questions download
  */
-public class CourseDBHandler extends SQLiteOpenHelper {
+public class TimetableDBHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
@@ -34,7 +34,7 @@ public class CourseDBHandler extends SQLiteOpenHelper {
             KEY_COURSE, KEY_LOCATION, KEY_SLOT_TAG};
     private Context context;
 
-    public CourseDBHandler(Context context) {
+    public TimetableDBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }

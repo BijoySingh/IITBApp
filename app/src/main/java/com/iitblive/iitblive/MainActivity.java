@@ -17,21 +17,21 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.iitblive.iitblive.activity.LoginActivity;
-import com.iitblive.iitblive.fragment.ArticleFragment;
 import com.iitblive.iitblive.fragment.DrawerFragment;
 import com.iitblive.iitblive.fragment.GenericListFragment;
+import com.iitblive.iitblive.fragment.HomeFragment;
 import com.iitblive.iitblive.fragment.MenuFragment;
-import com.iitblive.iitblive.items.GenericListViewItem;
+import com.iitblive.iitblive.items.GenericItem;
 import com.iitblive.iitblive.service.GcmUtility;
 import com.iitblive.iitblive.util.Constants;
-import com.iitblive.iitblive.util.FragmentListViewData;
 import com.iitblive.iitblive.util.Functions;
+import com.iitblive.iitblive.util.ListContent;
 import com.iitblive.iitblive.util.LoginFunctions;
 
 public class MainActivity extends ActionBarActivity implements DrawerFragment.OnFragmentInteractionListener {
 
     public static String FRAME_TYPE_KEY = "FRAME_TYPE";
-    public static Integer SHOW_ARTICLE = 0;
+    public static Integer SHOW_HOME = 0;
     public static Integer SHOW_EVENTS = 1;
     public static Integer SHOW_NEWS = 2;
     public static Integer SHOW_TIMETABLE = 3;
@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
         setContentView(R.layout.activity_main);
         mContext = this;
         firstTimeSetup();
-        FragmentListViewData.resetVariables();
+        ListContent.resetVariables();
 
         Functions.setActionBar(this);
         Functions.setActionBarTitle(this, getString(R.string.title_home));
@@ -62,9 +62,10 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                GenericListViewItem glvi = (GenericListViewItem) parent.getItemAtPosition(position);
-
-                if (glvi.tag == DrawerFragment.DRAWER_TAG_NEWS) {
+                GenericItem glvi = (GenericItem) parent.getItemAtPosition(position);
+                if (glvi.tag == DrawerFragment.DRAWER_TAG_HOME) {
+                    displayFragment(SHOW_HOME);
+                } else if (glvi.tag == DrawerFragment.DRAWER_TAG_NEWS) {
                     displayFragment(SHOW_NEWS);
                 } else if (glvi.tag == DrawerFragment.DRAWER_TAG_NOTICES) {
                     displayFragment(SHOW_NOTICES);
@@ -91,7 +92,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
         });
 
         if (LoginFunctions.isUserLoggedIn(mContext)) {
-            displayFragment(MainActivity.SHOW_NEWS);
+            displayFragment(MainActivity.SHOW_HOME);
         } else {
             displayFragment(MainActivity.SHOW_INFORMATION);
         }
@@ -102,7 +103,9 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
         Bundle bundle = new Bundle();
         mFragmentPosition = position;
 
-        if (position == SHOW_NEWS) {
+        if (position == SHOW_HOME) {
+            fragment = new HomeFragment();
+        } else if (position == SHOW_NEWS) {
             fragment = new MenuFragment();
             bundle.putInt(FRAME_TYPE_KEY, SHOW_NEWS);
         } else if (position == SHOW_EVENTS) {
@@ -112,28 +115,26 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
             fragment = new MenuFragment();
             bundle.putInt(FRAME_TYPE_KEY, SHOW_NOTICES);
         } else if (position == SHOW_INFORMATION) {
-            FragmentListViewData.InformationFragmentData(mContext);
-            GenericListFragment.mList = FragmentListViewData.mInformationList;
+            ListContent.InformationFragmentData(mContext);
+            GenericListFragment.mList = ListContent.mInformationList;
             GenericListFragment.mOnItemClickListener =
-                    FragmentListViewData.mInformationOnItemClickListener;
+                    ListContent.mInformationOnItemClickListener;
             fragment = new GenericListFragment();
         } else if (position == SHOW_TIMETABLE) {
-            FragmentListViewData.TimetableFragmentData(mContext);
-            GenericListFragment.mList = FragmentListViewData.mTimetableList;
+            ListContent.TimetableFragmentData(mContext);
+            GenericListFragment.mList = ListContent.mTimetableList;
             GenericListFragment.mOnItemClickListener =
-                    FragmentListViewData.mTimetableOnItemClickListener;
+                    ListContent.mTimetableOnItemClickListener;
             fragment = new GenericListFragment();
         } else if (position == SHOW_ABOUT) {
-            FragmentListViewData.SettingsFragmentData(mContext);
-            GenericListFragment.mList = FragmentListViewData.mSettingsList;
+            ListContent.SettingsFragmentData(mContext);
+            GenericListFragment.mList = ListContent.mSettingsList;
             GenericListFragment.mOnItemClickListener =
-                    FragmentListViewData.mSettingsOnItemClickListener;
+                    ListContent.mSettingsOnItemClickListener;
             fragment = new GenericListFragment();
-        } else if (position == SHOW_ARTICLE) {
-            fragment = new ArticleFragment();
         } else if (position == SHOW_DEVELOPERS) {
-            FragmentListViewData.DeveloperFragmentData(mContext);
-            GenericListFragment.mList = FragmentListViewData.mDeveloperList;
+            ListContent.DeveloperFragmentData(mContext);
+            GenericListFragment.mList = ListContent.mDeveloperList;
             GenericListFragment.mOnItemClickListener = null;
             fragment = new GenericListFragment();
         }
@@ -153,7 +154,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        super.onBackPressed();
         if (mFragmentPosition == SHOW_DEVELOPERS) {
             displayFragment(SHOW_ABOUT);
         } else if (mFragmentPosition != SHOW_NEWS) {

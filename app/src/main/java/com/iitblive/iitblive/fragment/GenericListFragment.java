@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.iitblive.iitblive.R;
-import com.iitblive.iitblive.items.GenericListViewItem;
+import com.iitblive.iitblive.items.GenericItem;
 import com.iitblive.iitblive.util.Functions;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
 @SuppressLint("NewApi")
 public class GenericListFragment extends Fragment {
 
-    public static List<GenericListViewItem> mList = new ArrayList<>();
+    public static List<GenericItem> mList = new ArrayList<>();
     public static AdapterView.OnItemClickListener mOnItemClickListener;
     private Context mContext;
 

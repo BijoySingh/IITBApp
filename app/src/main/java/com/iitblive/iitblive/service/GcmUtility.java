@@ -62,13 +62,25 @@ public class GcmUtility {
         }.execute();
     }
 
+    private static Map<String, String> getParameters(Context context) {
+        Map<String, String> params = new HashMap<>();
+        params.put(PARAM_NAME, Functions.loadSharedPreference(context, Constants.SP_NAME));
+        params.put(PARAM_REG_ID, registrationId);
+        params.put(PARAM_DEV_ID, Settings.Secure.getString(context.getContentResolver(),
+                Settings.Secure.ANDROID_ID));
+
+        Log.e(GCM_LOG_KEY, params.toString());
+        return params;
+    }
+
     private static void storeRegistrationIdOnServer(final Context context) {
+        JSONObject params = new JSONObject(getParameters(context));
         JsonObjectRequest jsonRequest = new JsonObjectRequest
-                (Request.Method.POST, Constants.GCM_REGISTER_URL, new Response
+                (Request.Method.POST, Constants.Urls.GCM_REGISTER, params, new Response
                         .Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e(GCM_LOG_KEY, Constants.GCM_REGISTER_URL);
+                        Log.e(GCM_LOG_KEY, Constants.Urls.GCM_REGISTER);
                         Log.e(GCM_LOG_KEY, response.toString());
                         try {
                             if (!response.has("error_message")) {
@@ -86,28 +98,25 @@ public class GcmUtility {
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
                     }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put(PARAM_NAME, Functions.loadSharedPreference(context, Constants.SP_NAME));
-                params.put(PARAM_REG_ID, registrationId);
-                params.put(PARAM_DEV_ID, Settings.Secure.getString(context.getContentResolver(),
-                        Settings.Secure.ANDROID_ID));
-                return params;
-            }
-        };
+                });
 
         Volley.newRequestQueue(context).add(jsonRequest);
     }
 
 
     public static void unregistrationIdOnServer(final Context context) {
+        Map<String, String> params = new HashMap<>();
+        params.put(PARAM_DEV_ID, Settings.Secure.getString(context.getContentResolver(),
+                Settings.Secure.ANDROID_ID));
+        JSONObject jsonParams = new JSONObject(params);
+
         JsonObjectRequest jsonRequest = new JsonObjectRequest
-                (Request.Method.POST, Constants.GCM_UNREGISTER_URL, new Response
+                (Request.Method.POST, Constants.Urls.GCM_UNREGISTER, jsonParams, new Response
                         .Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.e(GCM_LOG_KEY, Constants.Urls.GCM_UNREGISTER);
+                        Log.e(GCM_LOG_KEY, response.toString());
                         try {
                             Functions.saveSharedPreference(
                                     context,
@@ -123,15 +132,7 @@ public class GcmUtility {
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
                     }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put(PARAM_DEV_ID, Settings.Secure.getString(context.getContentResolver(),
-                        Settings.Secure.ANDROID_ID));
-                return params;
-            }
-        };
+                });
 
         Volley.newRequestQueue(context).add(jsonRequest);
     }

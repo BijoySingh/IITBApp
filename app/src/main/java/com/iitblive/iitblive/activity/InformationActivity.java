@@ -8,12 +8,12 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.iitblive.iitblive.R;
+import com.iitblive.iitblive.util.ApiUtil;
 import com.iitblive.iitblive.util.Constants;
-import com.iitblive.iitblive.util.DownloadJsonUtil;
 import com.iitblive.iitblive.util.Functions;
 
 @SuppressLint("NewApi")
-public class GenericInformationListActivity extends ActionBarActivity {
+public class InformationActivity extends ActionBarActivity {
 
     public static String mLink;
     public static String mFileName = null;
@@ -36,14 +36,14 @@ public class GenericInformationListActivity extends ActionBarActivity {
         if (mFileName != null) {
             String json = Functions.offlineDataReader(mContext, mFileName);
             if (json != null && !json.isEmpty()) {
-                DownloadJsonUtil.onGetInformationResult(json, mContext, mIconResource, listView,
+                ApiUtil.onGetInformationResult(json, mContext, mIconResource, listView,
                         false);
                 mFileExists = true;
             }
         }
 
-        DownloadJsonUtil.makeApiCall(
-                Constants.PUBLIC_BASE_URL + mLink,
+        ApiUtil.makeApiCall(
+                mLink,
                 mContext,
                 Constants.DATA_TYPE_INFORMATION,
                 Constants.DATA_COUNT_MULTIPLE,

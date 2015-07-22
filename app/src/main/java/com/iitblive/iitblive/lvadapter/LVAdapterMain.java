@@ -16,8 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.iitblive.iitblive.R;
-import com.iitblive.iitblive.items.EventListViewItem;
-import com.iitblive.iitblive.util.CategoryImageMapping;
+import com.iitblive.iitblive.items.ApiItem;
+import com.iitblive.iitblive.util.CategoryImages;
 import com.iitblive.iitblive.util.Constants;
 import com.iitblive.iitblive.util.Functions;
 import com.rey.material.widget.FloatingActionButton;
@@ -29,13 +29,13 @@ import java.util.Map;
 
 /*Listview adapter for the navigation drawer listview*/
 
-public class LVAdapterMain extends ArrayAdapter<EventListViewItem> {
+public class LVAdapterMain extends ArrayAdapter<ApiItem> {
     private final Context mContext;
-    private final List<EventListViewItem> mValues;
+    private final List<ApiItem> mValues;
     private final Integer mLayoutId;
     private Map<Integer, Drawable> mImages;
 
-    public LVAdapterMain(Context context, List<EventListViewItem> values) {
+    public LVAdapterMain(Context context, List<ApiItem> values) {
         super(context, R.layout.grid_item_layout, values);
         this.mLayoutId = R.layout.grid_item_layout;
         this.mContext = context;
@@ -67,58 +67,48 @@ public class LVAdapterMain extends ArrayAdapter<EventListViewItem> {
             viewHolder = (EventViewHolder) convertView.getTag();
         }
 
-        EventListViewItem data = mValues.get(position);
+        ApiItem data = mValues.get(position);
 
         if (data != null) {
             viewHolder.title.setText(data.title);
-            viewHolder.description.setText(
-                    Functions.cropString(data.description,
-                            Constants.DESCRIPTION_CROP_SIZE)
-            );
+            viewHolder.description.setText(data.description);
             viewHolder.categoryImage.setIcon(
-                    mContext.getResources().getDrawable(CategoryImageMapping.getDrawable(data.category)),
+                    mContext.getResources().getDrawable(CategoryImages.getDrawable(data.category)),
                     false
             );
             viewHolder.likes.setText("" + data.likes);
             viewHolder.views.setText("" + data.views);
             viewHolder.sourceName.setText(data.source_name);
-            viewHolder.emphasisView.setVisibility(View.VISIBLE);
 
             if (data.image_links != null && !data.image_links.isEmpty()) {
                 viewHolder.eventImage.setVisibility(View.VISIBLE);
                 Picasso.with(mContext)
-                        .load(data.image_links.get(0))
+                        .load(Constants.Urls.SERVER + data.image_links.get(0))
                         .into(viewHolder.eventImage);
             } else {
                 viewHolder.eventImage.setVisibility(View.GONE);
             }
 
+            int accentColor = data.getPrimaryColor();
+            //viewHolder.emphasisView.setVisibility(View.VISIBLE);
+            //viewHolder.emphasisView.setBackgroundColor(accentColor);
+
+            int categoryColor = data.getAccentColor();
+            viewHolder.categoryImage.setBackgroundColor(categoryColor);
+
             if (data.type.contentEquals(Constants.JSON_DATA_TYPE_EVENT)) {
                 viewHolder.eventLayout.setVisibility(View.VISIBLE);
                 viewHolder.eventTime.setText(data.event_time.time);
                 viewHolder.eventDate.setText(data.event_time.date);
-                viewHolder.emphasisView.setVisibility(View.VISIBLE);
-                viewHolder.emphasisView.setBackgroundColor(Constants.ACCENT_COLOR);
             } else if (data.type.contentEquals(Constants.JSON_DATA_TYPE_NEWS)) {
-                viewHolder.emphasisView.setBackgroundColor(Constants.ACCENT_COLOR_TEAL);
+
             } else if (data.type.contentEquals(Constants.JSON_DATA_TYPE_NOTICE)) {
-                viewHolder.emphasisView.setBackgroundColor(getPriorityColor(data.notice_priority));
+                viewHolder.eventLayout.setVisibility(View.VISIBLE);
+                viewHolder.eventTime.setText(data.expiration_time.time);
+                viewHolder.eventDate.setText(data.expiration_time.date);
             }
         }
         return convertView;
-    }
-
-    public int getPriorityColor(String priority) {
-        if (priority.contentEquals(Constants.NOTICE_PRIORITY_LOW)) {
-            return Constants.NOTICE_EMPHASIS_COLOR_LOW;
-        } else if (priority.contentEquals(Constants.NOTICE_PRIORITY_MEDIUM)) {
-            return Constants.NOTICE_EMPHASIS_COLOR_MEDIUM;
-        } else if (priority.contentEquals(Constants.NOTICE_PRIORITY_HIGH)) {
-            return Constants.NOTICE_EMPHASIS_COLOR_HIGH;
-        } else if (priority.contentEquals(Constants.NOTICE_PRIORITY_URGENT)) {
-            return Constants.NOTICE_EMPHASIS_COLOR_URGENT;
-        }
-        return Constants.ACCENT_COLOR;
     }
 
     public class EventViewHolder {

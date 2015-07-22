@@ -7,10 +7,8 @@
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="com.iitblive.iitblive.permission.C2D_MESSAGE" />
-
 
     <permission
         android:name="com.iitblive.iitblive.permission.C2D_MESSAGE"
@@ -31,11 +29,13 @@
                 <category android:name="com.iitblive.iitblive" />
             </intent-filter>
         </receiver>
+
         <service android:name=".service.GCMNotificationIntentService" />
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,32 +43,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.iitblive.iitblive.activity.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.LOGIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateUnchanged"></activity>
         <activity
-            android:name="com.iitblive.iitblive.activity.GenericInformationListActivity"
+            android:name=".activity.InformationActivity"
             android:label="@string/app_name"
-            android:theme="@style/BackTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.GENERIC" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/BackTheme"></activity>
         <activity
-            android:name="com.iitblive.iitblive.activity.IitbTimetableActivity"
+            android:name=".activity.IitbTimetableActivity"
             android:label="@string/app_name"
-            android:theme="@style/BackTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.GENERIC" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/BackTheme"></activity>
+        <activity
+            android:name=".activity.ArticleActivity"
+            android:label="@string/title_activity_article"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackTheme"></activity>
     </application>
 
 </manifest>

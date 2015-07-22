@@ -13,14 +13,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iitblive.iitblive.R;
-import com.iitblive.iitblive.items.GenericListViewItem;
+import com.iitblive.iitblive.items.GenericItem;
 
 /*Listview adapter for the navigation drawer listview*/
-public class LVAdapterDrawer extends ArrayAdapter<GenericListViewItem> {
+public class LVAdapterDrawer extends ArrayAdapter<GenericItem> {
     private final Context mContext;
-    private final GenericListViewItem[] mValues;
+    private final GenericItem[] mValues;
 
-    public LVAdapterDrawer(Context context, GenericListViewItem[] values) {
+    public LVAdapterDrawer(Context context, GenericItem[] values) {
         super(context, R.layout.drawer_list_item, values);
         this.mContext = context;
         this.mValues = values;

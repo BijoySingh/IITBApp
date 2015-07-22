@@ -18,4 +18,5 @@
 
     <string name="input_course_name">Course</string>
     <string name="input_course_location">Location</string>
+    <string name="title_activity_article">Article</string>
 </resources>

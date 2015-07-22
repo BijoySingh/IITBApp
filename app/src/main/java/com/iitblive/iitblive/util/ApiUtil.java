@@ -11,9 +11,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.iitblive.iitblive.R;
-import com.iitblive.iitblive.items.EventListViewItem;
-import com.iitblive.iitblive.items.GenericListViewItem;
-import com.iitblive.iitblive.items.InformationListViewItem;
+import com.iitblive.iitblive.fragment.HomeFragment;
+import com.iitblive.iitblive.items.ApiItem;
+import com.iitblive.iitblive.items.GenericItem;
+import com.iitblive.iitblive.items.InformationItem;
 import com.iitblive.iitblive.lvadapter.LVAdapterGeneric;
 import com.iitblive.iitblive.lvadapter.LVAdapterInformation;
 import com.iitblive.iitblive.lvadapter.LVAdapterMain;
@@ -27,7 +28,7 @@ import java.util.List;
 /**
  * Created by Bijoy on 6/21/2015.
  */
-public class DownloadJsonUtil {
+public class ApiUtil {
 
     public static void makeApiCall(String link,
                                    final Context context,
@@ -73,6 +74,55 @@ public class DownloadJsonUtil {
         Volley.newRequestQueue(context).add(jsonRequest);
     }
 
+    public static void makeApiCallForHome(String link,
+                                          final Context context,
+                                          final int dataType,
+                                          final String storeFile,
+                                          final HomeFragment homeFragment,
+                                          final HomeFragment.NowCardMetaContent metaContent) {
+        StringRequest jsonRequest = new StringRequest
+                (Request.Method.GET, link, new Response
+                        .Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        List<ApiItem> eventItems = new ArrayList<>();
+
+                        if (dataType == Constants.DATA_TYPE_NEWS ||
+                                dataType == Constants.DATA_TYPE_EVENT ||
+                                dataType == Constants.DATA_TYPE_NOTICE) {
+                            eventItems = getEventListFromJson(context, response, dataType);
+                        }
+
+                        if (storeFile != null) {
+                            Functions.offlineDataWriter(context, storeFile, response);
+                        }
+
+                        homeFragment.addCard(metaContent, eventItems);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+
+        Volley.newRequestQueue(context).add(jsonRequest);
+    }
+
+    public static List<ApiItem> getEventListFromJson(Context context, String data, int
+            dataType) {
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            JSONArray jsonArray = jsonObject.getJSONArray(Constants.JSON_KEY_RESULTS);
+            List<ApiItem> lst =
+                    Functions.getEventItemList(context, jsonArray, dataType);
+            return lst;
+        } catch (Exception e) {
+        }
+        return new ArrayList<>();
+    }
+
     public static boolean onGetInformationResult(String data,
                                                  Context context,
                                                  Integer iconResource,
@@ -81,9 +131,9 @@ public class DownloadJsonUtil {
         try {
             JSONObject jsonObject = new JSONObject(data);
             JSONArray jsonArray = jsonObject.getJSONArray(Constants.JSON_KEY_RESULTS);
-            List<InformationListViewItem> lst =
+            List<InformationItem> lst =
                     Functions.getInformationItemList(context, jsonArray, iconResource);
-            if (lst.isEmpty()) {
+            if (lst.isEmpty() || adapterView == null) {
                 return onCreateEmptyList(context, adapterView);
             }
             LVAdapterInformation lvAdapterInformation = new LVAdapterInformation(context, lst);
@@ -99,12 +149,8 @@ public class DownloadJsonUtil {
     public static boolean onGetDataResult(String data, Integer dataType, Context context, View
             adapterView) {
         try {
-            JSONObject jsonObject = new JSONObject(data);
-            JSONArray jsonArray = jsonObject.getJSONArray(Constants.JSON_KEY_RESULTS);
-            List<EventListViewItem> lst =
-                    Functions.getEventItemList(context, jsonArray, dataType);
-
-            if (lst.isEmpty()) {
+            List<ApiItem> lst = getEventListFromJson(context, data, dataType);
+            if (lst.isEmpty() || adapterView == null) {
                 return onCreateEmptyGrid(context, adapterView);
             }
             LVAdapterMain lvAdapterMain = new LVAdapterMain(context, lst);
@@ -117,14 +163,17 @@ public class DownloadJsonUtil {
 
 
     public static boolean onCreateEmptyView(Context context, View adapterView, boolean isGrid) {
-        try {
-            List<GenericListViewItem> emptyList = new ArrayList<>();
+        if (adapterView == null) {
+            return true;
+        }
 
-            GenericListViewItem emptyButton = new GenericListViewItem(
+        try {
+            List<GenericItem> emptyList = new ArrayList<>();
+            GenericItem emptyButton = new GenericItem(
                     R.drawable.urgent_no_data_icon,
                     context.getString(R.string.urgent_data_title),
                     context.getString(R.string.urgent_data_description));
-            emptyButton.tag = GenericListViewItem.IS_URGENT;
+            emptyButton.tag = GenericItem.IS_URGENT;
             emptyList.add(emptyButton);
 
             LVAdapterGeneric lvAdapterGeneric = new LVAdapterGeneric(context, emptyList);

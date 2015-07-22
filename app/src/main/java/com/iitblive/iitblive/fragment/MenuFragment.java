@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,10 @@ import android.widget.GridView;
 
 import com.iitblive.iitblive.MainActivity;
 import com.iitblive.iitblive.R;
-import com.iitblive.iitblive.items.EventListViewItem;
+import com.iitblive.iitblive.activity.ArticleActivity;
+import com.iitblive.iitblive.items.ApiItem;
+import com.iitblive.iitblive.util.ApiUtil;
 import com.iitblive.iitblive.util.Constants;
-import com.iitblive.iitblive.util.DownloadJsonUtil;
 import com.iitblive.iitblive.util.Functions;
 
 
@@ -36,8 +38,13 @@ public class MenuFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ArticleFragment.mArticle = (EventListViewItem) parent.getAdapter().getItem(position);
-                mActivity.displayFragment(MainActivity.SHOW_ARTICLE);
+                try {
+                    ArticleActivity.mArticle = (ApiItem) parent.getAdapter().getItem(position);
+                    Intent articleIntent = new Intent(mContext, ArticleActivity.class);
+                    startActivity(articleIntent);
+                } catch (Exception e) {
+                    ;
+                }
             }
         });
 
@@ -49,37 +56,39 @@ public class MenuFragment extends Fragment {
         mMode = bundle.getInt(MainActivity.FRAME_TYPE_KEY, MainActivity.SHOW_NEWS);
 
         if (mMode == MainActivity.SHOW_NEWS) {
-            link = Constants.URL_NEWS;
+            link = Constants.Urls.NEWS;
             dataType = Constants.DATA_TYPE_NEWS;
-            fileName = Constants.FILENAME_NEWS;
+            fileName = Constants.Filenames.NEWS;
         } else if (mMode == MainActivity.SHOW_EVENTS) {
-            link = Constants.URL_EVENTS;
+            link = Constants.Urls.EVENTS;
             dataType = Constants.DATA_TYPE_EVENT;
-            fileName = Constants.FILENAME_EVENT;
+            fileName = Constants.Filenames.EVENT;
         } else if (mMode == MainActivity.SHOW_NOTICES) {
-            link = Constants.URL_NOTICES;
+            link = Constants.Urls.NOTICES;
             dataType = Constants.DATA_TYPE_NOTICE;
-            fileName = Constants.FILENAME_NOTICE;
+            fileName = Constants.Filenames.NOTICE;
         }
 
         if (fileName != null) {
             String json = Functions.offlineDataReader(mContext, fileName);
             if (json != null || !json.isEmpty()) {
                 mFileExists = true;
-                DownloadJsonUtil.onGetDataResult(json, dataType, mContext, gridView);
+                ApiUtil.onGetDataResult(json, dataType, mContext, gridView);
             }
         }
 
-        DownloadJsonUtil.makeApiCall(
-                Constants.BASE_URL + link,
-                mContext,
-                dataType,
-                Constants.DATA_COUNT_MULTIPLE,
-                gridView,
-                null,
-                fileName,
-                mFileExists
-        );
+        if (!mFileExists) {
+            ApiUtil.makeApiCall(
+                    link,
+                    mContext,
+                    dataType,
+                    Constants.DATA_COUNT_MULTIPLE,
+                    gridView,
+                    null,
+                    fileName,
+                    mFileExists
+            );
+        }
 
         return rootView;
     }

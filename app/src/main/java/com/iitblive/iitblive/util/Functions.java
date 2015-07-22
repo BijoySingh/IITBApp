@@ -21,9 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iitblive.iitblive.R;
-import com.iitblive.iitblive.items.EventListViewItem;
-import com.iitblive.iitblive.items.GenericListViewItem;
-import com.iitblive.iitblive.items.InformationListViewItem;
+import com.iitblive.iitblive.items.ApiItem;
+import com.iitblive.iitblive.items.GenericItem;
+import com.iitblive.iitblive.items.InformationItem;
 import com.iitblive.iitblive.lvadapter.LVAdapterGeneric;
 import com.rey.material.widget.FloatingActionButton;
 
@@ -111,19 +111,31 @@ public class Functions {
         setActionBar(activity, R.color.actionbar_500, R.color.actionbar_700);
     }
 
+
     //Setup the actionbar of the activity
-    public static void setActionBar(ActionBarActivity activity,
-                                    int action_bar_color_resource,
-                                    int navigation_bar_color_resource) {
+    public static void setActionBarWithColor(ActionBarActivity activity,
+                                             int actionbarColor,
+                                             int navigationColor) {
         ActionBar ab = activity.getSupportActionBar();
-        ab.setBackgroundDrawable(new ColorDrawable(activity.getResources().getColor(action_bar_color_resource)));
+        ab.setBackgroundDrawable(new ColorDrawable(actionbarColor));
         ab.setDisplayHomeAsUpEnabled(true);
         if (Build.VERSION.SDK_INT >= 21) {
             Window window = activity.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(activity.getResources().getColor(navigation_bar_color_resource));
+            window.setStatusBarColor(navigationColor);
+            window.setNavigationBarColor(navigationColor);
         }
+    }
+
+    //Setup the actionbar of the activity
+    public static void setActionBar(ActionBarActivity activity,
+                                    int action_bar_color_resource,
+                                    int navigation_bar_color_resource) {
+        setActionBarWithColor(activity,
+                activity.getResources().getColor(action_bar_color_resource),
+                activity.getResources().getColor(navigation_bar_color_resource));
     }
 
     //Hide the actionbar of the activity
@@ -153,27 +165,27 @@ public class Functions {
         }
     }
 
-    public static EventListViewItem getEventItem(
+    public static ApiItem getEventItem(
             Context context,
             JSONObject json,
             Integer data_type
     ) throws Exception {
         if (data_type == Constants.DATA_TYPE_EVENT) {
-            return ListViewItemCreator.createEventItem(context, json);
+            return ListItemCreator.createEventItem(context, json);
         } else if (data_type == Constants.DATA_TYPE_NEWS) {
-            return ListViewItemCreator.createNewsItem(context, json);
+            return ListItemCreator.createNewsItem(context, json);
         } else if (data_type == Constants.DATA_TYPE_NOTICE) {
-            return ListViewItemCreator.createNoticeItem(context, json);
+            return ListItemCreator.createNoticeItem(context, json);
         }
         return null;
     }
 
-    public static List<EventListViewItem> getEventItemList(
+    public static List<ApiItem> getEventItemList(
             Context context,
             JSONArray json,
             Integer data_type
     ) {
-        List<EventListViewItem> listViewItems = new ArrayList<>();
+        List<ApiItem> listViewItems = new ArrayList<>();
         for (int i = 0; i < json.length(); i++) {
             try {
                 listViewItems.add(
@@ -188,15 +200,15 @@ public class Functions {
         return listViewItems;
     }
 
-    public static List<InformationListViewItem> getInformationItemList(
+    public static List<InformationItem> getInformationItemList(
             Context context,
             JSONArray json,
             int icon_resource) {
-        List<InformationListViewItem> listViewItems = new ArrayList<>();
+        List<InformationItem> listViewItems = new ArrayList<>();
         for (int i = 0; i < json.length(); i++) {
             try {
                 listViewItems.add(
-                        ListViewItemCreator.createInformationItem(context,
+                        ListItemCreator.createInformationItem(context,
                                 json.getJSONObject(i), icon_resource));
             } catch (Exception e) {
                 ;
@@ -244,7 +256,7 @@ public class Functions {
         return dialog;
     }
 
-    public static void setupList(List<GenericListViewItem> lst, ListView listView, Context context) {
+    public static void setupList(List<GenericItem> lst, ListView listView, Context context) {
         LVAdapterGeneric lvAdapterGeneric = new LVAdapterGeneric(context, lst);
         listView.setAdapter(lvAdapterGeneric);
     }
@@ -273,4 +285,5 @@ public class Functions {
             return openAppStore(packageName);
         }
     }
+
 }

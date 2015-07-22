@@ -8,11 +8,11 @@ import android.widget.AdapterView;
 
 import com.iitblive.iitblive.MainActivity;
 import com.iitblive.iitblive.R;
-import com.iitblive.iitblive.activity.GenericInformationListActivity;
 import com.iitblive.iitblive.activity.IitbTimetableActivity;
+import com.iitblive.iitblive.activity.InformationActivity;
 import com.iitblive.iitblive.activity.LoginActivity;
-import com.iitblive.iitblive.database.CourseDBHandler;
-import com.iitblive.iitblive.items.GenericListViewItem;
+import com.iitblive.iitblive.database.TimetableDBHandler;
+import com.iitblive.iitblive.items.GenericItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +20,12 @@ import java.util.List;
 /**
  * Created by Bijoy on 5/29/2015.
  */
-public class FragmentListViewData {
+public class ListContent {
 
-    public static List<GenericListViewItem> mSettingsList = null;
-    public static List<GenericListViewItem> mTimetableList = null;
-    public static List<GenericListViewItem> mInformationList = null;
-    public static List<GenericListViewItem> mDeveloperList = null;
+    public static List<GenericItem> mSettingsList = null;
+    public static List<GenericItem> mTimetableList = null;
+    public static List<GenericItem> mInformationList = null;
+    public static List<GenericItem> mDeveloperList = null;
 
     public static AdapterView.OnItemClickListener mSettingsOnItemClickListener = null;
     public static AdapterView.OnItemClickListener mTimetableOnItemClickListener = null;
@@ -48,15 +48,15 @@ public class FragmentListViewData {
         }
 
         mSettingsList = new ArrayList<>();
-        mSettingsList.add(new GenericListViewItem(
+        mSettingsList.add(new GenericItem(
                 R.drawable.user_icon,
                 context.getString(R.string.settings_about_iitbapp_title),
                 context.getString(R.string.settings_about_iitbapp_description)));
-        mSettingsList.add(new GenericListViewItem(
+        mSettingsList.add(new GenericItem(
                 R.drawable.settings_about_us,
                 context.getString(R.string.settings_about_us_title),
                 context.getString(R.string.settings_about_us_description)));
-        mSettingsList.add(new GenericListViewItem(
+        mSettingsList.add(new GenericItem(
                 R.drawable.settings_feedback,
                 context.getString(R.string.settings_rate_title),
                 context.getString(R.string.settings_rate_description)));
@@ -87,15 +87,15 @@ public class FragmentListViewData {
         }
 
         mTimetableList = new ArrayList<>();
-        mTimetableList.add(new GenericListViewItem(
+        mTimetableList.add(new GenericItem(
                 R.drawable.timetable_weekly,
                 context.getString(R.string.timetable_weekly_title),
                 context.getString(R.string.timetable_weekly_department)));
-        mTimetableList.add(new GenericListViewItem(
+        mTimetableList.add(new GenericItem(
                 R.drawable.timetable_academic_calendar,
                 context.getString(R.string.timetable_acad_cal_title),
                 context.getString(R.string.timetable_acad_cal_department)));
-        mTimetableList.add(new GenericListViewItem(
+        mTimetableList.add(new GenericItem(
                 R.drawable.timetable_delete,
                 context.getString(R.string.timetable_delete_title),
                 context.getString(R.string.timetable_delete_department)));
@@ -111,11 +111,12 @@ public class FragmentListViewData {
                         break;
 
                     case 1:
-                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.ACADEMIC_CAL_URL));
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants
+                                .Urls.ACADEMIC_CAL));
                         break;
 
                     case 2:
-                        CourseDBHandler db = new CourseDBHandler(context);
+                        TimetableDBHandler db = new TimetableDBHandler(context);
                         db.deleteDatabase();
                         Functions.makeToast(context, R.string.toast_timetable_deleted);
                         return;
@@ -133,31 +134,31 @@ public class FragmentListViewData {
 
         mInformationList = new ArrayList<>();
         if (!LoginFunctions.isUserLoggedIn(context)) {
-            GenericListViewItem loginButton = new GenericListViewItem(
+            GenericItem loginButton = new GenericItem(
                     R.drawable.urgent_icon,
                     context.getString(R.string.urgent_login_title),
                     context.getString(R.string.urgent_login_description));
-            loginButton.tag = GenericListViewItem.IS_URGENT;
+            loginButton.tag = GenericItem.IS_URGENT;
             mInformationList.add(loginButton);
         }
 
-        mInformationList.add(new GenericListViewItem(
+        mInformationList.add(new GenericItem(
                 R.drawable.information_department,
                 context.getString(R.string.information_department_title),
                 context.getString(R.string.information_department_description)));
-        mInformationList.add(new GenericListViewItem(
+        mInformationList.add(new GenericItem(
                 R.drawable.information_groups,
                 context.getString(R.string.information_groups_title),
                 context.getString(R.string.information_groups_description)));
-        mInformationList.add(new GenericListViewItem(
+        mInformationList.add(new GenericItem(
                 R.drawable.information_contacts,
                 context.getString(R.string.information_contacts_title),
                 context.getString(R.string.information_contacts_description)));
-        mInformationList.add(new GenericListViewItem(
+        mInformationList.add(new GenericItem(
                 R.drawable.information_emergency,
                 context.getString(R.string.information_emergency_title),
                 context.getString(R.string.information_emergency_description)));
-        mInformationList.add(new GenericListViewItem(
+        mInformationList.add(new GenericItem(
                 R.drawable.information_maps,
                 context.getString(R.string.information_maps_title),
                 context.getString(R.string.information_maps_description)));
@@ -174,28 +175,28 @@ public class FragmentListViewData {
                         intent = new Intent(context, LoginActivity.class);
                         break;
                     case 0:
-                        intent = new Intent(context, GenericInformationListActivity.class);
-                        GenericInformationListActivity.mLink = "information/department/";
-                        GenericInformationListActivity.mIconResource = R.drawable.information_department;
-                        GenericInformationListActivity.mFileName = Constants.FILENAME_INFO_DEPARTMENT;
+                        intent = new Intent(context, InformationActivity.class);
+                        InformationActivity.mLink = Constants.Urls.DEPARTMENTS;
+                        InformationActivity.mIconResource = R.drawable.information_department;
+                        InformationActivity.mFileName = Constants.Filenames.INFO_DEPARTMENT;
                         break;
                     case 1:
-                        intent = new Intent(context, GenericInformationListActivity.class);
-                        GenericInformationListActivity.mLink = "information/club/";
-                        GenericInformationListActivity.mIconResource = R.drawable.information_groups;
-                        GenericInformationListActivity.mFileName = Constants.FILENAME_INFO_GROUPS;
+                        intent = new Intent(context, InformationActivity.class);
+                        InformationActivity.mLink = Constants.Urls.CLUBS;
+                        InformationActivity.mIconResource = R.drawable.information_groups;
+                        InformationActivity.mFileName = Constants.Filenames.INFO_GROUPS;
                         break;
                     case 2:
-                        intent = new Intent(context, GenericInformationListActivity.class);
-                        GenericInformationListActivity.mLink = "information/contact/";
-                        GenericInformationListActivity.mIconResource = R.drawable.information_contacts;
-                        GenericInformationListActivity.mFileName = Constants.FILENAME_INFO_CONTACTS;
+                        intent = new Intent(context, InformationActivity.class);
+                        InformationActivity.mLink = Constants.Urls.CONTACTS;
+                        InformationActivity.mIconResource = R.drawable.information_contacts;
+                        InformationActivity.mFileName = Constants.Filenames.INFO_CONTACTS;
                         break;
                     case 3:
-                        intent = new Intent(context, GenericInformationListActivity.class);
-                        GenericInformationListActivity.mLink = "information/emergency_contact/";
-                        GenericInformationListActivity.mIconResource = R.drawable.information_emergency;
-                        GenericInformationListActivity.mFileName = Constants.FILENAME_INFO_EMERGENCY;
+                        intent = new Intent(context, InformationActivity.class);
+                        InformationActivity.mLink = Constants.Urls.EMERGENCY;
+                        InformationActivity.mIconResource = R.drawable.information_emergency;
+                        InformationActivity.mFileName = Constants.Filenames.INFO_EMERGENCY;
                         break;
                     case 4:
                         intent = Functions.openApp(context, Constants.PACKAGE_NAME_INSTIMAP);
@@ -215,19 +216,19 @@ public class FragmentListViewData {
 
         mDeveloperList = new ArrayList<>();
 
-        mDeveloperList.add(new GenericListViewItem(
+        mDeveloperList.add(new GenericItem(
                 R.drawable.developer_bijoy,
                 context.getString(R.string.developer_bijoy),
                 context.getString(R.string.developer_cse_iitb_4)));
-        mDeveloperList.add(new GenericListViewItem(
+        mDeveloperList.add(new GenericItem(
                 R.drawable.developer_dheerendra,
                 context.getString(R.string.developer_dheerendra),
                 context.getString(R.string.developer_cse_iitb_4)));
-        mDeveloperList.add(new GenericListViewItem(
+        mDeveloperList.add(new GenericItem(
                 R.drawable.developer_aman,
                 context.getString(R.string.developer_aman),
                 context.getString(R.string.developer_cse_iitb_4)));
-        mDeveloperList.add(new GenericListViewItem(
+        mDeveloperList.add(new GenericItem(
                 R.drawable.developer_ranveer,
                 context.getString(R.string.developer_ranveer),
                 context.getString(R.string.developer_cse_iitb_4)));

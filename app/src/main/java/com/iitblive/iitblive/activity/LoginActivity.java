@@ -11,28 +11,33 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.iitblive.iitblive.MainActivity;
 import com.iitblive.iitblive.R;
-import com.iitblive.iitblive.internet.FormTask;
 import com.iitblive.iitblive.util.Constants;
 import com.iitblive.iitblive.util.Functions;
 import com.iitblive.iitblive.util.LoginFunctions;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class LoginActivity extends ActionBarActivity {
 
+    public static boolean loginEnabled = true;
+    public static ProgressBar progressBar;
     private Context mContext;
     private Integer mMode = Constants.LOGIN_LDAP_LOGIN;
     private EditText mInput, mPassword;
     private ImageView mLeftImage, mCenterImage, mRightImage;
     private TextView mLeftText, mCenterText, mRightText;
+
+    public static void enableLogin() {
+        loginEnabled = true;
+
+        if (progressBar != null) {
+            progressBar.setVisibility(View.GONE);
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +62,13 @@ public class LoginActivity extends ActionBarActivity {
             mPassword.setHint(getString(R.string.login_input_password));
 
             mLeftImage.setImageResource(R.drawable.link_icon);
-            mLeftImage.setOnClickListener(getOnClickListener(Constants.BUTTON_TYPE_IITB_HOME));
+            mLeftImage.setOnClickListener(getOnClickListener(Constants.ButtonTypes.IITB_HOME));
 
             mCenterImage.setImageResource(R.drawable.login_icon);
-            mCenterImage.setOnClickListener(getOnClickListener(Constants.BUTTON_TYPE_LDAP_LOGIN));
+            mCenterImage.setOnClickListener(getOnClickListener(Constants.ButtonTypes.LDAP_LOGIN));
 
             mRightImage.setImageResource(R.drawable.offline_icon);
-            mRightImage.setOnClickListener(getOnClickListener(Constants.BUTTON_TYPE_OFFLINE));
+            mRightImage.setOnClickListener(getOnClickListener(Constants.ButtonTypes.OFFLINE));
 
             mLeftText.setText(getString(R.string.login_iitb_home));
             mCenterText.setText(getString(R.string.login_login));
@@ -74,13 +79,13 @@ public class LoginActivity extends ActionBarActivity {
             mPassword.setVisibility(View.GONE);
 
             mLeftImage.setImageResource(R.drawable.link_icon);
-            mLeftImage.setOnClickListener(getOnClickListener(Constants.BUTTON_TYPE_IITB_HOME));
+            mLeftImage.setOnClickListener(getOnClickListener(Constants.ButtonTypes.IITB_HOME));
 
             mCenterImage.setImageResource(R.drawable.login_icon);
-            mCenterImage.setOnClickListener(getOnClickListener(Constants.BUTTON_TYPE_REQUEST_CODE));
+            mCenterImage.setOnClickListener(getOnClickListener(Constants.ButtonTypes.REQUEST_CODE));
 
             mRightImage.setImageResource(R.drawable.offline_icon);
-            mRightImage.setOnClickListener(getOnClickListener(Constants.BUTTON_TYPE_OFFLINE));
+            mRightImage.setOnClickListener(getOnClickListener(Constants.ButtonTypes.OFFLINE));
 
             mLeftText.setText(getString(R.string.login_iitb_home));
             mCenterText.setText(getString(R.string.login_request_code));
@@ -91,13 +96,13 @@ public class LoginActivity extends ActionBarActivity {
             mPassword.setVisibility(View.GONE);
 
             mLeftImage.setImageResource(R.drawable.back_icon);
-            mLeftImage.setOnClickListener(getOnClickListener(Constants.BUTTON_TYPE_CHANGE_LDAP));
+            mLeftImage.setOnClickListener(getOnClickListener(Constants.ButtonTypes.CHANGE_LDAP));
 
             mCenterImage.setImageResource(R.drawable.login_icon);
-            mCenterImage.setOnClickListener(getOnClickListener(Constants.BUTTON_TYPE_LOGIN));
+            mCenterImage.setOnClickListener(getOnClickListener(Constants.ButtonTypes.LOGIN));
 
             mRightImage.setImageResource(R.drawable.resend_icon);
-            mRightImage.setOnClickListener(getOnClickListener(Constants.BUTTON_TYPE_RESEND_CODE));
+            mRightImage.setOnClickListener(getOnClickListener(Constants.ButtonTypes.RESEND_CODE));
 
             mLeftText.setText(getString(R.string.login_change_ldap));
             mCenterText.setText(getString(R.string.login_login));
@@ -120,37 +125,49 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     private void clickEvent(int buttonType) {
-        if (buttonType == Constants.BUTTON_TYPE_CHANGE_LDAP) {
+        if (buttonType == Constants.ButtonTypes.CHANGE_LDAP) {
 
-        } else if (buttonType == Constants.BUTTON_TYPE_IITB_HOME) {
-            Functions.openWebsite(mContext, Constants.IITB_HOME_URL);
+        } else if (buttonType == Constants.ButtonTypes.IITB_HOME) {
+            Functions.openWebsite(mContext, Constants.Urls.IITB_HOME);
 
-        } else if (buttonType == Constants.BUTTON_TYPE_LDAP_LOGIN) {
-            List<NameValuePair> nameValuePairs = new ArrayList<>();
-            nameValuePairs.add(new BasicNameValuePair(
-                    Constants.LDAP_AUTH_USERNAME_PARAM,
-                    mInput.getText().toString()));
-            nameValuePairs.add(new BasicNameValuePair(
-                    Constants.LDAP_AUTH_PASSWORD_PARAM,
-                    mPassword.getText().toString()));
+        } else if (buttonType == Constants.ButtonTypes.LDAP_LOGIN) {
+            if (loginEnabled) {
+                disableLogin();
+                LoginFunctions.sendLoginQuery(
+                        mContext,
+                        mInput.getText().toString(),
+                        mPassword.getText().toString()
+                );
+            }
+        } else if (buttonType == Constants.ButtonTypes.LOGIN) {
 
-            new FormTask(
-                    mContext,
-                    Constants.LDAP_AUTH_URL,
-                    FormTask.FORM_MODE_LDAP_LOGIN,
-                    nameValuePairs).execute();
-        } else if (buttonType == Constants.BUTTON_TYPE_LOGIN) {
-
-        } else if (buttonType == Constants.BUTTON_TYPE_OFFLINE) {
+        } else if (buttonType == Constants.ButtonTypes.OFFLINE) {
             LoginFunctions.userOffline(mContext);
             Intent intent = new Intent(mContext, MainActivity.class);
             startActivity(intent);
             finish();
 
-        } else if (buttonType == Constants.BUTTON_TYPE_REQUEST_CODE) {
+        } else if (buttonType == Constants.ButtonTypes.REQUEST_CODE) {
 
-        } else if (buttonType == Constants.BUTTON_TYPE_RESEND_CODE) {
+        } else if (buttonType == Constants.ButtonTypes.RESEND_CODE) {
 
         }
+    }
+
+    protected void disableLogin() {
+        loginEnabled = false;
+
+        if (progressBar == null) {
+            progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        }
+
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setIndeterminate(true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        progressBar = null;
     }
 }

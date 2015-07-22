@@ -19,6 +19,8 @@
     <color name="hint_text">#65000000</color>
     <color name="box_border">#33000000</color>
 
+    <color name="separator">#22000000</color>
+
     <!--     <color name="material_card_shadow_inner">#ffcdcdcd</color>
         <color name="material_card_shadow_middle">#aadadada</color>
         <color name="material_card_shadow_outer">#66dedede</color>

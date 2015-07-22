@@ -152,7 +152,7 @@
                     android:layout_marginLeft="8sp"
                     android:adjustViewBounds="true"
                     android:padding="4sp"
-                    android:src="@drawable/events_color_icon" />
+                    android:src="@drawable/drawer_icon_events" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

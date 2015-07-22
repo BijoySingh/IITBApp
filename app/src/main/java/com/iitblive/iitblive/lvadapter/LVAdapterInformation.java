@@ -16,19 +16,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iitblive.iitblive.R;
-import com.iitblive.iitblive.items.InformationListViewItem;
+import com.iitblive.iitblive.items.InformationItem;
 import com.iitblive.iitblive.util.Functions;
 
 import java.util.List;
 
 /*Listview adapter for the navigation drawer listview*/
 
-public class LVAdapterInformation extends ArrayAdapter<InformationListViewItem> {
+public class LVAdapterInformation extends ArrayAdapter<InformationItem> {
     private final Context mContext;
-    private final List<InformationListViewItem> mValues;
+    private final List<InformationItem> mValues;
     private final Integer mLayoutId;
 
-    public LVAdapterInformation(Context context, List<InformationListViewItem> values) {
+    public LVAdapterInformation(Context context, List<InformationItem> values) {
         super(context, R.layout.information_list_item_layout, values);
         this.mLayoutId = R.layout.information_list_item_layout;
         this.mContext = context;
@@ -56,7 +56,7 @@ public class LVAdapterInformation extends ArrayAdapter<InformationListViewItem> 
             viewHolder = (InformationViewHolder) convertView.getTag();
         }
 
-        final InformationListViewItem data = mValues.get(position);
+        final InformationItem data = mValues.get(position);
 
         if (data != null) {
             viewHolder.logo.setImageResource(data.img_resource);

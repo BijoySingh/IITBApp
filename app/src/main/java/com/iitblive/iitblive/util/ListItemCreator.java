@@ -2,8 +2,8 @@ package com.iitblive.iitblive.util;
 
 import android.content.Context;
 
-import com.iitblive.iitblive.items.EventListViewItem;
-import com.iitblive.iitblive.items.InformationListViewItem;
+import com.iitblive.iitblive.items.ApiItem;
+import com.iitblive.iitblive.items.InformationItem;
 import com.iitblive.iitblive.items.TimestampItem;
 
 import org.json.JSONArray;
@@ -14,9 +14,9 @@ import java.util.ArrayList;
 /**
  * Created by Bijoy on 5/25/2015.
  */
-public class ListViewItemCreator {
-    public static EventListViewItem createEventItem(Context context, JSONObject json) throws Exception {
-        EventListViewItem e = new EventListViewItem();
+public class ListItemCreator {
+    public static ApiItem createEventItem(Context context, JSONObject json) throws Exception {
+        ApiItem e = new ApiItem();
         e.type = Constants.JSON_DATA_TYPE_EVENT;
         e.title = json.getString(Constants.JSON_KEY_TITLE);
         e.description = json.getString(Constants.JSON_KEY_DESCRIPTION);
@@ -42,8 +42,8 @@ public class ListViewItemCreator {
         return e;
     }
 
-    public static EventListViewItem createNewsItem(Context context, JSONObject json) throws Exception {
-        EventListViewItem e = new EventListViewItem();
+    public static ApiItem createNewsItem(Context context, JSONObject json) throws Exception {
+        ApiItem e = new ApiItem();
         e.type = Constants.JSON_DATA_TYPE_NEWS;
         e.title = json.getString(Constants.JSON_KEY_TITLE);
         e.description = json.getString(Constants.JSON_KEY_DESCRIPTION);
@@ -65,8 +65,8 @@ public class ListViewItemCreator {
         return e;
     }
 
-    public static EventListViewItem createNoticeItem(Context context, JSONObject json) throws Exception {
-        EventListViewItem e = new EventListViewItem();
+    public static ApiItem createNoticeItem(Context context, JSONObject json) throws Exception {
+        ApiItem e = new ApiItem();
         e.type = Constants.JSON_DATA_TYPE_NOTICE;
         e.title = json.getString(Constants.JSON_KEY_TITLE);
         e.description = json.getString(Constants.JSON_KEY_DESCRIPTION);
@@ -76,7 +76,7 @@ public class ListViewItemCreator {
         e.notice_timestamp = json.getString(Constants.JSON_KEY_EXPIRATION);
         e.expiration_time = new TimestampItem(context, e.notice_timestamp);
         e.notice_priority = json.getString(Constants.JSON_KEY_PRIORITY);
-        e.category = CategoryImageMapping.Category.NOTICE;
+        e.category = CategoryImages.Category.NOTICE;
         e.image_links = new ArrayList<>();
 
         JSONObject source_json = json.getJSONObject(Constants.JSON_KEY_SOURCE_JSON);
@@ -86,8 +86,8 @@ public class ListViewItemCreator {
         return e;
     }
 
-    public static InformationListViewItem createInformationItem(Context context, JSONObject json, int icon_resource) throws Exception {
-        InformationListViewItem i = new InformationListViewItem();
+    public static InformationItem createInformationItem(Context context, JSONObject json, int icon_resource) throws Exception {
+        InformationItem i = new InformationItem();
         i.title = json.getString(Constants.JSON_KEY_TITLE);
         i.description = json.getString(Constants.JSON_KEY_DESCRIPTION);
         i.facebook = json.getString(Constants.JSON_KEY_FACEBOOK);

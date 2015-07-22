@@ -9,8 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="8sp"
-        app:cardCornerRadius="4sp"
+        android:layout_marginBottom="8sp"
         app:cardElevation="4sp">
 
         <LinearLayout
@@ -105,6 +104,8 @@
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:paddingBottom="16sp"
                 android:paddingLeft="16sp"
                 android:paddingRight="16sp"

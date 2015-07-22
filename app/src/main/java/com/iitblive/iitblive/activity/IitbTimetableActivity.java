@@ -13,9 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.iitblive.iitblive.R;
-import com.iitblive.iitblive.database.CourseDBHandler;
+import com.iitblive.iitblive.database.TimetableDBHandler;
+import com.iitblive.iitblive.items.ApiItem;
 import com.iitblive.iitblive.items.CourseDataItem;
-import com.iitblive.iitblive.items.EventListViewItem;
 import com.iitblive.iitblive.util.Functions;
 
 import java.util.HashMap;
@@ -25,21 +25,21 @@ import java.util.concurrent.Callable;
 @SuppressLint("NewApi")
 public class IitbTimetableActivity extends ActionBarActivity {
 
-    public static EventListViewItem mArticle;
+    public static ApiItem mArticle;
     private Context mContext;
 
     private Map<String, CourseDataItem> mData = new HashMap<>();
     private Map<String, LinearLayout> mLayouts = new HashMap<>();
     private Map<String, String[]> mMappings = new HashMap<>();
     private Map<String, String[]> mTimings = new HashMap<>();
-    private CourseDBHandler mCourseDBHandler;
+    private TimetableDBHandler mTimetableDBHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.iitb_timetable_layout);
         mContext = this;
-        mCourseDBHandler = new CourseDBHandler(mContext);
+        mTimetableDBHandler = new TimetableDBHandler(mContext);
 
         setupData();
         setupMappings();
@@ -289,7 +289,7 @@ public class IitbTimetableActivity extends ActionBarActivity {
                             R.drawable.ic_today_white_48dp,
                             new Callable<Void>() {
                                 public Void call() {
-                                    mCourseDBHandler.deleteItem(mData.get(mDataKey).mSlotTag);
+                                    mTimetableDBHandler.deleteItem(mData.get(mDataKey).mSlotTag);
                                     Functions.makeToast(mContext, R.string.toast_item_removed);
                                     setupItems();
                                     return null;
@@ -325,7 +325,7 @@ public class IitbTimetableActivity extends ActionBarActivity {
     }
 
     private void setupData() {
-        mData = mCourseDBHandler.getCourseData();
+        mData = mTimetableDBHandler.getCourseData();
     }
 
     private void setupItems() {
@@ -355,7 +355,7 @@ public class IitbTimetableActivity extends ActionBarActivity {
             cancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mCourseDBHandler.deleteItem(tag);
+                    mTimetableDBHandler.deleteItem(tag);
                     mData.remove(tag);
                     setupItems();
                     dialog.dismiss();
@@ -365,7 +365,7 @@ public class IitbTimetableActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     CourseDataItem courseDataItem =
-                            mCourseDBHandler.updateCourse(name.getText().toString(), location.getText().toString(), tag);
+                            mTimetableDBHandler.updateCourse(name.getText().toString(), location.getText().toString(), tag);
 
                     if (courseDataItem != null) {
                         mData.put(courseDataItem.mSlotTag, courseDataItem);
@@ -385,7 +385,7 @@ public class IitbTimetableActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     CourseDataItem courseDataItem =
-                            mCourseDBHandler.insertCourse(name.getText().toString(), location.getText().toString(), tag);
+                            mTimetableDBHandler.insertCourse(name.getText().toString(), location.getText().toString(), tag);
 
                     if (courseDataItem != null) {
                         mData.put(courseDataItem.mSlotTag, courseDataItem);

@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by bijoy on 7/10/15.
  */
-public class CategoryImageMapping {
+public class CategoryImages {
 
     public static int getDrawable(String type) {
         Map<String, Integer> mResourceMapping = new HashMap<>();

@@ -14,18 +14,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iitblive.iitblive.R;
-import com.iitblive.iitblive.items.GenericListViewItem;
+import com.iitblive.iitblive.items.GenericItem;
 
 import java.util.List;
 
 /*Listview adapter for the navigation drawer listview*/
 
-public class LVAdapterGeneric extends ArrayAdapter<GenericListViewItem> {
+public class LVAdapterGeneric extends ArrayAdapter<GenericItem> {
     private final Context mContext;
-    private final List<GenericListViewItem> mValues;
+    private final List<GenericItem> mValues;
     private final Integer mLayoutId;
 
-    public LVAdapterGeneric(Context context, List<GenericListViewItem> values) {
+    public LVAdapterGeneric(Context context, List<GenericItem> values) {
         super(context, R.layout.list_item_layout, values);
         this.mLayoutId = R.layout.list_item_layout;
         this.mContext = context;
@@ -35,10 +35,10 @@ public class LVAdapterGeneric extends ArrayAdapter<GenericListViewItem> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        GenericListViewItem data = mValues.get(position);
+        GenericItem data = mValues.get(position);
 
         int layout = mLayoutId;
-        if (data.tag == GenericListViewItem.IS_URGENT) {
+        if (data.tag == GenericItem.IS_URGENT) {
             layout = R.layout.urgent_list_item_layout;
         }
 
