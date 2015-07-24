@@ -59,6 +59,7 @@ public class Constants {
     public static final Integer LOGIN_REQUEST_CODE = 0;
     public static final Integer LOGIN_LOG_INTO = 1;
     public static final Integer LOGIN_LDAP_LOGIN = 2;
+
     public static final String PACKAGE_NAME_INSTIMAP = "in.designlabs.instimap";
 
     public static final String NOTICE_PRIORITY_LOW = "0";
