@@ -7,21 +7,18 @@ import android.graphics.Color;
  * This class contains all the core static final variables in the app
  */
 public class Constants {
-    public static final String GCM_SENDER_ID = "<KEY>";
-    public static final String IITB_EMAIL_EXTENSION = "@iitb.ac.in";
-    public static final String SERVER_REFERER = "Referer";
+    public static final Boolean PRODUCTION_MODE = true;
+    public static final String GCM_SENDER_ID = "KEY";
 
     public static final String JSON_DATA_TYPE_EVENT = "event";
     public static final String JSON_DATA_TYPE_NEWS = "news";
     public static final String JSON_DATA_TYPE_NOTICE = "";
+
     public static final Integer DATA_TYPE_EVENT = 0;
     public static final Integer DATA_TYPE_NEWS = 1;
     public static final Integer DATA_TYPE_NOTICE = 2;
     public static final Integer DATA_TYPE_ANY = 3;
     public static final Integer DATA_TYPE_INFORMATION = 4;
-    public static final Integer DATA_COUNT_SINGLE = 0;
-    public static final Integer DATA_COUNT_MULTIPLE = 1;
-    public static final Integer DESCRIPTION_CROP_SIZE = 60;
 
     // Json Total Data
     public static final String JSON_KEY_RESULTS = "results";
@@ -36,7 +33,6 @@ public class Constants {
     public static final String JSON_KEY_IMAGE_LIST = "images";
     public static final String JSON_KEY_TIMESTAMP = "time";
     public static final String JSON_KEY_CATEGORY = "category";
-    public static final String JSON_KEY_PUBLISHED = "published";
     public static final String JSON_KEY_TITLE = "title";
     public static final String JSON_KEY_DESCRIPTION = "description";
     // Source Json
@@ -48,7 +44,6 @@ public class Constants {
     public static final String JSON_KEY_EVENT_TIMESTAMP = "event_time";
     public static final String JSON_KEY_LOCATION = "event_place";
     // Notice Json
-    public static final String JSON_KEY_ISSUE_DATE = "issue_date";
     public static final String JSON_KEY_PRIORITY = "priority";
     public static final String JSON_KEY_EXPIRATION = "expiration_date";
     public static final String JSON_KEY_PHONE = "phone";
@@ -75,6 +70,8 @@ public class Constants {
 
         public static final String RESPONSE_VIEWED = "viewed";
         public static final String RESPONSE_LIKED = "liked";
+        public static final String RESPONSE_LIKES = "likes";
+        public static final String RESPONSE_VIEWS = "views";
 
         public static final String ACTION_URL_LIKE = "like/";
         public static final String ACTION_URL_UNLIKE = "unlike/";

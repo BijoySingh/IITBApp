@@ -39,12 +39,17 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recyclerview_layout, container, false);
         setupRecycler(rootView);
-        addEventCard();
-        addNewsCard();
-        addNoticeCard();
 
         Functions.setActionBarTitle(mActivity, mContext.getString(R.string.drawer_home));
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        addEventCard();
+        addNewsCard();
+        addNoticeCard();
     }
 
     @Override

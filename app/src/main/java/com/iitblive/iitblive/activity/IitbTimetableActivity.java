@@ -241,7 +241,7 @@ public class IitbTimetableActivity extends ActionBarActivity {
         setupData();
         setupItems();
 
-        IitbTimetableUtil.TimetableItem item = mIitbTimetableUtil.findNextCourse();
+        IitbTimetableUtil.TimetableItem item = mIitbTimetableUtil.findNextSlot();
         if (item != null)
             highlightItem(item.mSlot);
     }

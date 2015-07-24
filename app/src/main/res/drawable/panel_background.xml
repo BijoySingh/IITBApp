@@ -20,7 +20,7 @@
                 android:right="0dp"
                 android:top="1dp" />
 
-            <solid android:color="@color/card_shadow_1" />
+            <solid android:color="@color/separator" />
 
             <corners android:radius="0dp" />
         </shape>

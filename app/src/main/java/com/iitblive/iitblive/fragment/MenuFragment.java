@@ -87,7 +87,6 @@ public class MenuFragment extends Fragment {
                     link,
                     mContext,
                     dataType,
-                    Constants.DATA_COUNT_MULTIPLE,
                     gridView,
                     null,
                     fileName,

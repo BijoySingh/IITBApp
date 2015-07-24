@@ -172,16 +172,46 @@ public class ArticleActivity extends ActionBarActivity {
     private void actionResponse(int actionType, JSONObject jsonObject) {
         switch (actionType) {
             case Constants.Article.ACTION_LIKE:
-                mViewHolder.likeIcon.setColorFilter(mArticle.getAccentColor());
                 mIsLiked = true;
+                interpretLikeJSON(jsonObject);
                 break;
             case Constants.Article.ACTION_UNLIKE:
-                mViewHolder.likeIcon.clearColorFilter();
                 mIsLiked = false;
+                interpretLikeJSON(jsonObject);
                 break;
             case Constants.Article.ACTION_VIEW:
-                mViewHolder.viewIcon.setColorFilter(mArticle.getAccentColor());
+                interpretViewJSON(jsonObject);
                 break;
+        }
+    }
+
+    private void setupLike() {
+        if (mIsLiked) {
+            mViewHolder.likeIcon.setColorFilter(mArticle.getAccentColor());
+        } else {
+            mViewHolder.likeIcon.clearColorFilter();
+        }
+    }
+
+    private void interpretLikeJSON(JSONObject jsonObject) {
+        try {
+            setupLike();
+            mArticle.likes = jsonObject.getInt(Constants.Article.RESPONSE_LIKES);
+            mViewHolder.likes.setText(mArticle.likes.toString());
+        } catch (Exception e) {
+        }
+    }
+
+    private void interpretViewJSON(JSONObject jsonObject) {
+        try {
+            mIsLiked = jsonObject.getBoolean(Constants.Article.RESPONSE_LIKED);
+            setupLike();
+
+            mViewHolder.viewIcon.setColorFilter(mArticle.getAccentColor());
+
+            mArticle.views = jsonObject.getInt(Constants.Article.RESPONSE_VIEWS);
+            mViewHolder.views.setText(mArticle.views.toString());
+        } catch (Exception e) {
         }
     }
 
@@ -196,7 +226,6 @@ public class ArticleActivity extends ActionBarActivity {
                             @Override
                             public void onResponse(JSONObject result) {
                                 try {
-                                    Log.d("LOG", result.toString());
                                     if (result.has("id")) {
                                         actionResponse(actionType, result);
                                     }

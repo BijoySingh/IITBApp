@@ -46,7 +46,6 @@ public class InformationActivity extends ActionBarActivity {
                 mLink,
                 mContext,
                 Constants.DATA_TYPE_INFORMATION,
-                Constants.DATA_COUNT_MULTIPLE,
                 listView,
                 mIconResource,
                 mFileName,

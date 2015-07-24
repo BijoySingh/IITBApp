@@ -5,6 +5,7 @@ package com.iitblive.iitblive.util;
  */
 public class ServerUrls {
     public static final String DEFAULT_URL = "http://gymkhana.iitb.ac.in/iitbapp/";
+    public static final String DEBUG_URL = "http://gymkhana.iitb.ac.in/iitbapp_dev/";
     public String SERVER, GCM_REGISTER, GCM_UNREGISTER, IITB_HOME, ACADEMIC_CAL, API, USER,
             NEWS, EVENTS, NOTICES, PUBLIC_API, INFORMATION_API, DEPARTMENTS, CLUBS, CONTACTS, EMERGENCY,
             AUTHENTICATE;
@@ -30,6 +31,10 @@ public class ServerUrls {
     }
 
     public static final ServerUrls getInstance() {
-        return new ServerUrls(DEFAULT_URL);
+        if (Constants.PRODUCTION_MODE) {
+            return new ServerUrls(DEFAULT_URL);
+        } else {
+            return new ServerUrls(DEBUG_URL);
+        }
     }
 }

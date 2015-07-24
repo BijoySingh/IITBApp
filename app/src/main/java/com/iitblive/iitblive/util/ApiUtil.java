@@ -33,7 +33,6 @@ public class ApiUtil {
     public static void makeApiCall(String link,
                                    final Context context,
                                    final int dataType,
-                                   final int dataCount,
                                    final View adapterView,
                                    final Integer iconResource,
                                    final String storeFile,
@@ -44,19 +43,17 @@ public class ApiUtil {
                     @Override
                     public void onResponse(String response) {
                         boolean writeFile = false;
-
-                        if (dataCount == Constants.DATA_COUNT_MULTIPLE) {
-                            if (dataType == Constants.DATA_TYPE_NEWS ||
-                                    dataType == Constants.DATA_TYPE_EVENT ||
-                                    dataType == Constants.DATA_TYPE_NOTICE ||
-                                    dataType == Constants.DATA_TYPE_ANY) {
-                                writeFile = onGetDataResult(response, dataType, context,
-                                        adapterView);
-                            } else if (dataType == Constants.DATA_TYPE_INFORMATION) {
-                                writeFile = onGetInformationResult(response,
-                                        context, iconResource, adapterView, fileExists);
-                            }
+                        if (dataType == Constants.DATA_TYPE_NEWS ||
+                                dataType == Constants.DATA_TYPE_EVENT ||
+                                dataType == Constants.DATA_TYPE_NOTICE ||
+                                dataType == Constants.DATA_TYPE_ANY) {
+                            writeFile = onGetDataResult(response, dataType, context,
+                                    adapterView);
+                        } else if (dataType == Constants.DATA_TYPE_INFORMATION) {
+                            writeFile = onGetInformationResult(response,
+                                    context, iconResource, adapterView, fileExists);
                         }
+
                         if (writeFile && storeFile != null) {
                             Functions.offlineDataWriter(context, storeFile, response);
                         }

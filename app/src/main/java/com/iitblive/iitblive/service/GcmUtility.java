@@ -36,6 +36,7 @@ public class GcmUtility {
     public static String registrationId;
 
     public static void registerInBackground(final Context context, final String emailID) {
+        Log.d(GCM_LOG_KEY, "REGISTER IN BACKGROUND");
 
         new AsyncTask<Void, Void, String>() {
             @Override
@@ -49,6 +50,7 @@ public class GcmUtility {
                             .register(Constants.GCM_SENDER_ID);
                     return registrationId;
                 } catch (IOException ex) {
+                    ex.printStackTrace();
                     return null;
                 }
             }
@@ -58,6 +60,8 @@ public class GcmUtility {
                 if (registrationId != null && !TextUtils.isEmpty(registrationId)) {
                     storeRegistrationIdOnServer(context);
                     SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.REGISTRATION_ID, registrationId);
+                } else {
+                    Log.d(GCM_LOG_KEY, "NULL REGISTRATION ID");
                 }
             }
         }.execute();
@@ -70,7 +74,7 @@ public class GcmUtility {
         params.put(PARAM_DEV_ID, Settings.Secure.getString(context.getContentResolver(),
                 Settings.Secure.ANDROID_ID));
 
-        Log.e(GCM_LOG_KEY, params.toString());
+        Log.d(GCM_LOG_KEY, params.toString());
         return params;
     }
 
@@ -81,6 +85,7 @@ public class GcmUtility {
                         .Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.d(GCM_LOG_KEY, response.toString());
                         try {
                             if (!response.has("error_message")) {
                                 SharedPreferenceManager.save(

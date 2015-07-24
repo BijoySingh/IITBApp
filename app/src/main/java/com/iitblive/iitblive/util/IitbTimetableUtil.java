@@ -1,5 +1,7 @@
 package com.iitblive.iitblive.util;
 
+import com.iitblive.iitblive.items.CourseDataItem;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -127,10 +129,31 @@ public class IitbTimetableUtil {
         return bestItem;
     }
 
-    public TimetableItem findNextCourse() {
+    public TimetableItem findNextSlot() {
         Calendar now = Calendar.getInstance();
         return findNextClosestCourse(now.get(Calendar.DAY_OF_WEEK), now.get(Calendar.HOUR_OF_DAY),
                 now.get(Calendar.MINUTE));
+    }
+
+    public TimetableItem findNextCourse(Map<String, CourseDataItem> data) {
+        Calendar now = Calendar.getInstance();
+
+        int day = now.get(Calendar.DAY_OF_WEEK);
+        int hr = now.get(Calendar.HOUR_OF_DAY);
+        int min = now.get(Calendar.MINUTE);
+
+        TimetableItem bestItem = null;
+        for (TimetableItem item : mTimings.values()) {
+            if (item.mDay == day && item.relativeTimePosition(hr, min) != 1
+                    && data.containsKey(item.mParentSlot)) {
+                if (bestItem == null || bestItem.mStartHr > item.mStartHr || (bestItem.mStartHr
+                        == item.mStartHr && bestItem.mStartMin >= item.mStartMin)) {
+                    bestItem = item;
+                }
+            }
+        }
+
+        return bestItem;
     }
 
     public class TimetableItem {
