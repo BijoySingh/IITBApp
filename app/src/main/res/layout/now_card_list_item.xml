@@ -2,26 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/underline_background"
     android:orientation="vertical"
-    android:padding="16sp"
-    android:background="@drawable/underline_background">
+    android:padding="16sp">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/secondary_text"
-        android:textSize="16sp"
+        android:ellipsize="end"
         android:lines="1"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:textColor="@color/secondary_text"
+        android:textSize="21sp" />
 
     <TextView
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/hint_text"
-        android:textSize="14sp"
+        android:layout_marginTop="8sp"
+        android:ellipsize="middle"
         android:lines="1"
         android:maxLines="1"
-        android:ellipsize="middle"/>
+        android:textColor="@color/hint_text"
+        android:textSize="16sp" />
 </LinearLayout>

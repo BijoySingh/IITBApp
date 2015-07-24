@@ -28,6 +28,7 @@ public class NowCardItem {
         this.mColor = metaContent.color;
         this.mType = metaContent.type;
         this.mFragmentId = metaContent.fragmentId;
+        this.mIconResource = metaContent.iconResource;
         this.mData = mData;
     }
 

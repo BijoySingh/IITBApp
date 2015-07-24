@@ -23,10 +23,10 @@ import com.iitblive.iitblive.fragment.HomeFragment;
 import com.iitblive.iitblive.fragment.MenuFragment;
 import com.iitblive.iitblive.items.GenericItem;
 import com.iitblive.iitblive.service.GcmUtility;
-import com.iitblive.iitblive.util.Constants;
 import com.iitblive.iitblive.util.Functions;
 import com.iitblive.iitblive.util.ListContent;
 import com.iitblive.iitblive.util.LoginFunctions;
+import com.iitblive.iitblive.util.SharedPreferenceManager;
 
 public class MainActivity extends ActionBarActivity implements DrawerFragment.OnFragmentInteractionListener {
 
@@ -116,17 +116,20 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
             bundle.putInt(FRAME_TYPE_KEY, SHOW_NOTICES);
         } else if (position == SHOW_INFORMATION) {
             ListContent.InformationFragmentData(mContext);
+            GenericListFragment.mTitle = getString(R.string.drawer_information);
             GenericListFragment.mList = ListContent.mInformationList;
             GenericListFragment.mOnItemClickListener =
                     ListContent.mInformationOnItemClickListener;
             fragment = new GenericListFragment();
         } else if (position == SHOW_TIMETABLE) {
+            GenericListFragment.mTitle = getString(R.string.drawer_timetable);
             ListContent.TimetableFragmentData(mContext);
             GenericListFragment.mList = ListContent.mTimetableList;
             GenericListFragment.mOnItemClickListener =
                     ListContent.mTimetableOnItemClickListener;
             fragment = new GenericListFragment();
         } else if (position == SHOW_ABOUT) {
+            GenericListFragment.mTitle = getString(R.string.drawer_about);
             ListContent.SettingsFragmentData(mContext);
             GenericListFragment.mList = ListContent.mSettingsList;
             GenericListFragment.mOnItemClickListener =
@@ -134,6 +137,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
             fragment = new GenericListFragment();
         } else if (position == SHOW_DEVELOPERS) {
             ListContent.DeveloperFragmentData(mContext);
+            GenericListFragment.mTitle = getString(R.string.settings_about_us_title);
             GenericListFragment.mList = ListContent.mDeveloperList;
             GenericListFragment.mOnItemClickListener = null;
             fragment = new GenericListFragment();
@@ -154,11 +158,11 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        //super.onBackPressed();
         if (mFragmentPosition == SHOW_DEVELOPERS) {
             displayFragment(SHOW_ABOUT);
-        } else if (mFragmentPosition != SHOW_NEWS) {
-            displayFragment(SHOW_NEWS);
+        } else if (mFragmentPosition != SHOW_HOME) {
+            displayFragment(SHOW_HOME);
         } else {
             finish();
         }
@@ -171,9 +175,9 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
             finish();
         }
 
-        if (!Functions.loadSharedPreference(
+        if (!SharedPreferenceManager.load(
                 mContext,
-                Constants.SP_FIRST_TIME).contentEquals(getString(R.string.app_version))) {
+                SharedPreferenceManager.Tags.FIRST_TIME).contentEquals(getString(R.string.app_version))) {
             // This is the first time setup
 
         }

@@ -3,11 +3,13 @@ package com.iitblive.iitblive.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.iitblive.iitblive.MainActivity;
@@ -24,38 +26,38 @@ import java.util.Map;
  */
 public class LoginFunctions {
     public static void userLoggedIn(Context context) {
-        Functions.saveSharedPreference(context, Constants.SP_LOGGED_IN, Constants.SP_TRUE);
+        SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.LOGGED_IN, SharedPreferenceManager.Tags.TRUE);
     }
 
     public static void userOffline(Context context) {
-        Functions.saveSharedPreference(context, Constants.SP_LOGGED_IN, Constants.SP_OFFLINE);
+        SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.LOGGED_IN, SharedPreferenceManager.Tags.OFFLINE);
     }
 
     public static boolean isUserLoggedIn(Context context) {
-        return Functions.loadSharedPreference(
+        return SharedPreferenceManager.load(
                 context,
-                Constants.SP_LOGGED_IN).contentEquals(Constants.SP_TRUE);
+                SharedPreferenceManager.Tags.LOGGED_IN).contentEquals(SharedPreferenceManager.Tags.TRUE);
     }
 
     public static boolean isUserOffline(Context context) {
-        return Functions.loadSharedPreference(
+        return SharedPreferenceManager.load(
                 context,
-                Constants.SP_LOGGED_IN).contentEquals(Constants.SP_OFFLINE);
+                SharedPreferenceManager.Tags.LOGGED_IN).contentEquals(SharedPreferenceManager.Tags.OFFLINE);
     }
 
     public static void logoutUser(Context context) {
-        Functions.saveSharedPreference(context, Constants.SP_NAME, Constants.SP_EMPTY);
-        Functions.saveSharedPreference(context, Constants.SP_LOGGED_IN, Constants.SP_OFFLINE);
+        SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.NAME, SharedPreferenceManager.Tags.EMPTY);
+        SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.LOGGED_IN, SharedPreferenceManager.Tags.OFFLINE);
     }
 
-    public static void sendLoginQuery(final Context context, String username, String password) {
+    public static void sendLoginQuery(final Context context, final String username, final String password) {
         final Map<String, String> params = new HashMap<>();
         params.put(Constants.Ldap.REQUEST_USERNAME, username);
         params.put(Constants.Ldap.REQUEST_PASSWORD, password);
         JSONObject jsonParams = new JSONObject(params);
 
         StringRequest jsonRequest = new StringRequest
-                (Request.Method.POST, Constants.Ldap.JSON_URL, new Response
+                (Request.Method.POST, ServerUrls.getInstance().AUTHENTICATE, new Response
                         .Listener<String>() {
                     @Override
                     public void onResponse(String result) {
@@ -67,15 +69,17 @@ public class LoginFunctions {
                                         context,
                                         response.getString(Constants.Ldap.RESPONSE_ERROR_MESSAGE));
                             } else {
-                                String ldap = response.getString(Constants
-                                        .Ldap.RESPONSE_LDAP);
-                                String name = response.getString(Constants
-                                        .Ldap.RESPONSE_NAME);
-                                String email = response.getString(Constants
-                                        .Ldap.RESPONSE_EMAIL);
-                                loginUtil(context, ldap, name);
-                                GcmUtility.registerInBackground(context, Functions.loadSharedPreference
+                                String ldap = response.getString(Constants.Ldap.RESPONSE_LDAP);
+                                String name = response.getString(Constants.Ldap.RESPONSE_NAME);
+                                String email = response.getString(Constants.Ldap.RESPONSE_EMAIL);
+                                String first_name = response.getString(Constants.Ldap.RESPONSE_FIRST_NAME);
+                                String last_name = response.getString(Constants.Ldap.RESPONSE_LAST_NAME);
+                                String employee_number = response.getString(Constants.Ldap.RESPONSE_EMPLOYEE_NUMBER);
+
+                                GcmUtility.registerInBackground(context, SharedPreferenceManager.load
                                         (context, email));
+                                storeLoginInformation(context, ldap, name);
+                                signupOnServer(context, employee_number, first_name, last_name, email);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -105,11 +109,51 @@ public class LoginFunctions {
 
     }
 
-    public static void loginUtil(Context context, String ldap, String name) {
-        Functions.saveSharedPreference(context, Constants.SP_USERNAME, ldap);
-        Functions.saveSharedPreference(context, Constants.SP_NAME, name);
-        LoginFunctions.userLoggedIn(context);
+    public static void signupOnServer(final Context context, String employeeNumber, final String
+            first_name, String last_name, String email) {
+        final Map<String, String> params = new HashMap<>();
+        params.put(Constants.User.REQUEST_FIRST_NAME, first_name);
+        params.put(Constants.User.REQUEST_LAST_NAME, last_name);
+        params.put(Constants.User.REQUEST_EMAIL, email);
+        params.put(Constants.User.REQUEST_EMPLOYEE_NUMBER, employeeNumber);
+        JSONObject jsonParams = new JSONObject(params);
 
+        Log.e("LOG", jsonParams.toString());
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest
+                (Request.Method.POST, ServerUrls.getInstance().USER, jsonParams, new
+                        Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject result) {
+                                LoginActivity.enableLogin();
+                                try {
+                                    Integer id = result.getInt(Constants.User.RESPONSE_ID);
+                                    SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.USER_ID, id.toString());
+                                    loginUtil(context);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        LoginActivity.enableLogin();
+                        error.printStackTrace();
+                    }
+                });
+
+        Volley.newRequestQueue(context).add(jsonRequest);
+    }
+
+    public static void storeLoginInformation(Context context,
+                                             String ldap,
+                                             String name) {
+        SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.USERNAME, ldap);
+        SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.NAME, name);
+    }
+
+    public static void loginUtil(Context context) {
+        LoginFunctions.userLoggedIn(context);
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
         ((Activity) context).finish();

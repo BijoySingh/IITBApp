@@ -13,7 +13,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.iitblive.iitblive.util.Constants;
-import com.iitblive.iitblive.util.Functions;
+import com.iitblive.iitblive.util.ServerUrls;
+import com.iitblive.iitblive.util.SharedPreferenceManager;
 
 import org.json.JSONObject;
 
@@ -56,7 +57,7 @@ public class GcmUtility {
             protected void onPostExecute(String msg) {
                 if (registrationId != null && !TextUtils.isEmpty(registrationId)) {
                     storeRegistrationIdOnServer(context);
-                    Functions.saveSharedPreference(context, Constants.SP_REGISTRATION_ID, registrationId);
+                    SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.REGISTRATION_ID, registrationId);
                 }
             }
         }.execute();
@@ -64,7 +65,7 @@ public class GcmUtility {
 
     private static Map<String, String> getParameters(Context context) {
         Map<String, String> params = new HashMap<>();
-        params.put(PARAM_NAME, Functions.loadSharedPreference(context, Constants.SP_NAME));
+        params.put(PARAM_NAME, SharedPreferenceManager.load(context, SharedPreferenceManager.Tags.NAME));
         params.put(PARAM_REG_ID, registrationId);
         params.put(PARAM_DEV_ID, Settings.Secure.getString(context.getContentResolver(),
                 Settings.Secure.ANDROID_ID));
@@ -76,18 +77,16 @@ public class GcmUtility {
     private static void storeRegistrationIdOnServer(final Context context) {
         JSONObject params = new JSONObject(getParameters(context));
         JsonObjectRequest jsonRequest = new JsonObjectRequest
-                (Request.Method.POST, Constants.Urls.GCM_REGISTER, params, new Response
+                (Request.Method.POST, ServerUrls.getInstance().GCM_REGISTER, params, new Response
                         .Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e(GCM_LOG_KEY, Constants.Urls.GCM_REGISTER);
-                        Log.e(GCM_LOG_KEY, response.toString());
                         try {
                             if (!response.has("error_message")) {
-                                Functions.saveSharedPreference(
+                                SharedPreferenceManager.save(
                                         context,
-                                        Constants.SP_GCM_REGISTERED,
-                                        Constants.SP_TRUE);
+                                        SharedPreferenceManager.Tags.GCM_REGISTERED,
+                                        SharedPreferenceManager.Tags.TRUE);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -111,17 +110,15 @@ public class GcmUtility {
         JSONObject jsonParams = new JSONObject(params);
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest
-                (Request.Method.POST, Constants.Urls.GCM_UNREGISTER, jsonParams, new Response
+                (Request.Method.POST, ServerUrls.getInstance().GCM_UNREGISTER, jsonParams, new Response
                         .Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e(GCM_LOG_KEY, Constants.Urls.GCM_UNREGISTER);
-                        Log.e(GCM_LOG_KEY, response.toString());
                         try {
-                            Functions.saveSharedPreference(
+                            SharedPreferenceManager.save(
                                     context,
-                                    Constants.SP_GCM_REGISTERED,
-                                    Constants.SP_FALSE);
+                                    SharedPreferenceManager.Tags.GCM_REGISTERED,
+                                    SharedPreferenceManager.Tags.FALSE);
 
                         } catch (Exception e) {
                             e.printStackTrace();

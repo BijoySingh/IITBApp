@@ -11,7 +11,6 @@ import com.iitblive.iitblive.R;
 import com.iitblive.iitblive.activity.IitbTimetableActivity;
 import com.iitblive.iitblive.activity.InformationActivity;
 import com.iitblive.iitblive.activity.LoginActivity;
-import com.iitblive.iitblive.database.TimetableDBHandler;
 import com.iitblive.iitblive.items.GenericItem;
 
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class ListContent {
 
         mSettingsList = new ArrayList<>();
         mSettingsList.add(new GenericItem(
-                R.drawable.user_icon,
+                R.drawable.ic_launcher,
                 context.getString(R.string.settings_about_iitbapp_title),
                 context.getString(R.string.settings_about_iitbapp_description)));
         mSettingsList.add(new GenericItem(
@@ -111,14 +110,11 @@ public class ListContent {
                         break;
 
                     case 1:
-                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants
-                                .Urls.ACADEMIC_CAL));
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ServerUrls.getInstance().ACADEMIC_CAL));
                         break;
 
                     case 2:
-                        TimetableDBHandler db = new TimetableDBHandler(context);
-                        db.deleteDatabase();
-                        Functions.makeToast(context, R.string.toast_timetable_deleted);
+                        Functions.deleteDatabaseDialog(context);
                         return;
                 }
 
@@ -176,25 +172,25 @@ public class ListContent {
                         break;
                     case 0:
                         intent = new Intent(context, InformationActivity.class);
-                        InformationActivity.mLink = Constants.Urls.DEPARTMENTS;
+                        InformationActivity.mLink = ServerUrls.getInstance().DEPARTMENTS;
                         InformationActivity.mIconResource = R.drawable.information_department;
                         InformationActivity.mFileName = Constants.Filenames.INFO_DEPARTMENT;
                         break;
                     case 1:
                         intent = new Intent(context, InformationActivity.class);
-                        InformationActivity.mLink = Constants.Urls.CLUBS;
+                        InformationActivity.mLink = ServerUrls.getInstance().CLUBS;
                         InformationActivity.mIconResource = R.drawable.information_groups;
                         InformationActivity.mFileName = Constants.Filenames.INFO_GROUPS;
                         break;
                     case 2:
                         intent = new Intent(context, InformationActivity.class);
-                        InformationActivity.mLink = Constants.Urls.CONTACTS;
+                        InformationActivity.mLink = ServerUrls.getInstance().CONTACTS;
                         InformationActivity.mIconResource = R.drawable.information_contacts;
                         InformationActivity.mFileName = Constants.Filenames.INFO_CONTACTS;
                         break;
                     case 3:
                         intent = new Intent(context, InformationActivity.class);
-                        InformationActivity.mLink = Constants.Urls.EMERGENCY;
+                        InformationActivity.mLink = ServerUrls.getInstance().EMERGENCY;
                         InformationActivity.mIconResource = R.drawable.information_emergency;
                         InformationActivity.mFileName = Constants.Filenames.INFO_EMERGENCY;
                         break;

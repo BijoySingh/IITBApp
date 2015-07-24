@@ -19,6 +19,7 @@ import com.iitblive.iitblive.items.ApiItem;
 import com.iitblive.iitblive.util.ApiUtil;
 import com.iitblive.iitblive.util.Constants;
 import com.iitblive.iitblive.util.Functions;
+import com.iitblive.iitblive.util.ServerUrls;
 
 
 @SuppressLint("NewApi")
@@ -48,6 +49,7 @@ public class MenuFragment extends Fragment {
             }
         });
 
+        String title = mContext.getString(R.string.drawer_home);
         String fileName = null;
         String link = null;
         Integer dataType = null;
@@ -56,15 +58,18 @@ public class MenuFragment extends Fragment {
         mMode = bundle.getInt(MainActivity.FRAME_TYPE_KEY, MainActivity.SHOW_NEWS);
 
         if (mMode == MainActivity.SHOW_NEWS) {
-            link = Constants.Urls.NEWS;
+            title = mContext.getString(R.string.drawer_news);
+            link = ServerUrls.getInstance().NEWS;
             dataType = Constants.DATA_TYPE_NEWS;
             fileName = Constants.Filenames.NEWS;
         } else if (mMode == MainActivity.SHOW_EVENTS) {
-            link = Constants.Urls.EVENTS;
+            title = mContext.getString(R.string.drawer_events);
+            link = ServerUrls.getInstance().EVENTS;
             dataType = Constants.DATA_TYPE_EVENT;
             fileName = Constants.Filenames.EVENT;
         } else if (mMode == MainActivity.SHOW_NOTICES) {
-            link = Constants.Urls.NOTICES;
+            title = mContext.getString(R.string.drawer_notices);
+            link = ServerUrls.getInstance().NOTICES;
             dataType = Constants.DATA_TYPE_NOTICE;
             fileName = Constants.Filenames.NOTICE;
         }
@@ -90,6 +95,7 @@ public class MenuFragment extends Fragment {
             );
         }
 
+        Functions.setActionBarTitle(mActivity, title);
         return rootView;
     }
 

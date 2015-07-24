@@ -7,23 +7,13 @@ import android.graphics.Color;
  * This class contains all the core static final variables in the app
  */
 public class Constants {
-    public static final String GCM_SENDER_ID = <KEY>;
+    public static final String GCM_SENDER_ID = "<KEY>";
     public static final String IITB_EMAIL_EXTENSION = "@iitb.ac.in";
     public static final String SERVER_REFERER = "Referer";
-    public static final String SHARED_PREFERENCES = "IITBAPP";
-    public static final String SP_NAME = "NAME";
-    public static final String SP_USERNAME = "USERNAME";
-    public static final String SP_LOGGED_IN = "LOGGED_IN";
-    public static final String SP_FIRST_TIME = "FIRST_TIME";
-    public static final String SP_REGISTRATION_ID = "GCM_REG_ID";
-    public static final String SP_GCM_REGISTERED = "GCM_REG_STATUS";
-    public static final String SP_TRUE = "TRUE";
-    public static final String SP_FALSE = "FALSE";
-    public static final String SP_OFFLINE = "OFFLINE";
-    public static final String SP_EMPTY = "";
-    public static final String JSON_DATA_TYPE_EVENT = "E";
-    public static final String JSON_DATA_TYPE_NEWS = "N";
-    public static final String JSON_DATA_TYPE_NOTICE = "C";
+
+    public static final String JSON_DATA_TYPE_EVENT = "event";
+    public static final String JSON_DATA_TYPE_NEWS = "news";
+    public static final String JSON_DATA_TYPE_NOTICE = "";
     public static final Integer DATA_TYPE_EVENT = 0;
     public static final Integer DATA_TYPE_NEWS = 1;
     public static final Integer DATA_TYPE_NOTICE = 2;
@@ -32,11 +22,13 @@ public class Constants {
     public static final Integer DATA_COUNT_SINGLE = 0;
     public static final Integer DATA_COUNT_MULTIPLE = 1;
     public static final Integer DESCRIPTION_CROP_SIZE = 60;
+
     // Json Total Data
     public static final String JSON_KEY_RESULTS = "results";
     public static final String JSON_KEY_COUNT = "count";
     public static final String JSON_KEY_NEXT = "next";
     public static final String JSON_KEY_PREVIOUS = "previous";
+
     // News Json
     public static final String JSON_KEY_ID = "id";
     public static final String JSON_KEY_LIKES = "likes";
@@ -63,31 +55,33 @@ public class Constants {
     public static final String JSON_KEY_FACEBOOK = "facebook";
     public static final String JSON_KEY_LINK = "link";
     public static final String JSON_KEY_EMAIL = "email";
+
     public static final Integer LOGIN_REQUEST_CODE = 0;
     public static final Integer LOGIN_LOG_INTO = 1;
     public static final Integer LOGIN_LDAP_LOGIN = 2;
     public static final String PACKAGE_NAME_INSTIMAP = "in.designlabs.instimap";
+
     public static final String NOTICE_PRIORITY_LOW = "0";
     public static final String NOTICE_PRIORITY_MEDIUM = "1";
     public static final String NOTICE_PRIORITY_HIGH = "2";
     public static final String NOTICE_PRIORITY_URGENT = "3";
 
-    public static final class Urls {
-        public static final String SERVER = "http://iitbapp.herokuapp.com/";
-        public static final String GCM_REGISTER = SERVER + "gcm/v1/device/register/";
-        public static final String GCM_UNREGISTER = SERVER + "gcm/v1/device/unregister/";
-        public static final String IITB_HOME = "http://www.iitb.ac.in/";
-        public static final String ACADEMIC_CAL = IITB_HOME + "newacadhome/toacadcalender.jsp";
-        private static final String API = SERVER + "api/";
-        public static final String NEWS = API + "news/";
-        public static final String EVENTS = API + "event/";
-        public static final String NOTICES = API + "notice/";
-        private static final String PUBLIC_API = SERVER + "public/api/";
-        private static final String INFORMATION_API = PUBLIC_API + "information/";
-        public static final String DEPARTMENTS = INFORMATION_API + "department/";
-        public static final String CLUBS = INFORMATION_API + "club/";
-        public static final String CONTACTS = INFORMATION_API + "contact/";
-        public static final String EMERGENCY = INFORMATION_API + "emergency_contact/";
+    public static final class Article {
+        public static final String REQUEST_USER = "user";
+        public static final String REQUEST_CONTENT_ID = "content_id";
+        public static final String REQUEST_NEWS = "news";
+        public static final String REQUEST_EVENT = "event";
+
+        public static final String RESPONSE_VIEWED = "viewed";
+        public static final String RESPONSE_LIKED = "liked";
+
+        public static final String ACTION_URL_LIKE = "like/";
+        public static final String ACTION_URL_UNLIKE = "unlike/";
+        public static final String ACTION_URL_VIEW = "view/";
+
+        public static final int ACTION_LIKE = 0;
+        public static final int ACTION_UNLIKE = 1;
+        public static final int ACTION_VIEW = 2;
     }
 
     public static final class Filenames {
@@ -131,18 +125,32 @@ public class Constants {
         public static final int NOTICE_URGENT = Color.parseColor("#D32F2F");
     }
 
-    public static final class Ldap {
-        public static final String SERVER = "http://www.cse.iitb.ac.in/~bijoy/";
-        public static final String URL = SERVER + "authenticate.php";
-        public static final String JSON_URL = SERVER + "json_authenticate.php";
+    public static final class User {
+        public static final String REQUEST_FIRST_NAME = "first_name";
+        public static final String REQUEST_LAST_NAME = "last_name";
+        public static final String REQUEST_EMAIL = "email";
+        public static final String REQUEST_EMPLOYEE_NUMBER = "employeeNumber";
+        public static final String RESPONSE_ID = "id";
+    }
 
-        public static final String REQUEST_USERNAME = "ldap_username";
-        public static final String REQUEST_PASSWORD = "ldap_password";
+    public static final class Ldap {
+        public static final String REQUEST_USERNAME = "username";
+        public static final String REQUEST_PASSWORD = "password";
 
         public static final String RESPONSE_LDAP = "ldap";
+        public static final String RESPONSE_FIRST_NAME = "first_name";
+        public static final String RESPONSE_LAST_NAME = "last_name";
         public static final String RESPONSE_NAME = "name";
+        public static final String RESPONSE_EMPLOYEE_NUMBER = "employeeNumber";
         public static final String RESPONSE_ERROR = "error";
         public static final String RESPONSE_ERROR_MESSAGE = "error_message";
         public static final String RESPONSE_EMAIL = "email";
+    }
+
+    public static final class Gcm {
+        public static final String MESSAGE = "msg";
+        public static final String ACTION = "action";
+        public static final String TYPE = "type";
+        public static final String ITEM = "item";
     }
 }

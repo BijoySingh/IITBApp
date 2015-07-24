@@ -19,41 +19,34 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="0sp"
-                app:cardElevation="4sp">
+                android:layout_height="wrap_content">
 
-                <RelativeLayout
+                <HorizontalScrollView
+                    android:id="@+id/horizontal_scroll_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="320dp">
 
-                    <HorizontalScrollView
-                        android:id="@+id/horizontal_scroll_view"
+                    <LinearLayout
+                        android:id="@+id/image_scroll_view"
                         android:layout_width="match_parent"
-                        android:layout_height="320dp">
+                        android:layout_height="320dp"
+                        android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:id="@+id/image_scroll_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="320dp"
-                            android:orientation="horizontal">
+                    </LinearLayout>
+                </HorizontalScrollView>
 
-                        </LinearLayout>
-                    </HorizontalScrollView>
-
-                    <TextView
-                        android:id="@+id/title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:background="@drawable/article_title_bg_gradient"
-                        android:padding="16sp"
-                        android:textColor="@color/white"
-                        android:textSize="32sp" />
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/article_title_bg_gradient"
+                    android:padding="16sp"
+                    android:textColor="@color/white"
+                    android:textSize="32sp" />
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -198,8 +191,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/panel_background"
-        android:visibility="gone">
+        android:background="@drawable/panel_background">
 
         <ImageView
             android:id="@+id/like_logo"

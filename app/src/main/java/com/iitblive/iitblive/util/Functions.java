@@ -1,10 +1,10 @@
 package com.iitblive.iitblive.util;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iitblive.iitblive.R;
+import com.iitblive.iitblive.database.TimetableDBHandler;
 import com.iitblive.iitblive.items.ApiItem;
 import com.iitblive.iitblive.items.GenericItem;
 import com.iitblive.iitblive.items.InformationItem;
@@ -42,22 +43,6 @@ import java.util.concurrent.Callable;
  * All the functions here are static functions and form the basis of the app
  */
 public class Functions {
-
-    //Load the data from the shared preferences
-    public static String loadSharedPreference(Context context, String key) {
-        SharedPreferences sp = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Activity.MODE_PRIVATE);
-        String strValue = sp.getString(key, "");
-        return strValue;
-    }
-
-    //Saves the data into the shared preferences
-    public static void saveSharedPreference(Context context,
-                                            String key, String value) {
-        SharedPreferences sp = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString(key, value);
-        editor.commit();
-    }
 
     //It store the filedata into the file given by the filename
     public static void offlineDataWriter(Context context, String filename, String filedata) {
@@ -125,7 +110,7 @@ public class Functions {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(navigationColor);
-            window.setNavigationBarColor(navigationColor);
+            //window.setNavigationBarColor(navigationColor);
         }
     }
 
@@ -163,6 +148,21 @@ public class Functions {
             str += "...";
             return str;
         }
+    }
+
+    public static ApiItem getEventItem(
+            Context context,
+            JSONObject json,
+            String data_type
+    ) throws Exception {
+        if (data_type.contentEquals(Constants.JSON_DATA_TYPE_EVENT)) {
+            return ListItemCreator.createEventItem(context, json);
+        } else if (data_type.contentEquals(Constants.JSON_DATA_TYPE_NEWS)) {
+            return ListItemCreator.createNewsItem(context, json);
+        } else if (data_type.contentEquals(Constants.JSON_DATA_TYPE_NOTICE)) {
+            return ListItemCreator.createNoticeItem(context, json);
+        }
+        return null;
     }
 
     public static ApiItem getEventItem(
@@ -237,7 +237,7 @@ public class Functions {
         footer.setText(footerStr);
 
         FloatingActionButton fabLogo = (FloatingActionButton) dialog.findViewById(R.id.fab_logo);
-        fabLogo.setIcon(context.getDrawable(fabIcon), false);
+        fabLogo.setIcon(context.getResources().getDrawable(fabIcon), false);
 
         Button button = (Button) dialog.findViewById(R.id.button);
         button.setText(buttonText);
@@ -286,4 +286,18 @@ public class Functions {
         }
     }
 
+    public static void deleteDatabaseDialog(final Context context) {
+        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
+        mBuilder.setTitle(R.string.remove_timetable)
+                .setIcon(R.drawable.ic_warning_black_24dp)
+                .setMessage(R.string.delete_database_message)
+                .setPositiveButton(R.string.remove, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        TimetableDBHandler db = new TimetableDBHandler(context);
+                        db.deleteDatabase();
+                        Functions.makeToast(context, R.string.toast_timetable_deleted);
+                    }
+                }).create().show();
+    }
 }

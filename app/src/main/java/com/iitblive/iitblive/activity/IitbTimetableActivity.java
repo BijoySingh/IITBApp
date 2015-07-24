@@ -17,6 +17,7 @@ import com.iitblive.iitblive.database.TimetableDBHandler;
 import com.iitblive.iitblive.items.ApiItem;
 import com.iitblive.iitblive.items.CourseDataItem;
 import com.iitblive.iitblive.util.Functions;
+import com.iitblive.iitblive.util.IitbTimetableUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,9 +31,8 @@ public class IitbTimetableActivity extends ActionBarActivity {
 
     private Map<String, CourseDataItem> mData = new HashMap<>();
     private Map<String, LinearLayout> mLayouts = new HashMap<>();
-    private Map<String, String[]> mMappings = new HashMap<>();
-    private Map<String, String[]> mTimings = new HashMap<>();
     private TimetableDBHandler mTimetableDBHandler;
+    private IitbTimetableUtil mIitbTimetableUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,159 +40,14 @@ public class IitbTimetableActivity extends ActionBarActivity {
         setContentView(R.layout.iitb_timetable_layout);
         mContext = this;
         mTimetableDBHandler = new TimetableDBHandler(mContext);
+        mIitbTimetableUtil = IitbTimetableUtil.getInstance();
 
-        setupData();
-        setupMappings();
         setupView();
-        setupTimings();
-        setupItems();
+        resetUi();
 
         Functions.setActionBar(this);
         Functions.setActionBarTitle(this, getString(R.string.title_timetable));
     }
-
-    private void setupMappings() {
-        String[] slot1 = new String[]{"1", "1A", "1B", "1C"};
-        mMappings.put("1A", slot1);
-        mMappings.put("1B", slot1);
-        mMappings.put("1C", slot1);
-
-        String[] slot2 = new String[]{"2", "2A", "2B", "2C"};
-        mMappings.put("2A", slot2);
-        mMappings.put("2B", slot2);
-        mMappings.put("2C", slot2);
-
-        String[] slot3 = new String[]{"3", "3A", "3B", "3C"};
-        mMappings.put("3A", slot3);
-        mMappings.put("3B", slot3);
-        mMappings.put("3C", slot3);
-
-        String[] slot4 = new String[]{"4", "4A", "4B", "4C"};
-        mMappings.put("4A", slot4);
-        mMappings.put("4B", slot4);
-        mMappings.put("4C", slot4);
-
-        String[] slot5 = new String[]{"5", "5A", "5B"};
-        mMappings.put("5A", slot5);
-        mMappings.put("5B", slot5);
-
-        String[] slot6 = new String[]{"6", "6A", "6B"};
-        mMappings.put("6A", slot6);
-        mMappings.put("6B", slot6);
-
-        String[] slot7 = new String[]{"7", "7A", "7B"};
-        mMappings.put("7A", slot7);
-        mMappings.put("7B", slot7);
-
-        String[] slot8 = new String[]{"8", "8A", "8B"};
-        mMappings.put("8A", slot8);
-        mMappings.put("8B", slot8);
-
-        String[] slot9 = new String[]{"9", "9A", "9B"};
-        mMappings.put("9A", slot9);
-        mMappings.put("9B", slot9);
-
-        String[] slot10 = new String[]{"10", "10A", "10B"};
-        mMappings.put("10A", slot10);
-        mMappings.put("10B", slot10);
-
-        String[] slot11 = new String[]{"11", "11A", "11B"};
-        mMappings.put("11A", slot11);
-        mMappings.put("11B", slot11);
-
-        String[] slot12 = new String[]{"12", "12A", "12B"};
-        mMappings.put("12A", slot12);
-        mMappings.put("12B", slot12);
-
-        String[] slot13 = new String[]{"13", "13A", "13B"};
-        mMappings.put("13A", slot13);
-        mMappings.put("13B", slot13);
-
-        String[] slot14 = new String[]{"14", "14A", "14B"};
-        mMappings.put("14A", slot14);
-        mMappings.put("14B", slot14);
-
-        String[] slot15 = new String[]{"15", "15A", "15B"};
-        mMappings.put("15A", slot15);
-        mMappings.put("15B", slot15);
-
-        mMappings.put("X1", new String[]{"X1", "X1"});
-        mMappings.put("X2", new String[]{"X2", "X2"});
-        mMappings.put("X3", new String[]{"X3", "X3"});
-        mMappings.put("XC", new String[]{"XC", "XC"});
-        mMappings.put("XD", new String[]{"XD", "XD"});
-
-        mMappings.put("L1", new String[]{"L1", "L1"});
-        mMappings.put("L2", new String[]{"L2", "L2"});
-        mMappings.put("LX", new String[]{"LX", "LX"});
-        mMappings.put("L3", new String[]{"L3", "L3"});
-        mMappings.put("L4", new String[]{"L4", "L4"});
-
-    }
-
-    private void setupTimings() {
-        mTimings.put("1A", new String[]{"Monday", "8:30am - 9:25am"});
-        mTimings.put("1B", new String[]{"Tuesday", "9:30am - 10:25am"});
-        mTimings.put("1C", new String[]{"Thursday", "10:35am - 11:30am"});
-
-        mTimings.put("2A", new String[]{"Monday", "9:30am - 10:25am"});
-        mTimings.put("2B", new String[]{"Tuesday", "10:35am - 11:30am"});
-        mTimings.put("2C", new String[]{"Thursday", "11:35am - 12:30pm"});
-
-        mTimings.put("3A", new String[]{"Monday", "10:35am - 11:30am"});
-        mTimings.put("3B", new String[]{"Tuesday", "11:35am - 12:30pm"});
-        mTimings.put("3C", new String[]{"Thursday", "8:30am - 9:25am"});
-
-        mTimings.put("4A", new String[]{"Monday", "11:35am - 12:30pm"});
-        mTimings.put("4B", new String[]{"Tuesday", "8:30am - 9:25am"});
-        mTimings.put("4C", new String[]{"Thursday", "9:30am - 10:25am"});
-
-        mTimings.put("5A", new String[]{"Wednesday", "9:30am - 10:55am"});
-        mTimings.put("5B", new String[]{"Friday", "9:30am - 10:55am"});
-
-        mTimings.put("6A", new String[]{"Wednesday", "11:05am - 12:30pm"});
-        mTimings.put("6B", new String[]{"Friday", "11:05am - 12:30pm"});
-
-        mTimings.put("7A", new String[]{"Wednesday", "8:30am - 9:25am"});
-        mTimings.put("7B", new String[]{"Friday", "8:30am - 9:25am"});
-
-        mTimings.put("8A", new String[]{"Monday", "2:00pm - 3:25pm"});
-        mTimings.put("8B", new String[]{"Thursday", "2:00pm - 3:25pm"});
-
-        mTimings.put("9A", new String[]{"Monday", "3:30pm - 4:55pm"});
-        mTimings.put("9B", new String[]{"Thursday", "3:30pm - 4:55pm"});
-
-        mTimings.put("10A", new String[]{"Tuesday", "2:00pm - 3:25pm"});
-        mTimings.put("10B", new String[]{"Friday", "2:00pm - 3:25pm"});
-
-        mTimings.put("11A", new String[]{"Tuesday", "3:30pm - 4:55pm"});
-        mTimings.put("11B", new String[]{"Friday", "3:30pm - 4:55pm"});
-
-        mTimings.put("12A", new String[]{"Monday", "5:05pm - 6:30pm"});
-        mTimings.put("12B", new String[]{"Thursday", "5:05pm - 6:30pm"});
-
-        mTimings.put("13A", new String[]{"Monday", "6:35pm - 8:00pm"});
-        mTimings.put("13B", new String[]{"Thursday", "6:35pm - 8:00pm"});
-
-        mTimings.put("14A", new String[]{"Tuesday", "5:05pm - 6:30pm"});
-        mTimings.put("14B", new String[]{"Friday", "5:05pm - 6:30pm"});
-
-        mTimings.put("15A", new String[]{"Tuesday", "6:35pm - 8:00pm"});
-        mTimings.put("15B", new String[]{"Friday", "6:35pm - 8:00pm"});
-
-        mTimings.put("X1", new String[]{"Wednesday", "2:00pm - 2:5pm"});
-        mTimings.put("X2", new String[]{"Wednesday", "3:00pm - 3:55pm"});
-        mTimings.put("X3", new String[]{"Wednesday", "4:00pm - 4:55pm"});
-        mTimings.put("XC", new String[]{"Wednesday", "5:05pm - 6:30pm"});
-        mTimings.put("XD", new String[]{"Wednesday", "6:35pm - 8:00pm"});
-
-        mTimings.put("L1", new String[]{"Monday", "2:00pm - 4:55pm"});
-        mTimings.put("L2", new String[]{"Tuesday", "2:00pm - 4:55pm"});
-        mTimings.put("LX", new String[]{"Wednesday", "2:00pm - 4:55pm"});
-        mTimings.put("L3", new String[]{"Thursday", "2:00pm - 4:55pm"});
-        mTimings.put("L4", new String[]{"Friday", "2:00pm - 4:55pm"});
-    }
-
 
     private void setupView() {
         mLayouts.put("1A", (LinearLayout) findViewById(R.id.t1A));
@@ -256,24 +111,43 @@ public class IitbTimetableActivity extends ActionBarActivity {
         mLayouts.put("L3", (LinearLayout) findViewById(R.id.tL3));
         mLayouts.put("L4", (LinearLayout) findViewById(R.id.tL4));
 
+        mLayouts.put("MondaySet", (LinearLayout) findViewById(R.id.set_monday));
+        mLayouts.put("TuesdaySet", (LinearLayout) findViewById(R.id.set_tuesday));
+        mLayouts.put("WednesdaySet", (LinearLayout) findViewById(R.id.set_wednesday));
+        mLayouts.put("ThursdaySet", (LinearLayout) findViewById(R.id.set_thursday));
+        mLayouts.put("FridaySet", (LinearLayout) findViewById(R.id.set_friday));
+    }
+
+    private void highlightItem(final String tag) {
+        LinearLayout linearLayout = mLayouts.get(tag);
+        LinearLayout unitLayout = (LinearLayout) linearLayout.findViewById(R.id.unit_layout);
+        unitLayout.setBackgroundColor(getResources().getColor(R.color.timetable_highlighted));
     }
 
     private void setupItem(final String tag) {
+        if (!mIitbTimetableUtil.mTimings.containsKey(tag))
+            return;
+
         LinearLayout linearLayout = mLayouts.get(tag);
 
-        final String mDataKey = mMappings.get(tag)[0];
+        final String mDataKey = mIitbTimetableUtil.mTimings.get(tag).mParentSlot;
         LinearLayout unitLayout = (LinearLayout) linearLayout.findViewById(R.id.unit_layout);
         TextView titleView = (TextView) linearLayout.findViewById(R.id.unit_title);
         TextView descriptionView = (TextView) linearLayout.findViewById(R.id.unit_description);
         final boolean isCourse = mData.containsKey(mDataKey);
 
         if (isCourse) {
+            linearLayout.setVisibility(View.VISIBLE);
             titleView.setText(mData.get(mDataKey).mName);
             descriptionView.setText(mData.get(mDataKey).mLocation);
             unitLayout.setBackgroundColor(getResources().getColor(R.color.timetable_selected));
             titleView.setTextColor(getResources().getColor(R.color.secondary_text));
+            increaseVisibility(mDataKey);
         } else {
+            unitLayout.setBackgroundColor(getResources().getColor(R.color.white));
             titleView.setText(tag);
+            titleView.setTextColor(getResources().getColor(R.color.hint_text));
+            descriptionView.setText("");
         }
 
         linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -291,7 +165,7 @@ public class IitbTimetableActivity extends ActionBarActivity {
                                 public Void call() {
                                     mTimetableDBHandler.deleteItem(mData.get(mDataKey).mSlotTag);
                                     Functions.makeToast(mContext, R.string.toast_item_removed);
-                                    setupItems();
+                                    resetUi();
                                     return null;
                                 }
                             }
@@ -299,8 +173,8 @@ public class IitbTimetableActivity extends ActionBarActivity {
                 } else {
                     Functions.createMaterialDialog(
                             mContext,
-                            mTimings.get(tag)[0],
-                            mTimings.get(tag)[1],
+                            mIitbTimetableUtil.mTimings.get(tag).getDay(),
+                            mIitbTimetableUtil.mTimings.get(tag).getRange(),
                             getString(R.string.slot) + " " + mDataKey,
                             getString(R.string.set),
                             R.drawable.ic_today_white_48dp,
@@ -324,6 +198,28 @@ public class IitbTimetableActivity extends ActionBarActivity {
         });
     }
 
+    private void increaseVisibility(String parentSlot) {
+        if (parentSlot.contentEquals("8") || parentSlot.contentEquals("9")) {
+            mLayouts.get("L1").setVisibility(View.GONE);
+            mLayouts.get("L3").setVisibility(View.GONE);
+        } else if (parentSlot.contentEquals("L1") || parentSlot.contentEquals("L3")) {
+            mLayouts.get("MondaySet").setVisibility(View.GONE);
+            mLayouts.get("ThursdaySet").setVisibility(View.GONE);
+        } else if (parentSlot.contentEquals("10") || parentSlot.contentEquals("11")) {
+            mLayouts.get("L2").setVisibility(View.GONE);
+            mLayouts.get("L4").setVisibility(View.GONE);
+        } else if (parentSlot.contentEquals("L2") || parentSlot.contentEquals("L4")) {
+            mLayouts.get("TuesdaySet").setVisibility(View.GONE);
+            mLayouts.get("FridaySet").setVisibility(View.GONE);
+        } else if (parentSlot.contentEquals("X1") ||
+                parentSlot.contentEquals("X2") ||
+                parentSlot.contentEquals("X3")) {
+            mLayouts.get("LX").setVisibility(View.GONE);
+        } else if (parentSlot.contentEquals("LX")) {
+            mLayouts.get("WednesdaySet").setVisibility(View.GONE);
+        }
+    }
+
     private void setupData() {
         mData = mTimetableDBHandler.getCourseData();
     }
@@ -334,6 +230,20 @@ public class IitbTimetableActivity extends ActionBarActivity {
             LinearLayout linearLayout = (LinearLayout) entry.getValue();
             setupItem(key);
         }
+    }
+
+    private void resetUi() {
+
+        for (Map.Entry entry : mLayouts.entrySet()) {
+            ((LinearLayout) entry.getValue()).setVisibility(View.VISIBLE);
+        }
+
+        setupData();
+        setupItems();
+
+        IitbTimetableUtil.TimetableItem item = mIitbTimetableUtil.findNextCourse();
+        if (item != null)
+            highlightItem(item.mSlot);
     }
 
     private void createCourseDialog(final String tag) {
@@ -357,7 +267,7 @@ public class IitbTimetableActivity extends ActionBarActivity {
                 public void onClick(View v) {
                     mTimetableDBHandler.deleteItem(tag);
                     mData.remove(tag);
-                    setupItems();
+                    resetUi();
                     dialog.dismiss();
                 }
             });
@@ -369,7 +279,7 @@ public class IitbTimetableActivity extends ActionBarActivity {
 
                     if (courseDataItem != null) {
                         mData.put(courseDataItem.mSlotTag, courseDataItem);
-                        setupItems();
+                        resetUi();
                     }
                     dialog.dismiss();
                 }
@@ -389,7 +299,7 @@ public class IitbTimetableActivity extends ActionBarActivity {
 
                     if (courseDataItem != null) {
                         mData.put(courseDataItem.mSlotTag, courseDataItem);
-                        setupItems();
+                        resetUi();
                     }
                     dialog.dismiss();
                 }

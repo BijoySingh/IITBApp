@@ -19,7 +19,6 @@ import com.iitblive.iitblive.R;
 import com.iitblive.iitblive.items.ApiItem;
 import com.iitblive.iitblive.util.CategoryImages;
 import com.iitblive.iitblive.util.Constants;
-import com.iitblive.iitblive.util.Functions;
 import com.rey.material.widget.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
@@ -71,27 +70,23 @@ public class LVAdapterMain extends ArrayAdapter<ApiItem> {
 
         if (data != null) {
             viewHolder.title.setText(data.title);
-            viewHolder.description.setText(data.description);
+            viewHolder.description.setText(data.description.trim());
             viewHolder.categoryImage.setIcon(
                     mContext.getResources().getDrawable(CategoryImages.getDrawable(data.category)),
                     false
             );
             viewHolder.likes.setText("" + data.likes);
             viewHolder.views.setText("" + data.views);
-            viewHolder.sourceName.setText(data.source_name);
+            viewHolder.sourceName.setText(data.source_name + ", " + data.source_designation);
 
             if (data.image_links != null && !data.image_links.isEmpty()) {
                 viewHolder.eventImage.setVisibility(View.VISIBLE);
                 Picasso.with(mContext)
-                        .load(Constants.Urls.SERVER + data.image_links.get(0))
+                        .load(data.image_links.get(0))
                         .into(viewHolder.eventImage);
             } else {
                 viewHolder.eventImage.setVisibility(View.GONE);
             }
-
-            int accentColor = data.getPrimaryColor();
-            //viewHolder.emphasisView.setVisibility(View.VISIBLE);
-            //viewHolder.emphasisView.setBackgroundColor(accentColor);
 
             int categoryColor = data.getAccentColor();
             viewHolder.categoryImage.setBackgroundColor(categoryColor);

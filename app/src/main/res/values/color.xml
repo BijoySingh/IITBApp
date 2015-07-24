@@ -47,5 +47,6 @@
     <color name="buttoncolor_500_translucent">#aa263238</color>
 
     <color name="timetable_selected">#AED581</color>
+    <color name="timetable_highlighted">#90CAF9</color>
 
 </resources>

@@ -7,9 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.iitblive.iitblive.MainActivity;
 import com.iitblive.iitblive.R;
 import com.iitblive.iitblive.activity.ArticleActivity;
 import com.iitblive.iitblive.fragment.HomeFragment;
@@ -24,15 +26,10 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
 
     private static final int MAX_COUNT = 3;
 
-    private OnItemClickListener mClickListener;
     private Context mContext;
 
     public HomeRecyclerViewAdapter(Context context) {
         mContext = context;
-    }
-
-    public void setListener(OnItemClickListener onItemClickListener) {
-        mClickListener = onItemClickListener;
     }
 
     @Override
@@ -49,11 +46,25 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
 
         final NowCardItem data = HomeFragment.mCards.get(position);
         holder.title.setText(data.mTitle);
+
+        View.OnClickListener showFragment = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) mContext).displayFragment(data.mFragmentId);
+            }
+        };
+        holder.titlebar.setOnClickListener(showFragment);
+        holder.showMore.setOnClickListener(showFragment);
+
         holder.description.setText(data.mDescription);
 
         if (data.mColor != null) {
             holder.title.setTextColor(Color.WHITE);
-            holder.title.setBackgroundColor(data.mColor);
+            holder.titlebar.setBackgroundColor(data.mColor);
+            holder.logo.setColorFilter(Color.WHITE);
+        }
+        if (data.mIconResource != null) {
+            holder.logo.setImageResource(data.mIconResource);
         }
 
         holder.content.removeAllViewsInLayout();
@@ -61,7 +72,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         for (final ApiItem apiItem : data.mData) {
             NowCardListItem item = new NowCardListItem(mContext);
             item.setTitle(apiItem.title);
-            item.setDescription(apiItem.description);
+            item.setDescription(apiItem.description.trim());
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -83,36 +94,20 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         return HomeFragment.mCards.size();
     }
 
-    public interface OnItemClickListener {
-        void itemClicked(View v, int position);
-        void itemLongClick(View v, int position);
-    }
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-
-        LinearLayout content;
+        LinearLayout content, titlebar, showMore;
         TextView title, description;
+        ImageView logo;
 
         public ViewHolder(View v) {
             super(v);
             content = (LinearLayout) v.findViewById(R.id.content);
+            titlebar = (LinearLayout) v.findViewById(R.id.titlebar);
+            showMore = (LinearLayout) v.findViewById(R.id.show_more);
             title = (TextView) v.findViewById(R.id.title);
             description = (TextView) v.findViewById(R.id.description);
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (mClickListener != null) {
-                mClickListener.itemClicked(v, getAdapterPosition());
-            }
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            if (mClickListener != null) {
-                mClickListener.itemLongClick(v, getAdapterPosition());
-            }
-            return false;
+            logo = (ImageView) v.findViewById(R.id.logo);
         }
     }
 

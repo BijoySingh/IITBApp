@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.iitblive.iitblive.MainActivity;
 import com.iitblive.iitblive.R;
 import com.iitblive.iitblive.items.GenericItem;
 import com.iitblive.iitblive.util.Functions;
@@ -21,9 +22,11 @@ import java.util.List;
 @SuppressLint("NewApi")
 public class GenericListFragment extends Fragment {
 
+    public static String mTitle;
     public static List<GenericItem> mList = new ArrayList<>();
     public static AdapterView.OnItemClickListener mOnItemClickListener;
     private Context mContext;
+    private MainActivity mActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,6 +35,7 @@ public class GenericListFragment extends Fragment {
         ListView listView = (ListView) rootView.findViewById(R.id.list);
         listView.setOnItemClickListener(mOnItemClickListener);
         Functions.setupList(mList, listView, mContext);
+        Functions.setActionBarTitle(mActivity, mTitle);
         return rootView;
     }
 
@@ -39,5 +43,6 @@ public class GenericListFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mContext = activity;
+        mActivity = (MainActivity) activity;
     }
 }

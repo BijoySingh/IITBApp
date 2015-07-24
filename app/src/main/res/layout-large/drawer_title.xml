@@ -32,6 +32,6 @@
         android:layout_height="64dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="48dp"
-        android:src="@drawable/user_icon" />
+        android:src="@drawable/ic_launcher" />
 
 </RelativeLayout>

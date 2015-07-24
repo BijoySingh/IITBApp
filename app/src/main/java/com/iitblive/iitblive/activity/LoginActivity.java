@@ -19,6 +19,8 @@ import com.iitblive.iitblive.R;
 import com.iitblive.iitblive.util.Constants;
 import com.iitblive.iitblive.util.Functions;
 import com.iitblive.iitblive.util.LoginFunctions;
+import com.iitblive.iitblive.util.ServerUrls;
+import com.iitblive.iitblive.util.SharedPreferenceManager;
 
 public class LoginActivity extends ActionBarActivity {
 
@@ -58,7 +60,7 @@ public class LoginActivity extends ActionBarActivity {
 
         if (mMode == Constants.LOGIN_LDAP_LOGIN) {
             mInput.setHint(getString(R.string.login_input_ldap));
-            mInput.setText(Functions.loadSharedPreference(mContext, Constants.SP_USERNAME));
+            mInput.setText(SharedPreferenceManager.load(mContext, SharedPreferenceManager.Tags.USERNAME));
             mPassword.setHint(getString(R.string.login_input_password));
 
             mLeftImage.setImageResource(R.drawable.link_icon);
@@ -128,7 +130,7 @@ public class LoginActivity extends ActionBarActivity {
         if (buttonType == Constants.ButtonTypes.CHANGE_LDAP) {
 
         } else if (buttonType == Constants.ButtonTypes.IITB_HOME) {
-            Functions.openWebsite(mContext, Constants.Urls.IITB_HOME);
+            Functions.openWebsite(mContext, ServerUrls.getInstance().IITB_HOME);
 
         } else if (buttonType == Constants.ButtonTypes.LDAP_LOGIN) {
             if (loginEnabled) {

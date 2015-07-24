@@ -7,23 +7,32 @@ import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.iitblive.iitblive.R;
 import com.iitblive.iitblive.items.ApiItem;
 import com.iitblive.iitblive.items.TimestampItem;
 import com.iitblive.iitblive.util.CategoryImages;
 import com.iitblive.iitblive.util.Constants;
-import com.iitblive.iitblive.util.Functions;
+import com.iitblive.iitblive.util.ServerUrls;
+import com.iitblive.iitblive.util.SharedPreferenceManager;
 import com.rey.material.widget.FloatingActionButton;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 public class ArticleActivity extends ActionBarActivity {
 
@@ -34,6 +43,7 @@ public class ArticleActivity extends ActionBarActivity {
 
     private Context mContext;
     private EventViewHolder mViewHolder = new EventViewHolder();
+    private boolean mIsLiked = false;
 
     public static float convertDpToPixel(float dp, Context context) {
         Resources resources = context.getResources();
@@ -58,6 +68,8 @@ public class ArticleActivity extends ActionBarActivity {
         mViewHolder.scrollLayout = (LinearLayout) findViewById(R.id.image_scroll_view);
         mViewHolder.categoryImage = (FloatingActionButton) findViewById(R.id.category_logo);
         mViewHolder.addToCalendar = (ImageView) findViewById(R.id.add_event_logo);
+        mViewHolder.likeIcon = (ImageView) findViewById(R.id.like_logo);
+        mViewHolder.viewIcon = (ImageView) findViewById(R.id.view_logo);
         mViewHolder.eventTime = (TextView) findViewById(R.id.event_time);
         mViewHolder.eventDate = (TextView) findViewById(R.id.event_date);
         mViewHolder.articleTime = (TextView) findViewById(R.id.article_time);
@@ -86,14 +98,14 @@ public class ArticleActivity extends ActionBarActivity {
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     (int) convertDpToPixel(320, mContext)
             ));
-            Picasso.with(mContext).load(Constants.Urls.SERVER + link).into(imageView);
+            Picasso.with(mContext).load(link).into(imageView);
             mViewHolder.scrollLayout.addView(imageView);
         }
 
         if (mArticle.image_links == null || mArticle.image_links.isEmpty()) {
             mViewHolder.scrollLayout.setVisibility(View.GONE);
             mViewHolder.horizontalScrollView.setVisibility(View.GONE);
-            mViewHolder.title.setBackgroundColor(mArticle.getPrimaryColor());
+            mViewHolder.title.setBackgroundColor(mArticle.getNavigationColor());
         }
 
         if (mArticle.type.contentEquals(Constants.JSON_DATA_TYPE_EVENT)) {
@@ -115,10 +127,34 @@ public class ArticleActivity extends ActionBarActivity {
 
         mViewHolder.articleTime.setText(mArticle.article_time.time);
         mViewHolder.articleDate.setText(mArticle.article_time.date);
+        mViewHolder.likeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mIsLiked) {
+                    unlikeArticle();
+                } else {
+                    likeArticle();
+                }
+            }
+        });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hideNavigation();
+        viewArticle();
+    }
 
-        Functions.setActionBarWithColor(this, mArticle.getNavigationColor(), mArticle.getNavigationColor());
-        Functions.setActionBarTitle(this, getString(R.string.title_activity_article));
+    public void hideNavigation() {
+        Window window = getWindow();
+        window.getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
     public void addCalendarEvent() {
@@ -133,19 +169,100 @@ public class ArticleActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            onBackPressed();
+    private void actionResponse(int actionType, JSONObject jsonObject) {
+        switch (actionType) {
+            case Constants.Article.ACTION_LIKE:
+                mViewHolder.likeIcon.setColorFilter(mArticle.getAccentColor());
+                mIsLiked = true;
+                break;
+            case Constants.Article.ACTION_UNLIKE:
+                mViewHolder.likeIcon.clearColorFilter();
+                mIsLiked = false;
+                break;
+            case Constants.Article.ACTION_VIEW:
+                mViewHolder.viewIcon.setColorFilter(mArticle.getAccentColor());
+                break;
+        }
+    }
+
+    private void apiAction(final Context context, String url, JSONObject jsonParams, final int actionType) {
+        if (url == null || jsonParams == null) {
+            return;
         }
 
-        return super.onOptionsItemSelected(item);
+        JsonObjectRequest jsonRequest = new JsonObjectRequest
+                (Request.Method.POST, url, jsonParams, new
+                        Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject result) {
+                                try {
+                                    Log.d("LOG", result.toString());
+                                    if (result.has("id")) {
+                                        actionResponse(actionType, result);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        LoginActivity.enableLogin();
+                        error.printStackTrace();
+                    }
+                });
+
+        Volley.newRequestQueue(context).add(jsonRequest);
+    }
+
+    private String getActionBaseUrl() {
+        if (mArticle.type.contentEquals(Constants.JSON_DATA_TYPE_EVENT)) {
+            return ServerUrls.getInstance().EVENTS;
+        } else if (mArticle.type.contentEquals(Constants.JSON_DATA_TYPE_NEWS)) {
+            return ServerUrls.getInstance().NEWS;
+        } else {
+            return null;
+        }
+    }
+
+    private JSONObject getActionParams() {
+        try {
+            JSONObject params = new JSONObject();
+            if (mArticle.type.contentEquals(Constants.JSON_DATA_TYPE_EVENT)) {
+                params.put(Constants.Article.REQUEST_EVENT, mArticle.id);
+            } else if (mArticle.type.contentEquals(Constants.JSON_DATA_TYPE_NEWS)) {
+                params.put(Constants.Article.REQUEST_NEWS, mArticle.id);
+            } else {
+                return null;
+            }
+
+            params.put(Constants.Article.REQUEST_USER,
+                    SharedPreferenceManager.load(mContext, SharedPreferenceManager.Tags.USER_ID));
+            return params;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void likeArticle() {
+        apiAction(mContext, getActionBaseUrl() + Constants.Article.ACTION_URL_LIKE,
+                getActionParams(), Constants.Article.ACTION_LIKE);
+    }
+
+    private void unlikeArticle() {
+        apiAction(mContext, getActionBaseUrl() + Constants.Article.ACTION_URL_UNLIKE,
+                getActionParams(), Constants.Article.ACTION_UNLIKE);
+    }
+
+    private void viewArticle() {
+        apiAction(mContext, getActionBaseUrl() + Constants.Article.ACTION_URL_VIEW,
+                getActionParams(), Constants.Article.ACTION_VIEW);
     }
 
     public class EventViewHolder {
         FloatingActionButton categoryImage;
-        ImageView addToCalendar;
+        ImageView addToCalendar, likeIcon, viewIcon;
         TextView title, description, sourceName, sourceDesignation, likes, views;
         TextView eventTime, eventDate;
         TextView articleTime, articleDate;
@@ -153,4 +270,5 @@ public class ArticleActivity extends ActionBarActivity {
         LinearLayout scrollLayout;
         HorizontalScrollView horizontalScrollView;
     }
+
 }

@@ -111,11 +111,11 @@
                         android:id="@+id/description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
                         android:paddingBottom="16sp"
                         android:paddingLeft="16sp"
                         android:paddingRight="16sp"
-                        android:ellipsize="end"
-                        android:maxLines="2"
                         android:textColor="@color/secondary_text"
                         android:textSize="16sp" />
 

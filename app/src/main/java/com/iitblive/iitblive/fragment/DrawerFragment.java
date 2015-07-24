@@ -16,9 +16,8 @@ import android.widget.TextView;
 import com.iitblive.iitblive.R;
 import com.iitblive.iitblive.items.GenericItem;
 import com.iitblive.iitblive.lvadapter.LVAdapterDrawer;
-import com.iitblive.iitblive.util.Constants;
-import com.iitblive.iitblive.util.Functions;
 import com.iitblive.iitblive.util.LoginFunctions;
+import com.iitblive.iitblive.util.SharedPreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -176,8 +175,8 @@ public class DrawerFragment extends Fragment {
         RelativeLayout rl = (RelativeLayout) mDrawerLayout.findViewById(R.id.drawer_title);
         TextView name = (TextView) rl.findViewById(R.id.name);
 
-        name.setText(Functions.loadSharedPreference(getActivity(),
-                Constants.SP_NAME));
+        name.setText(SharedPreferenceManager.load(getActivity(),
+                SharedPreferenceManager.Tags.NAME));
 
         mListView = (ListView) mDrawerLayout.findViewById(R.id.drawer_listview);
 

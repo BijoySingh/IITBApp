@@ -18,6 +18,7 @@ import com.iitblive.iitblive.lvadapter.HomeRecyclerViewAdapter;
 import com.iitblive.iitblive.util.ApiUtil;
 import com.iitblive.iitblive.util.Constants;
 import com.iitblive.iitblive.util.Functions;
+import com.iitblive.iitblive.util.ServerUrls;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +26,12 @@ import java.util.List;
 /**
  * Created by bijoy on 7/21/15.
  */
-public class HomeFragment extends Fragment implements HomeRecyclerViewAdapter.OnItemClickListener {
+public class HomeFragment extends Fragment {
     public static List<NowCardItem> mCards = new ArrayList<>();
     RecyclerView.LayoutManager mLayoutManager;
     RecyclerView mRecyclerView;
     HomeRecyclerViewAdapter mAdapter;
+    MainActivity mActivity;
     private Context mContext;
 
     @Override
@@ -40,6 +42,8 @@ public class HomeFragment extends Fragment implements HomeRecyclerViewAdapter.On
         addEventCard();
         addNewsCard();
         addNoticeCard();
+
+        Functions.setActionBarTitle(mActivity, mContext.getString(R.string.drawer_home));
         return rootView;
     }
 
@@ -69,8 +73,11 @@ public class HomeFragment extends Fragment implements HomeRecyclerViewAdapter.On
     }
 
     public void addEventCard() {
-        NowCardMetaContent metaContent = new NowCardMetaContent(getString(R.string.drawer_events),
-                Constants.Colors.PRIMARY_DARK_DISABLED, 0, MainActivity.SHOW_EVENTS);
+        NowCardMetaContent metaContent = new NowCardMetaContent(
+                getString(R.string.drawer_events),
+                Constants.Colors.PRIMARY_DARK_EVENT,
+                0, MainActivity.SHOW_EVENTS,
+                R.drawable.drawer_icon_events);
         addOfflineCard(
                 metaContent,
                 Constants.DATA_TYPE_EVENT,
@@ -78,15 +85,18 @@ public class HomeFragment extends Fragment implements HomeRecyclerViewAdapter.On
         );
         addOnlineCard(
                 metaContent,
-                Constants.Urls.EVENTS,
+                ServerUrls.getInstance().EVENTS,
                 Constants.DATA_TYPE_EVENT,
                 Constants.Filenames.EVENT
         );
     }
 
     public void addNoticeCard() {
-        NowCardMetaContent metaContent = new NowCardMetaContent(getString(R.string.drawer_notices),
-                Constants.Colors.PRIMARY_DARK_DISABLED, 1, MainActivity.SHOW_EVENTS);
+        NowCardMetaContent metaContent = new NowCardMetaContent(
+                getString(R.string.drawer_notices),
+                Constants.Colors.PRIMARY_NOTICES,
+                1, MainActivity.SHOW_NOTICES,
+                R.drawable.drawer_icon_notice);
         addOfflineCard(
                 metaContent,
                 Constants.DATA_TYPE_NOTICE,
@@ -94,15 +104,17 @@ public class HomeFragment extends Fragment implements HomeRecyclerViewAdapter.On
         );
         addOnlineCard(
                 metaContent,
-                Constants.Urls.NOTICES,
+                ServerUrls.getInstance().NOTICES,
                 Constants.DATA_TYPE_NOTICE,
                 Constants.Filenames.NOTICE
         );
     }
 
     public void addNewsCard() {
-        NowCardMetaContent metaContent = new NowCardMetaContent(getString(R.string.drawer_news),
-                Constants.Colors.PRIMARY_DARK_DISABLED, 2, MainActivity.SHOW_EVENTS);
+        NowCardMetaContent metaContent = new NowCardMetaContent(
+                getString(R.string.drawer_news),
+                Constants.Colors.PRIMARY_DARK_NEWS, 2, MainActivity.SHOW_NEWS,
+                R.drawable.drawer_icon_news);
         addOfflineCard(
                 metaContent,
                 Constants.DATA_TYPE_NEWS,
@@ -110,7 +122,7 @@ public class HomeFragment extends Fragment implements HomeRecyclerViewAdapter.On
         );
         addOnlineCard(
                 metaContent,
-                Constants.Urls.NEWS,
+                ServerUrls.getInstance().NEWS,
                 Constants.DATA_TYPE_NEWS,
                 Constants.Filenames.NEWS
         );
@@ -140,6 +152,7 @@ public class HomeFragment extends Fragment implements HomeRecyclerViewAdapter.On
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mContext = activity;
+        mActivity = (MainActivity) activity;
     }
 
     public void setupRecycler(View rootView) {
@@ -150,31 +163,21 @@ public class HomeFragment extends Fragment implements HomeRecyclerViewAdapter.On
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new HomeRecyclerViewAdapter(mContext);
-        mAdapter.setListener(this);
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    @Override
-    public void itemClicked(View v, int position) {
-        Functions.makeToast(mContext, "Reached Here");
-        ((MainActivity) mContext).displayFragment(mCards.get(position).mFragmentId);
-    }
-
-    @Override
-    public void itemLongClick(View v, int position) {
-
-    }
-
     public class NowCardMetaContent {
-        public int type;
+        public Integer type;
         public String title, description;
-        public int color, fragmentId;
+        public Integer color, fragmentId, iconResource;
 
-        public NowCardMetaContent(String title, int color, int type, int fragmentId) {
+        public NowCardMetaContent(String title, Integer color, Integer type, Integer fragmentId,
+                                  Integer iconResource) {
             this.title = title;
             this.color = color;
             this.type = type;
             this.fragmentId = fragmentId;
+            this.iconResource = iconResource;
         }
     }
 

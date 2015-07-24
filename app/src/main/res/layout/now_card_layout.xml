@@ -18,14 +18,29 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/title"
+            <LinearLayout
+                android:id="@+id/titlebar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/underline_background"
-                android:padding="16sp"
-                android:textColor="@color/primary_text"
-                android:textSize="24sp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16sp">
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="28sp"
+                    android:layout_height="28sp"
+                    android:layout_marginRight="16sp" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/primary_text"
+                    android:textSize="24sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/description"
@@ -43,6 +58,31 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"></LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/show_more"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="8sp">
+
+                <ImageView
+                    android:layout_width="28sp"
+                    android:layout_height="28sp"
+                    android:layout_marginRight="16sp"
+                    android:alpha="0.4"
+                    android:src="@drawable/ic_arrow_forward_black_36dp" />
+
+                <TextView
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/show_more"
+                    android:textColor="@color/hint_text"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
         </LinearLayout>
     </android.support.v7.widget.CardView>

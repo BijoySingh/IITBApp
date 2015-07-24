@@ -10,6 +10,11 @@
     <string name="title_home">Home</string>
     <string name="title_timetable">Timetable</string>
 
+    <string name="remove_timetable">Remove Timetable?</string>
+    <string name="delete_database_message">All your stored courses will be removed from the
+        app</string>
+    <string name="show_more">Show More</string>
+
     <string name="done">DONE</string>
     <string name="cancel">CANCEL</string>
     <string name="remove">REMOVE</string>
