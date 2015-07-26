@@ -113,7 +113,6 @@ public class ApiUtil {
                         }
 
                         homeFragment.addCard(metaContent, eventItems);
-
                     }
                 }, new Response.ErrorListener() {
                     @Override

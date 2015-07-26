@@ -93,14 +93,22 @@ public class LVAdapterMain extends ArrayAdapter<ApiItem> {
             int categoryColor = data.getAccentColor();
             viewHolder.categoryImage.setBackgroundColor(categoryColor);
 
+            if (!data.type.contentEquals(Constants.JSON_DATA_TYPE_NOTICE) && data.viewed) {
+                viewHolder.viewIcon.setColorFilter(categoryColor);
+            } else {
+                viewHolder.viewIcon.clearColorFilter();
+            }
+
+            if (!data.type.contentEquals(Constants.JSON_DATA_TYPE_NOTICE) && data.liked) {
+                viewHolder.likeIcon.setColorFilter(categoryColor);
+            } else {
+                viewHolder.likeIcon.clearColorFilter();
+            }
+
             if (data.type.contentEquals(Constants.JSON_DATA_TYPE_EVENT)) {
                 viewHolder.eventLayout.setVisibility(View.VISIBLE);
                 viewHolder.eventTime.setText(data.event_time.time);
                 viewHolder.eventDate.setText(data.event_time.date);
-                if (data.viewed)
-                    viewHolder.viewIcon.setColorFilter(categoryColor);
-                if (data.liked)
-                    viewHolder.likeIcon.setColorFilter(categoryColor);
             } else if (data.type.contentEquals(Constants.JSON_DATA_TYPE_NEWS)) {
                 if (data.viewed)
                     viewHolder.viewIcon.setColorFilter(categoryColor);
