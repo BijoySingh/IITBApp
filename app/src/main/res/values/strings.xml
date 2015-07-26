@@ -13,11 +13,17 @@
     <string name="remove_timetable">Remove Timetable?</string>
     <string name="delete_database_message">All your stored courses will be removed from the
         app</string>
+
+
+    <string name="make_call">Make Call</string>
+    <string name="make_call_message">Would you like to make a call - </string>
+
     <string name="show_more">Show More</string>
 
     <string name="done">DONE</string>
     <string name="cancel">CANCEL</string>
     <string name="remove">REMOVE</string>
+    <string name="call">CALL</string>
     <string name="slot">SLOT</string>
     <string name="set">SET</string>
 

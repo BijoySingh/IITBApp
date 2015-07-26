@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.iitblive.iitblive">
+    package="com.gymkhana.iitbapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,7 +11,7 @@
     <uses-permission android:name="com.iitblive.iitblive.permission.C2D_MESSAGE" />
 
     <permission
-        android:name="com.iitblive.iitblive.permission.C2D_MESSAGE"
+        android:name="com.gymkhana.iitbapp.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <application
@@ -20,7 +20,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <receiver
-            android:name=".service.GcmBroadcastReceiver"
+            android:name="com.gymkhana.iitbapp.service.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -30,10 +30,10 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".service.GCMNotificationIntentService" />
+        <service android:name="com.gymkhana.iitbapp.service.GCMNotificationIntentService" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.gymkhana.iitbapp.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -43,22 +43,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.LoginActivity"
+            android:name="com.gymkhana.iitbapp.activity.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateUnchanged"></activity>
         <activity
-            android:name=".activity.InformationActivity"
+            android:name="com.gymkhana.iitbapp.activity.InformationActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/BackTheme"></activity>
         <activity
-            android:name=".activity.IitbTimetableActivity"
+            android:name="com.gymkhana.iitbapp.activity.IitbTimetableActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/BackTheme"></activity>
         <activity
-            android:name=".activity.ArticleActivity"
+            android:name="com.gymkhana.iitbapp.activity.ArticleActivity"
             android:label="@string/title_activity_article"
             android:screenOrientation="portrait"
             android:theme="@style/ArticleTheme"></activity>

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context="com.iitblive.iitblive.fragment.DrawerFragment">
+    tools:context="com.gymkhana.iitbapp.fragment.DrawerFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
