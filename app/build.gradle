@@ -9,8 +9,8 @@ android {
         applicationId "com.gymkhana.iitbapp"
         minSdkVersion 11
         targetSdkVersion 21
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 4
+        versionName "1.0.4"
     }
     buildTypes {
         release {
@@ -32,4 +32,5 @@ dependencies {
     compile 'com.google.android.gms:play-services:7.5.0'
     compile 'com.mcxiaoke.volley:library:1.0.17'
     compile 'com.android.support:recyclerview-v7:22.0.+'
+    compile 'net.danlew:android.joda:2.8.1'
 }

@@ -40,12 +40,10 @@ import java.util.Map;
 public class ArticleActivity extends ActionBarActivity {
 
     public static String INTENT_ARTICLE = "ARTICLE";
-
-    private ApiItem mArticle;
     private static String EVENT_TYPE = "vnd.android.cursor.item/event";
     private static String EVENT_BEGIN_TIME = "beginTime";
     private static String EVENT_END_TIME = "endTime";
-
+    private ApiItem mArticle;
     private Context mContext;
     private EventViewHolder mViewHolder = new EventViewHolder();
 
@@ -78,6 +76,7 @@ public class ArticleActivity extends ActionBarActivity {
         mViewHolder.viewIcon = (ImageView) findViewById(R.id.view_logo);
         mViewHolder.eventTime = (TextView) findViewById(R.id.event_time);
         mViewHolder.eventDate = (TextView) findViewById(R.id.event_date);
+        mViewHolder.eventLocation = (TextView) findViewById(R.id.event_location);
         mViewHolder.articleTime = (TextView) findViewById(R.id.article_time);
         mViewHolder.articleDate = (TextView) findViewById(R.id.article_date);
         mViewHolder.eventLayout = (RelativeLayout) findViewById(R.id.event_layout);
@@ -119,6 +118,7 @@ public class ArticleActivity extends ActionBarActivity {
             mViewHolder.eventLayout.setVisibility(View.VISIBLE);
             mViewHolder.eventTime.setText(mArticle.event_time.time);
             mViewHolder.eventDate.setText(mArticle.event_time.date);
+            mViewHolder.eventLocation.setText(mArticle.event_location);
             mViewHolder.addToCalendar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -172,6 +172,7 @@ public class ArticleActivity extends ActionBarActivity {
         intent.setType(EVENT_TYPE);
         intent.putExtra(CalendarContract.Events.TITLE, mArticle.title);
         intent.putExtra(CalendarContract.Events.DESCRIPTION, mArticle.description);
+        intent.putExtra(CalendarContract.Events.EVENT_LOCATION, mArticle.event_location);
         intent.putExtra(EVENT_BEGIN_TIME, mArticle.event_time.calender.getTimeInMillis());
         intent.putExtra(
                 EVENT_END_TIME,
@@ -290,7 +291,7 @@ public class ArticleActivity extends ActionBarActivity {
         FloatingActionButton categoryImage;
         ImageView addToCalendar, likeIcon, viewIcon;
         TextView title, description, sourceName, sourceDesignation, likes, views;
-        TextView eventTime, eventDate;
+        TextView eventTime, eventDate, eventLocation;
         TextView articleTime, articleDate;
         RelativeLayout eventLayout, likePanel;
         LinearLayout scrollLayout;

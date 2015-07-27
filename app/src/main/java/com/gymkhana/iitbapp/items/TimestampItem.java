@@ -2,7 +2,8 @@ package com.gymkhana.iitbapp.items;
 
 import android.content.Context;
 
-import com.gymkhana.iitbapp.R;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -24,54 +25,21 @@ public class TimestampItem implements Serializable {
 
     public TimestampItem(Context context, String timestamp) {
         this.timestamp = timestamp;
-        //yyyy-MM-ddThh:mm:ss
-        //0123456789012345678
 
-        String yyyy = getYear();
-        String MM = getMonth();
-        String dd = getDate();
+        DateTime dateTime = new DateTime(timestamp);
+        dateTime = dateTime.toDateTime(DateTimeZone.UTC);
+        dateTime = dateTime.plusHours(5).plusMinutes(30);
 
-        String MMMM = TimestampItem.getMonthStr(
-                context,
-                Integer.parseInt(MM));
-
-        String hh = getHour();
-        String mm = getMinute();
+        String MM = dateTime.monthOfYear().getAsString();
+        String MMMM = dateTime.monthOfYear().getAsText();
+        String dd = dateTime.dayOfMonth().getAsText();
+        String hh = dateTime.hourOfDay().getAsText();
+        String mm = dateTime.minuteOfHour().getAsText();
+        String yyyy = dateTime.year().getAsText();
 
         date = dd + SPACE + MMMM + SPACE + yyyy;
         time = TimestampItem.getTimeStr(hh, mm);
         calender = getCalendar(yyyy, MM, dd, hh, mm);
-    }
-
-    public static String getMonthStr(Context context, Integer month) {
-        switch (month) {
-            case 1:
-                return context.getString(R.string.month_jan);
-            case 2:
-                return context.getString(R.string.month_feb);
-            case 3:
-                return context.getString(R.string.month_mar);
-            case 4:
-                return context.getString(R.string.month_apr);
-            case 5:
-                return context.getString(R.string.month_may);
-            case 6:
-                return context.getString(R.string.month_jun);
-            case 7:
-                return context.getString(R.string.month_jul);
-            case 8:
-                return context.getString(R.string.month_aug);
-            case 9:
-                return context.getString(R.string.month_sep);
-            case 10:
-                return context.getString(R.string.month_oct);
-            case 11:
-                return context.getString(R.string.month_nov);
-            case 12:
-                return context.getString(R.string.month_dec);
-            default:
-                return null;
-        }
     }
 
     public static String getTimeStr(String hh, String mm) {
@@ -80,6 +48,8 @@ public class TimestampItem implements Serializable {
 
         if (hr == 0 && min == 0) {
             return MIDNIGHT;
+        } else if (hr == 0) {
+            return 12 + COLON + mm + SPACE + AM;
         } else if (hr < 12) {
             return hh + COLON + mm + SPACE + AM;
         } else if (hr == 12 && min == 0) {
@@ -107,23 +77,4 @@ public class TimestampItem implements Serializable {
         return calendar;
     }
 
-    public String getYear() {
-        return timestamp.substring(0, 4);
-    }
-
-    public String getMonth() {
-        return timestamp.substring(5, 7);
-    }
-
-    public String getDate() {
-        return timestamp.substring(8, 10);
-    }
-
-    public String getHour() {
-        return timestamp.substring(11, 13);
-    }
-
-    public String getMinute() {
-        return timestamp.substring(14, 16);
-    }
 }

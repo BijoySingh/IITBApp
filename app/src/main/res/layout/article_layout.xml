@@ -169,6 +169,14 @@
                         android:textColor="@color/hint_text"
                         android:textSize="16sp" />
 
+                    <TextView
+                        android:id="@+id/event_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/hint_text"
+                        android:textSize="16sp" />
+
+
                 </LinearLayout>
 
                 <ImageView
