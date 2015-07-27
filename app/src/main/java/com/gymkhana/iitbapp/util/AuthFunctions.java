@@ -87,6 +87,7 @@ public class AuthFunctions {
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
+                            Functions.makeToast(context, "Unknown Error Occured");
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -94,6 +95,7 @@ public class AuthFunctions {
                     public void onErrorResponse(VolleyError error) {
                         LoginActivity.enableLogin();
                         error.printStackTrace();
+                        Functions.makeToast(context, "Server Error");
                     }
                 }) {
             @Override

@@ -69,7 +69,7 @@ public class TimestampItem implements Serializable {
         Calendar calendar = Calendar.getInstance();
         calendar.set(
                 Integer.parseInt(yyyy),
-                Integer.parseInt(MM),
+                Integer.parseInt(MM)-1,
                 Integer.parseInt(dd),
                 Integer.parseInt(hh),
                 Integer.parseInt(mm)
