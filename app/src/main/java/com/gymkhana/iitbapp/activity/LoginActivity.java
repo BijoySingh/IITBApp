@@ -16,9 +16,9 @@ import android.widget.TextView;
 
 import com.gymkhana.iitbapp.MainActivity;
 import com.gymkhana.iitbapp.R;
+import com.gymkhana.iitbapp.util.AuthFunctions;
 import com.gymkhana.iitbapp.util.Constants;
 import com.gymkhana.iitbapp.util.Functions;
-import com.gymkhana.iitbapp.util.AuthFunctions;
 import com.gymkhana.iitbapp.util.ServerUrls;
 import com.gymkhana.iitbapp.util.SharedPreferenceManager;
 
@@ -127,6 +127,15 @@ public class LoginActivity extends ActionBarActivity {
         };
     }
 
+    private boolean checkNonEmpty() {
+        if (mInput.getText().toString().trim().isEmpty() || mPassword.getText().toString().trim().isEmpty()) {
+            Functions.makeToast(mContext, "Empty Username or Password");
+            return false;
+        }
+
+        return true;
+    }
+
     private void clickEvent(int buttonType) {
         if (buttonType == Constants.ButtonTypes.CHANGE_LDAP) {
 
@@ -134,7 +143,7 @@ public class LoginActivity extends ActionBarActivity {
             Functions.openWebsite(mContext, ServerUrls.getInstance().IITB_HOME);
 
         } else if (buttonType == Constants.ButtonTypes.LDAP_LOGIN) {
-            if (loginEnabled) {
+            if (loginEnabled && checkNonEmpty()) {
                 disableLogin();
                 AuthFunctions.sendLoginQuery(
                         mContext,

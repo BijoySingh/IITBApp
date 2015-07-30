@@ -60,7 +60,8 @@ public class ApiUtil {
                         }
 
                         if (writeFile && storeFile != null) {
-                            Functions.offlineDataWriter(context, storeFile, response);
+                            Functions.offlineDataWriter(context, storeFile,
+                                    Functions.correctUTFEncoding(response));
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -77,6 +78,7 @@ public class ApiUtil {
                         }
                     }
                 }) {
+
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -109,7 +111,8 @@ public class ApiUtil {
                         }
 
                         if (storeFile != null) {
-                            Functions.offlineDataWriter(context, storeFile, response);
+                            Functions.offlineDataWriter(context, storeFile,
+                                    Functions.correctUTFEncoding(response));
                         }
 
                         homeFragment.addCard(metaContent, eventItems);

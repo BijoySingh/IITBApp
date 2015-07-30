@@ -20,13 +20,21 @@ public class TimestampItem implements Serializable {
     public static String COLON = ":";
     public static Integer ONE_HOUR = 1000 * 60 * 60;
 
+    public boolean isNull = false;
     public String timestamp, time, date;
     public Calendar calender;
 
     public TimestampItem(Context context, String timestamp) {
         this.timestamp = timestamp;
 
-        DateTime dateTime = new DateTime(timestamp);
+        DateTime dateTime;
+        try {
+            dateTime = new DateTime(timestamp);
+        } catch (Exception e) {
+            isNull = true;
+            return;
+        }
+
         dateTime = dateTime.toDateTime(DateTimeZone.UTC);
         dateTime = dateTime.plusHours(5).plusMinutes(30);
 

@@ -58,6 +58,10 @@ public class ListContent {
                 context.getString(R.string.settings_about_us_description)));
         mSettingsList.add(new GenericItem(
                 R.drawable.settings_feedback,
+                context.getString(R.string.settings_report_bug),
+                context.getString(R.string.settings_report_bug_description)));
+        mSettingsList.add(new GenericItem(
+                R.drawable.settings_feedback,
                 context.getString(R.string.settings_rate_title),
                 context.getString(R.string.settings_rate_description)));
 
@@ -73,6 +77,9 @@ public class ListContent {
                         ((MainActivity) context).displayFragment(MainActivity.SHOW_DEVELOPERS);
                         return;
                     case 2:
+                        BugReportFunctions.showDialog(context);
+                        return;
+                    case 3:
                         intent = Functions.openAppStore(context.getPackageName());
                         break;
                 }

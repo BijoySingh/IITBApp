@@ -26,6 +26,7 @@
     <string name="call">CALL</string>
     <string name="slot">SLOT</string>
     <string name="set">SET</string>
+    <string name="send">SEND</string>
 
     <string name="input_course_name">Course</string>
     <string name="input_course_location">Location</string>

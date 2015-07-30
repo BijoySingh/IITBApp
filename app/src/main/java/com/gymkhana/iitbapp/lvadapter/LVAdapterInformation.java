@@ -59,6 +59,13 @@ public class LVAdapterInformation extends ArrayAdapter<InformationItem> {
             viewHolder = (InformationViewHolder) convertView.getTag();
         }
 
+        View.OnClickListener unresponsiveClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                return;
+            }
+        };
+
         final InformationItem data = mValues.get(position);
 
         if (data != null) {
@@ -87,6 +94,9 @@ public class LVAdapterInformation extends ArrayAdapter<InformationItem> {
                                 }).create().show();
                     }
                 });
+            } else {
+                viewHolder.phone.setImageResource(R.drawable.info_icon_phone_disabled);
+                viewHolder.phone.setOnClickListener(unresponsiveClickListener);
             }
 
             if (!data.email.contentEquals("")) {
@@ -102,6 +112,9 @@ public class LVAdapterInformation extends ArrayAdapter<InformationItem> {
                         mContext.startActivity(Intent.createChooser(intent, ""));
                     }
                 });
+            } else {
+                viewHolder.email.setImageResource(R.drawable.info_icon_email_disabled);
+                viewHolder.email.setOnClickListener(unresponsiveClickListener);
             }
 
             if (!data.website.contentEquals("")) {
@@ -112,6 +125,9 @@ public class LVAdapterInformation extends ArrayAdapter<InformationItem> {
                         Functions.openWebsite(mContext, data.website);
                     }
                 });
+            } else {
+                viewHolder.website.setImageResource(R.drawable.info_icon_website_disabled);
+                viewHolder.website.setOnClickListener(unresponsiveClickListener);
             }
 
             if (!data.facebook.contentEquals("")) {
@@ -123,6 +139,9 @@ public class LVAdapterInformation extends ArrayAdapter<InformationItem> {
                         mContext.startActivity(browserIntent);
                     }
                 });
+            } else {
+                viewHolder.facebook.setImageResource(R.drawable.info_icon_facebook_disabled);
+                viewHolder.facebook.setOnClickListener(unresponsiveClickListener);
             }
         }
 

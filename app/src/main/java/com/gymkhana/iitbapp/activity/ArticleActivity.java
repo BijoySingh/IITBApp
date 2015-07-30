@@ -2,11 +2,9 @@ package com.gymkhana.iitbapp.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v7.app.ActionBarActivity;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -27,6 +25,7 @@ import com.gymkhana.iitbapp.items.ApiItem;
 import com.gymkhana.iitbapp.items.TimestampItem;
 import com.gymkhana.iitbapp.util.CategoryImages;
 import com.gymkhana.iitbapp.util.Constants;
+import com.gymkhana.iitbapp.util.Functions;
 import com.gymkhana.iitbapp.util.ServerUrls;
 import com.gymkhana.iitbapp.util.SharedPreferenceManager;
 import com.rey.material.widget.FloatingActionButton;
@@ -46,13 +45,6 @@ public class ArticleActivity extends ActionBarActivity {
     private ApiItem mArticle;
     private Context mContext;
     private EventViewHolder mViewHolder = new EventViewHolder();
-
-    public static float convertDpToPixel(float dp, Context context) {
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        float px = dp * (metrics.densityDpi / 160f);
-        return px;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +94,7 @@ public class ArticleActivity extends ActionBarActivity {
             imageView.setAdjustViewBounds(true);
             imageView.setLayoutParams(new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
-                    (int) convertDpToPixel(320, mContext)
+                    (int) Functions.convertDpToPixel(320, mContext)
             ));
             Picasso.with(mContext).load(link).into(imageView);
             mViewHolder.scrollLayout.addView(imageView);
@@ -126,9 +118,11 @@ public class ArticleActivity extends ActionBarActivity {
                 }
             });
         } else if (mArticle.type.contentEquals(Constants.JSON_DATA_TYPE_NOTICE)) {
-            mViewHolder.eventLayout.setVisibility(View.VISIBLE);
-            mViewHolder.eventTime.setText(mArticle.expiration_time.time);
-            mViewHolder.eventDate.setText(mArticle.expiration_time.date);
+            if (!mArticle.expiration_time.isNull) {
+                mViewHolder.eventLayout.setVisibility(View.VISIBLE);
+                mViewHolder.eventTime.setText(mArticle.expiration_time.time);
+                mViewHolder.eventDate.setText(mArticle.expiration_time.date);
+            }
             mViewHolder.addToCalendar.setVisibility(View.GONE);
             mViewHolder.likePanel.setVisibility(View.GONE);
         }

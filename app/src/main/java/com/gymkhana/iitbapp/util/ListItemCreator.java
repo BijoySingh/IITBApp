@@ -18,14 +18,14 @@ public class ListItemCreator {
     public static ApiItem createEventItem(Context context, JSONObject json) throws Exception {
         ApiItem e = new ApiItem();
         e.type = Constants.JSON_DATA_TYPE_EVENT;
-        e.title = json.getString(Constants.JSON_KEY_TITLE);
-        e.description = json.getString(Constants.JSON_KEY_DESCRIPTION);
+        e.title = Functions.correctUTFEncoding(json.getString(Constants.JSON_KEY_TITLE));
+        e.description = Functions.correctUTFEncoding(json.getString(Constants.JSON_KEY_DESCRIPTION));
         e.timestamp = json.getString(Constants.JSON_KEY_TIMESTAMP);
         e.article_time = new TimestampItem(context, e.timestamp);
         e.event_timestamp = json.getString(Constants.JSON_KEY_EVENT_TIMESTAMP);
         e.event_time = new TimestampItem(context, e.event_timestamp);
         e.category = json.getString(Constants.JSON_KEY_CATEGORY);
-        e.event_location = json.getString(Constants.JSON_KEY_LOCATION);
+        e.event_location = Functions.correctUTFEncoding(json.getString(Constants.JSON_KEY_LOCATION));
         e.id = json.getInt(Constants.JSON_KEY_ID);
         e.likes = json.getInt(Constants.JSON_KEY_LIKES);
         e.views = json.getInt(Constants.JSON_KEY_VIEWS);
@@ -48,8 +48,8 @@ public class ListItemCreator {
     public static ApiItem createNewsItem(Context context, JSONObject json) throws Exception {
         ApiItem e = new ApiItem();
         e.type = Constants.JSON_DATA_TYPE_NEWS;
-        e.title = json.getString(Constants.JSON_KEY_TITLE);
-        e.description = json.getString(Constants.JSON_KEY_DESCRIPTION);
+        e.title = Functions.correctUTFEncoding(json.getString(Constants.JSON_KEY_TITLE));
+        e.description = Functions.correctUTFEncoding(json.getString(Constants.JSON_KEY_DESCRIPTION));
         e.timestamp = json.getString(Constants.JSON_KEY_TIMESTAMP);
         e.article_time = new TimestampItem(context, e.timestamp);
         e.category = json.getString(Constants.JSON_KEY_CATEGORY);
@@ -74,8 +74,8 @@ public class ListItemCreator {
     public static ApiItem createNoticeItem(Context context, JSONObject json) throws Exception {
         ApiItem e = new ApiItem();
         e.type = Constants.JSON_DATA_TYPE_NOTICE;
-        e.title = json.getString(Constants.JSON_KEY_TITLE);
-        e.description = json.getString(Constants.JSON_KEY_DESCRIPTION);
+        e.title = Functions.correctUTFEncoding(json.getString(Constants.JSON_KEY_TITLE));
+        e.description = Functions.correctUTFEncoding(json.getString(Constants.JSON_KEY_DESCRIPTION));
         e.timestamp = json.getString(Constants.JSON_KEY_TIMESTAMP);
         e.article_time = new TimestampItem(context, e.timestamp);
         e.id = json.getInt(Constants.JSON_KEY_ID);

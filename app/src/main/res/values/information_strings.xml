@@ -33,13 +33,16 @@
     <string name="information_maps_description">The awesome map app for IIT Bombay</string>
 
     <string name="settings_about_iitbapp_title">About IITBApp</string>
-  <string name="settings_about_iitbapp_description">IITBApp is an initiative to provide information
+    <string name="settings_about_iitbapp_description">IITBApp is an initiative to provide information
     right at the fingers of students at IITB. It is a medium to connects groups and event managers,
     with those who are looking for information about the latest news and events happening in and
     around IIT Bombay.</string>
 
     <string name="settings_about_us_title">About Us</string>
     <string name="settings_about_us_description">About IITBApp project developers</string>
+
+  <string name="settings_report_bug">Report a Bug</string>
+  <string name="settings_report_bug_description">Help us fix it quickly</string>
 
     <string name="settings_rate_title">Rate Us</string>
     <string name="settings_rate_description">Give us your valuable feedback</string>

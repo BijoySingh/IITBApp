@@ -5,12 +5,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -54,6 +56,14 @@ public class Functions {
             ;
         }
 
+    }
+
+    public static String correctUTFEncoding(String source) {
+        try {
+            return new String(source.getBytes("ISO-8859-1"), "UTF-8");
+        } catch (Exception e) {
+            return source;
+        }
     }
 
     //Reads the data stored in the file given by the filename
@@ -254,6 +264,13 @@ public class Functions {
         });
 
         return dialog;
+    }
+
+    public static float convertDpToPixel(float dp, Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float px = dp * (metrics.densityDpi / 160f);
+        return px;
     }
 
     public static void setupList(List<GenericItem> lst, ListView listView, Context context) {

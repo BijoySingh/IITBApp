@@ -25,6 +25,9 @@ public class ApiItem implements Serializable {
             timestampItem = event_time;
         } else if (type.contentEquals(Constants.JSON_DATA_TYPE_NEWS)) {
             return false;
+        } else if (type.contentEquals(Constants.JSON_DATA_TYPE_NOTICE)
+                && expiration_time.isNull) {
+            return false;
         } else if (type.contentEquals(Constants.JSON_DATA_TYPE_NOTICE)) {
             timestampItem = expiration_time;
         } else {

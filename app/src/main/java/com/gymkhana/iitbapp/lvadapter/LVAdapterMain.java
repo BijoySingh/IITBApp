@@ -116,8 +116,15 @@ public class LVAdapterMain extends ArrayAdapter<ApiItem> {
                     viewHolder.likeIcon.setColorFilter(categoryColor);
             } else if (data.type.contentEquals(Constants.JSON_DATA_TYPE_NOTICE)) {
                 viewHolder.eventLayout.setVisibility(View.VISIBLE);
-                viewHolder.eventTime.setText(data.expiration_time.time);
-                viewHolder.eventDate.setText(data.expiration_time.date);
+
+                if (!data.expiration_time.isNull) {
+                    viewHolder.eventTime.setText(data.expiration_time.time);
+                    viewHolder.eventDate.setText(data.expiration_time.date);
+                } else {
+                    viewHolder.eventTime.setVisibility(View.GONE);
+                    viewHolder.eventDate.setVisibility(View.GONE);
+                }
+
                 viewHolder.likes.setVisibility(View.GONE);
                 viewHolder.likeIcon.setVisibility(View.GONE);
                 viewHolder.viewIcon.setVisibility(View.GONE);
