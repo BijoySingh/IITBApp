@@ -8,7 +8,7 @@ import android.graphics.Color;
  */
 public class Constants {
     public static final Boolean PRODUCTION_MODE = true;
-    public static final String GCM_SENDER_ID = "388067495650";
+    public static final String GCM_SENDER_ID = "";
 
     public static final String JSON_DATA_TYPE_EVENT = "event";
     public static final String JSON_DATA_TYPE_NEWS = "news";
