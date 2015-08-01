@@ -8,7 +8,7 @@ public class ServerUrls {
     public static final String DEBUG_URL = "http://gymkhana.iitb.ac.in/iitbapp_dev/";
     public String SERVER, GCM_REGISTER, GCM_UNREGISTER, IITB_HOME, ACADEMIC_CAL, API, USER,
             NEWS, EVENTS, NOTICES, PUBLIC_API, INFORMATION_API, DEPARTMENTS, CLUBS, CONTACTS, EMERGENCY,
-            AUTHENTICATE, LOGOUT;
+            AUTHENTICATE, LOGOUT, BUG;
 
     private ServerUrls(String serverUrl) {
         SERVER = serverUrl;
@@ -18,6 +18,7 @@ public class ServerUrls {
         ACADEMIC_CAL = IITB_HOME + "newacadhome/toacadcalender.jsp";
         API = SERVER + "api/";
         USER = API + "users/";
+        BUG = API + "bug/add/";
         NEWS = API + "news/";
         AUTHENTICATE = USER + "authenticate/";
         LOGOUT = USER + "logout/";

@@ -57,7 +57,7 @@ public class ListContent {
                 context.getString(R.string.settings_about_us_title),
                 context.getString(R.string.settings_about_us_description)));
         mSettingsList.add(new GenericItem(
-                R.drawable.settings_feedback,
+                R.drawable.settings_bug,
                 context.getString(R.string.settings_report_bug),
                 context.getString(R.string.settings_report_bug_description)));
         mSettingsList.add(new GenericItem(
