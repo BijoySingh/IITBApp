@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">IITBApp</string>
-    <string name="app_version">1</string>
+    <string name="app_version">2</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -31,4 +31,9 @@
     <string name="input_course_name">Course</string>
     <string name="input_course_location">Location</string>
     <string name="title_activity_article">Article</string>
+
+    <string name="feed_insight">Insight Feed</string>
+    <string name="feed_internship_portal">Internship Portal</string>
+    <string name="feed_placement_cell">Placement Cell</string>
+
 </resources>

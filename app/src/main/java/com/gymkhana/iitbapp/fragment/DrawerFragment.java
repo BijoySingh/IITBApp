@@ -32,6 +32,7 @@ public class DrawerFragment extends Fragment {
     public static int DRAWER_TAG_ABOUT = 6;
     public static int DRAWER_TAG_NOTICES = 7;
     public static int DRAWER_TAG_HOME = 8;
+    public static int DRAWER_TAG_FEED = 9;
 
     public DrawerLayout mDrawerLayout;
     public ListView mListView = null;
@@ -149,6 +150,10 @@ public class DrawerFragment extends Fragment {
                     R.drawable.drawer_icon_notice,
                     getString(R.string.drawer_notices),
                     DRAWER_TAG_NOTICES));
+            mDrawerListView.add(new GenericItem(
+                    R.drawable.drawer_icon_news,
+                    getString(R.string.drawer_feed),
+                    DRAWER_TAG_FEED));
             mDrawerListView.add(new GenericItem(
                     R.drawable.drawer_icon_information,
                     getString(R.string.drawer_information),

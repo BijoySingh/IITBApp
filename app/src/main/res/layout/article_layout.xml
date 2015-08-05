@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
-    <com.nirhart.parallaxscroll.views.ParallaxScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.nirhart.parallaxscroll.views.ParallaxScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,7 +46,7 @@
                     android:background="@drawable/article_title_bg_gradient"
                     android:padding="16sp"
                     android:textColor="@color/white"
-                    android:textSize="32sp" />
+                    android:textSize="32sp"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -63,7 +64,7 @@
                     app:fab_backgroundColor="@color/fab_primary"
                     app:fab_elevation="1sp"
                     app:fab_iconSrc="@drawable/ic_audiotrack_white_48dp"
-                    app:fab_radius="@dimen/fab_radius" />
+                    app:fab_radius="@dimen/fab_radius"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -77,28 +78,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/secondary_text"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"/>
 
                     <TextView
                         android:id="@+id/source_designation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/hint_text"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
                 </LinearLayout>
             </RelativeLayout>
-
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="21sp"
-                android:paddingLeft="21sp"
-                android:paddingRight="21sp"
-                android:paddingTop="6sp"
-                android:textColor="@color/secondary_text"
-                android:textSize="16sp" />
 
             <RelativeLayout
                 android:id="@+id/time_layout"
@@ -114,7 +104,7 @@
                     android:layout_centerVertical="true"
                     android:paddingLeft="16sp"
                     android:textColor="@color/hint_text"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:id="@+id/article_time"
@@ -124,8 +114,19 @@
                     android:layout_centerVertical="true"
                     android:paddingRight="16sp"
                     android:textColor="@color/hint_text"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="21sp"
+                android:paddingLeft="21sp"
+                android:paddingRight="21sp"
+                android:paddingTop="6sp"
+                android:textColor="@color/secondary_text"
+                android:textSize="16sp"/>
 
             <RelativeLayout
                 android:id="@+id/event_layout"
@@ -145,7 +146,7 @@
                     android:layout_marginLeft="8sp"
                     android:adjustViewBounds="true"
                     android:padding="4sp"
-                    android:src="@drawable/drawer_icon_events" />
+                    android:src="@drawable/drawer_icon_events"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -160,21 +161,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/primary_text"
-                        android:textSize="22sp" />
+                        android:textSize="22sp"/>
 
                     <TextView
                         android:id="@+id/event_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/hint_text"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"/>
 
                     <TextView
                         android:id="@+id/event_location"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/hint_text"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"/>
 
 
                 </LinearLayout>
@@ -188,7 +189,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="8sp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/add_icon" />
+                    android:src="@drawable/add_icon"/>
             </RelativeLayout>
         </LinearLayout>
 
@@ -211,7 +212,7 @@
             android:layout_marginLeft="8sp"
             android:adjustViewBounds="true"
             android:padding="4sp"
-            android:src="@drawable/like_icon" />
+            android:src="@drawable/like_icon"/>
 
         <TextView
             android:id="@+id/likes"
@@ -221,7 +222,7 @@
             android:layout_toRightOf="@+id/like_logo"
             android:padding="4sp"
             android:textColor="@color/hint_text"
-            android:textSize="21sp" />
+            android:textSize="21sp"/>
 
         <ImageView
             android:id="@+id/view_logo"
@@ -233,7 +234,7 @@
             android:layout_marginRight="8sp"
             android:adjustViewBounds="true"
             android:padding="4sp"
-            android:src="@drawable/views_icon" />
+            android:src="@drawable/views_icon"/>
 
         <TextView
             android:id="@+id/views"
@@ -243,6 +244,6 @@
             android:layout_toLeftOf="@+id/view_logo"
             android:padding="4sp"
             android:textColor="@color/hint_text"
-            android:textSize="21sp" />
+            android:textSize="21sp"/>
     </RelativeLayout>
 </RelativeLayout>

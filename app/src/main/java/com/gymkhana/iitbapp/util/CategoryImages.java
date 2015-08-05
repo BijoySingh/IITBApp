@@ -21,6 +21,7 @@ public class CategoryImages {
         mResourceMapping.put(Category.FOOD, Resource.FOOD);
         mResourceMapping.put(Category.LITERATURE, Resource.LITERATURE);
         mResourceMapping.put(Category.NOTICE, Resource.NOTICE);
+        mResourceMapping.put(Category.FEED, Resource.FEED);
 
         if (mResourceMapping.containsKey(type)) {
             return mResourceMapping.get(type);
@@ -38,6 +39,7 @@ public class CategoryImages {
         public static String FOOD = "food";
         public static String LITERATURE = "literature";
         public static String NOTICE = "notice";
+        public static String FEED = "feed";
     }
 
     private static class Resource {
@@ -51,5 +53,6 @@ public class CategoryImages {
         public static int LITERATURE = R.drawable.ic_local_library_white_48dp;
         public static int DEFAULT = R.drawable.ic_people_white_48dp;
         public static int NOTICE = R.drawable.ic_chrome_reader_mode_white_48dp;
+        public static int FEED = R.drawable.ic_storage_white_48dp;
     }
 }

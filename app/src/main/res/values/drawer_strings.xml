@@ -4,6 +4,7 @@
     <string name="drawer_news">News</string>
     <string name="drawer_events">Events</string>
     <string name="drawer_notices">Notices</string>
+    <string name="drawer_feed">Feed</string>
     <string name="drawer_information">Information</string>
     <string name="drawer_timetable">Timetable</string>
     <string name="drawer_settings">Settings</string>

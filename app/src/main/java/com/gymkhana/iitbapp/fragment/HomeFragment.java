@@ -13,6 +13,10 @@ import android.view.ViewGroup;
 
 import com.gymkhana.iitbapp.MainActivity;
 import com.gymkhana.iitbapp.R;
+import com.gymkhana.iitbapp.feed.RSSFeedConstants;
+import com.gymkhana.iitbapp.feed.RSSFeedConstants.Feed;
+import com.gymkhana.iitbapp.feed.RSSFeedFetcher;
+import com.gymkhana.iitbapp.feed.RSSFeedItem;
 import com.gymkhana.iitbapp.items.ApiItem;
 import com.gymkhana.iitbapp.items.NowCardItem;
 import com.gymkhana.iitbapp.lvadapter.HomeRecyclerViewAdapter;
@@ -20,6 +24,7 @@ import com.gymkhana.iitbapp.util.ApiUtil;
 import com.gymkhana.iitbapp.util.Constants;
 import com.gymkhana.iitbapp.util.Functions;
 import com.gymkhana.iitbapp.util.ServerUrls;
+import com.gymkhana.iitbapp.util.SharedPreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +38,8 @@ public class HomeFragment extends Fragment {
     RecyclerView mRecyclerView;
     HomeRecyclerViewAdapter mAdapter;
     MainActivity mActivity;
-    private Context mContext;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    private Context mContext;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,15 +47,18 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.recyclerview_layout, container, false);
         setupRecycler(rootView);
 
-        Functions.setActionBarTitle(mActivity, mContext.getString(R.string.drawer_home));
         createCards(false);
+
+        Functions.setActionBarTitle(mActivity, mContext.getString(R.string.drawer_home));
         return rootView;
     }
 
+
     private void createCards(boolean isRefreshCall) {
-        addEventCard();
-        addNewsCard();
-        addNoticeCard();
+        addEventCard(isRefreshCall);
+        addNewsCard(isRefreshCall);
+        addNoticeCard(isRefreshCall);
+        addFeedCards(isRefreshCall);
     }
 
     @Override
@@ -74,26 +82,30 @@ public class HomeFragment extends Fragment {
 
     }
 
+    public void addOfflineCard(final NowCardMetaContent metaContent,
+                               final int dataType,
+                               final String fileName) {
 
-    public void addOfflineCard(NowCardMetaContent metaContent, int dataType, String
-            fileName) {
         String json = Functions.offlineDataReader(mContext, fileName);
         if (json != null || !json.isEmpty()) {
             addCard(metaContent, ApiUtil.getEventListFromJson(mContext, json, dataType));
         }
+
     }
 
-    public void addEventCard() {
+    public void addEventCard(boolean isRefreshCall) {
         NowCardMetaContent metaContent = new NowCardMetaContent(
                 getString(R.string.drawer_events),
                 Constants.Colors.PRIMARY_DARK_EVENT,
-                0, MainActivity.SHOW_EVENTS,
-                R.drawable.drawer_icon_events);
-        addOfflineCard(
-                metaContent,
-                Constants.DATA_TYPE_EVENT,
-                Constants.Filenames.EVENT
-        );
+                Constants.DATA_TYPE_EVENT, MainActivity.SHOW_EVENTS,
+                R.drawable.drawer_icon_events, 0);
+        if (!isRefreshCall) {
+            addOfflineCard(
+                    metaContent,
+                    Constants.DATA_TYPE_EVENT,
+                    Constants.Filenames.EVENT
+            );
+        }
         addOnlineCard(
                 metaContent,
                 ServerUrls.getInstance().EVENTS,
@@ -102,17 +114,20 @@ public class HomeFragment extends Fragment {
         );
     }
 
-    public void addNoticeCard() {
+    public void addNoticeCard(boolean isRefreshCall) {
         NowCardMetaContent metaContent = new NowCardMetaContent(
                 getString(R.string.drawer_notices),
                 Constants.Colors.PRIMARY_NOTICES,
-                1, MainActivity.SHOW_NOTICES,
-                R.drawable.drawer_icon_notice);
-        addOfflineCard(
-                metaContent,
-                Constants.DATA_TYPE_NOTICE,
-                Constants.Filenames.NOTICE
-        );
+                Constants.DATA_TYPE_NOTICE, MainActivity.SHOW_NOTICES,
+                R.drawable.drawer_icon_notice, 1);
+
+        if (!isRefreshCall) {
+            addOfflineCard(
+                    metaContent,
+                    Constants.DATA_TYPE_NOTICE,
+                    Constants.Filenames.NOTICE
+            );
+        }
         addOnlineCard(
                 metaContent,
                 ServerUrls.getInstance().NOTICES,
@@ -121,16 +136,19 @@ public class HomeFragment extends Fragment {
         );
     }
 
-    public void addNewsCard() {
+    public void addNewsCard(boolean isRefreshCall) {
         NowCardMetaContent metaContent = new NowCardMetaContent(
                 getString(R.string.drawer_news),
-                Constants.Colors.PRIMARY_DARK_NEWS, 2, MainActivity.SHOW_NEWS,
-                R.drawable.drawer_icon_news);
-        addOfflineCard(
-                metaContent,
-                Constants.DATA_TYPE_NEWS,
-                Constants.Filenames.NEWS
-        );
+                Constants.Colors.PRIMARY_DARK_NEWS,
+                Constants.DATA_TYPE_NEWS, MainActivity.SHOW_NEWS,
+                R.drawable.drawer_icon_news, 2);
+        if (!isRefreshCall) {
+            addOfflineCard(
+                    metaContent,
+                    Constants.DATA_TYPE_NEWS,
+                    Constants.Filenames.NEWS
+            );
+        }
         addOnlineCard(
                 metaContent,
                 ServerUrls.getInstance().NEWS,
@@ -139,7 +157,49 @@ public class HomeFragment extends Fragment {
         );
     }
 
-    public void addCard(NowCardMetaContent metaContent, List<ApiItem> list) {
+    public void addOfflineFeedCard(final NowCardMetaContent metaContent) {
+
+        String xml = Functions.offlineDataReader(mContext, metaContent.feed.filename());
+
+        if (xml != null || !xml.isEmpty()) {
+            addFeedCard(metaContent, RSSFeedFetcher.parseFeed(xml).getFeed(3));
+        }
+
+    }
+
+    public void addFeedCards(boolean isRefreshCall) {
+        int unique_position = 3;
+        for (Feed feed : RSSFeedConstants.feeds) {
+            if (SharedPreferenceManager.load(mContext, feed.feed_id).contentEquals(SharedPreferenceManager.Tags.FALSE)) {
+                unique_position += 1;
+                continue;
+            }
+
+            NowCardMetaContent metaContent = new NowCardMetaContent(
+                    feed.title,
+                    Constants.Colors.PRIMARY_DARK_FEED,
+                    Constants.DATA_TYPE_RSS,
+                    MainActivity.SHOW_FEED,
+                    R.drawable.drawer_icon_news,
+                    unique_position);
+            metaContent.setFeed(feed);
+            unique_position += 1;
+
+            if (!isRefreshCall) {
+                addOfflineFeedCard(metaContent);
+            }
+
+            String username = null, password = null;
+
+            if (feed.authenticated) {
+                username = SharedPreferenceManager.getUsername(mContext);
+                password = SharedPreferenceManager.getPassword(mContext);
+            }
+            RSSFeedFetcher.getFeedForHome(mContext, feed.url, username, password, this, metaContent, feed);
+        }
+    }
+
+    public void addFeedCard(NowCardMetaContent metaContent, List<RSSFeedItem> list) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (list == null || list.isEmpty()) {
             return;
@@ -149,7 +209,28 @@ public class HomeFragment extends Fragment {
 
         int position = 0;
         for (NowCardItem card : mCards) {
-            if (card.mType == metaContent.type) {
+            if (card.mUniqueId == metaContent.uniqueLocation) {
+                mCards.set(position, nowCardItem);
+                mAdapter.notifyItemChanged(position);
+                return;
+            }
+            position++;
+        }
+        mCards.add(nowCardItem);
+        mAdapter.notifyItemInserted(mCards.size());
+    }
+
+    public void addCard(NowCardMetaContent metaContent, List<ApiItem> list) {
+        mSwipeRefreshLayout.setRefreshing(false);
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+
+        NowCardItem<ApiItem> nowCardItem = new NowCardItem(metaContent, list);
+
+        int position = 0;
+        for (NowCardItem<ApiItem> card : mCards) {
+            if (card.mUniqueId == metaContent.uniqueLocation) {
                 mCards.set(position, nowCardItem);
                 mAdapter.notifyItemChanged(position);
                 return;
@@ -190,16 +271,23 @@ public class HomeFragment extends Fragment {
     public class NowCardMetaContent {
         public Integer type;
         public String title, description;
-        public Integer color, fragmentId, iconResource;
+        public Integer color, fragmentId, iconResource, uniqueLocation;
+        public Feed feed;
 
         public NowCardMetaContent(String title, Integer color, Integer type, Integer fragmentId,
-                                  Integer iconResource) {
+                                  Integer iconResource, int uniqueLocation) {
             this.title = title;
             this.color = color;
             this.type = type;
             this.fragmentId = fragmentId;
             this.iconResource = iconResource;
+            this.uniqueLocation = uniqueLocation;
         }
+
+        public void setFeed(Feed feed) {
+            this.feed = feed;
+        }
+
     }
 
 }

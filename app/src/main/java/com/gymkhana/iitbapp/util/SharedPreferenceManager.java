@@ -26,6 +26,14 @@ public class SharedPreferenceManager {
         editor.commit();
     }
 
+    public static final String getUsername(Context context) {
+        return load(context, Tags.USERNAME);
+    }
+
+    public static final String getPassword(Context context) {
+        return load(context, Tags.PASSWORD);
+    }
+
     public static final class Tags {
         public static final String NAME = "NAME";
         public static final String USERNAME = "USERNAME";
@@ -39,6 +47,7 @@ public class SharedPreferenceManager {
         public static final String TRUE = "TRUE";
         public static final String FALSE = "FALSE";
         public static final String OFFLINE = "OFFLINE";
+        public static final String ALARM = "ALARM";
         public static final String EMPTY = "";
 
     }

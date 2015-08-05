@@ -1,6 +1,7 @@
 package com.gymkhana.iitbapp.views;
 
 import android.content.Context;
+import android.text.Spanned;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +48,10 @@ public class NowCardListItem extends LinearLayout {
     }
 
     public void setDescription(String text) {
+        mDescription.setText(text);
+    }
+
+    public void setDescription(Spanned text) {
         mDescription.setText(text);
     }
 

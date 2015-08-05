@@ -25,7 +25,7 @@
             android:background="#ffffff"
             android:divider="@null"
             android:dividerHeight="0dp"
-            android:paddingTop="16dp"></ListView>
+            android:paddingTop="8dp"></ListView>
 
 
     </RelativeLayout>

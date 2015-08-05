@@ -7,7 +7,7 @@ import android.graphics.Color;
  * This class contains all the core static final variables in the app
  */
 public class Constants {
-    public static final Boolean PRODUCTION_MODE = true;
+    public static final Boolean PRODUCTION_MODE = false;
     public static final String GCM_SENDER_ID = "";
 
     public static final String JSON_DATA_TYPE_EVENT = "event";
@@ -19,6 +19,7 @@ public class Constants {
     public static final Integer DATA_TYPE_NOTICE = 2;
     public static final Integer DATA_TYPE_ANY = 3;
     public static final Integer DATA_TYPE_INFORMATION = 4;
+    public static final Integer DATA_TYPE_RSS = 5;
 
     // Json Total Data
     public static final String JSON_KEY_RESULTS = "results";
@@ -69,6 +70,7 @@ public class Constants {
         public static final String REQUEST_CONTENT_ID = "content_id";
         public static final String REQUEST_NEWS = "news";
         public static final String REQUEST_EVENT = "event";
+        public static final String REQUEST_GUID = "guid";
 
         public static final String RESPONSE_VIEWED = "viewed";
         public static final String RESPONSE_LIKED = "liked";
@@ -118,6 +120,9 @@ public class Constants {
 
         public static final int PRIMARY_DARK_NOTICES = Color.parseColor("#303F9F");
         public static final int PRIMARY_NOTICES = Color.parseColor("#3F51B5");
+
+        public static final int PRIMARY_DARK_FEED = Color.parseColor("#00838F");
+        public static final int PRIMARY_FEED = Color.parseColor("#0097A7");
 
         public static final int NOTICE_LOW = Color.parseColor("#FF9800");
         public static final int NOTICE_MEDIUM = Color.parseColor("#F57C00");

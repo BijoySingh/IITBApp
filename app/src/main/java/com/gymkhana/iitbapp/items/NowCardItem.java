@@ -1,5 +1,6 @@
 package com.gymkhana.iitbapp.items;
 
+import com.gymkhana.iitbapp.feed.RSSFeedConstants;
 import com.gymkhana.iitbapp.fragment.HomeFragment;
 
 import java.util.List;
@@ -7,12 +8,13 @@ import java.util.List;
 /**
  * Created by bijoy on 7/21/15.
  */
-public class NowCardItem {
+public class NowCardItem<T> {
     public String mTitle, mDescription;
-    public List<ApiItem> mData;
-    public Integer mIconResource, mColor, mType, mFragmentId;
+    public List<T> mData;
+    public Integer mIconResource, mColor, mType, mFragmentId, mUniqueId;
+    public RSSFeedConstants.Feed mFeed;
 
-    public NowCardItem(String mTitle, String mDescription, List<ApiItem> mData) {
+    public NowCardItem(String mTitle, String mDescription, List<T> mData) {
         this.mTitle = mTitle;
         this.mDescription = mDescription;
         this.mData = mData;
@@ -23,16 +25,18 @@ public class NowCardItem {
         this.mDescription = mDescription;
     }
 
-    public NowCardItem(HomeFragment.NowCardMetaContent metaContent, List<ApiItem> mData) {
+    public NowCardItem(HomeFragment.NowCardMetaContent metaContent, List<T> mData) {
         this.mTitle = metaContent.title;
         this.mColor = metaContent.color;
         this.mType = metaContent.type;
         this.mFragmentId = metaContent.fragmentId;
         this.mIconResource = metaContent.iconResource;
         this.mData = mData;
+        this.mUniqueId = metaContent.uniqueLocation;
+        this.mFeed = metaContent.feed;
     }
 
-    public NowCardItem(String mTitle, List<ApiItem> mData) {
+    public NowCardItem(String mTitle, List<T> mData) {
         this.mTitle = mTitle;
         this.mData = mData;
     }
