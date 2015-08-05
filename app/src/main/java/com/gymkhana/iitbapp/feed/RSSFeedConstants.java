@@ -13,9 +13,7 @@ public class RSSFeedConstants {
             new Feed("Placement Cell", "http://placements.iitb.ac.in/blog/?feed=atom", true,
                     "feed_placement_cell", "Updates from the placement cell @ IITBombay"),
             new Feed("Internship Portal", "http://placements.iitb.ac.in/trainingblog/?feed=atom", true,
-                    "feed_internship_portal", "Feed from the internship portal"),
-            new Feed("Dheerendra's Blog", "https://dheerendrarathor.wordpress.com/feed/atom/", true,
-                    "feed_dheeru", "Dheeru it is")
+                    "feed_internship_portal", "Feed from the internship portal")
     };
 
     public static final class Feed implements Serializable {
