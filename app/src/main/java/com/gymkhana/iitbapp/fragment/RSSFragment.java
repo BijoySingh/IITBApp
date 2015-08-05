@@ -65,7 +65,7 @@ public class RSSFragment extends Fragment {
 
         if (fileName != null) {
             String contents = Functions.offlineDataReader(mContext, fileName);
-            if (contents != null || !contents.isEmpty()) {
+            if (contents != null && !contents.isEmpty()) {
                 mFileExists = true;
                 RSSFeedChannel feedChannel = RSSFeedFetcher.parseFeed(contents);
                 gridView.setAdapter(new LVAdapterRSS(mContext, feedChannel.entries));

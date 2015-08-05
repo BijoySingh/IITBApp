@@ -77,7 +77,7 @@ public class MenuFragment extends Fragment {
 
         if (fileName != null) {
             String json = Functions.offlineDataReader(mContext, fileName);
-            if (json != null || !json.isEmpty()) {
+            if (json != null && !json.isEmpty()) {
                 mFileExists = true;
                 ApiUtil.onGetDataResult(json, dataType, mContext, gridView);
             }
