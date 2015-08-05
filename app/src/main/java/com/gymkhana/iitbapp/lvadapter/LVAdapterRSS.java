@@ -65,7 +65,7 @@ public class LVAdapterRSS extends ArrayAdapter<RSSFeedItem> {
         RSSFeedItem data = mValues.get(position);
 
         if (data != null) {
-            viewHolder.title.setText(data.title);
+            viewHolder.title.setText(Html.fromHtml(data.title).toString());
             viewHolder.description.setText(Html.fromHtml(data.description.trim()).toString());
             viewHolder.categoryImage.setIcon(
                     mContext.getResources().getDrawable(CategoryImages.getDrawable("feed")),

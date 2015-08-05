@@ -242,11 +242,11 @@ public class RSSFeedFetcher {
                             if (rssFeedItem == null) {
                                 feedChannel.title = text;
                             } else {
-                                rssFeedItem.title = Functions.correctUTFEncoding(text);
+                                rssFeedItem.title = text;
                             }
                         } else if (name.equals("content")) {
                             if (rssFeedItem != null) {
-                                rssFeedItem.description = Functions.correctUTFEncoding(text);
+                                rssFeedItem.description = text;
                             }
                         } else if (name.equals("id")) {
                             if (rssFeedItem != null) {

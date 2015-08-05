@@ -72,7 +72,7 @@ public class RSSViewerActivity extends ActionBarActivity {
         mViewHolder.horizontalScrollView =
                 (HorizontalScrollView) findViewById(R.id.horizontal_scroll_view);
 
-        mViewHolder.title.setText(mRSSItem.title);
+        mViewHolder.title.setText(Html.fromHtml(mRSSItem.title).toString());
         mViewHolder.description.setText(Html.fromHtml(mRSSItem.description));
         mViewHolder.categoryImage.setIcon(
                 mContext.getResources().getDrawable(CategoryImages.getDrawable("feed")),
