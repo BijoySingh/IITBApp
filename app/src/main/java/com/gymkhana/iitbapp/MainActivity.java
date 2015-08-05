@@ -190,7 +190,6 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
                 mContext,
                 SharedPreferenceManager.Tags.FIRST_TIME).contentEquals(getString(R.string.app_version))) {
             // This is the first time setup
-            setupRecurringAlarm();
         }
     }
 

@@ -4,8 +4,6 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 
-import com.gymkhana.iitbapp.util.SharedPreferenceManager;
-
 /**
  * Created by bijoy on 8/5/15.
  */
@@ -22,7 +20,7 @@ public class RSSFeedService extends IntentService {
     @Override
     protected void onHandleIntent(Intent workIntent) {
         Context context = getBaseContext();
-
+        /*
         for (RSSFeedConstants.Feed feed : RSSFeedConstants.feeds) {
             if (SharedPreferenceManager.load(context, feed.feed_id).contentEquals(SharedPreferenceManager.Tags.FALSE)) {
                 continue;
@@ -36,6 +34,6 @@ public class RSSFeedService extends IntentService {
             }
             RSSFeedFetcher.getFeedForNotification(context, feed.url, username, password, feed);
         }
-
+        */
     }
 }
