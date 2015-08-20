@@ -13,12 +13,13 @@ import android.widget.ListView;
 
 import com.gymkhana.iitbapp.MainActivity;
 import com.gymkhana.iitbapp.R;
-import com.gymkhana.iitbapp.feed.RSSFeedConstants;
-import com.gymkhana.iitbapp.lvadapter.LVAdapterRSSSubscription;
+import com.gymkhana.iitbapp.util.ApiUtil;
+import com.gymkhana.iitbapp.util.Constants;
 import com.gymkhana.iitbapp.util.Functions;
+import com.gymkhana.iitbapp.util.ServerUrls;
 
 @SuppressLint("NewApi")
-public class RSSSubscriptionFragment extends Fragment {
+public class FeedSubscriptionFragment extends Fragment {
 
     public String mTitle;
     public AdapterView.OnItemClickListener mOnItemClickListener;
@@ -31,8 +32,31 @@ public class RSSSubscriptionFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.listview_layout, container, false);
         ListView listView = (ListView) rootView.findViewById(R.id.list);
         listView.setOnItemClickListener(mOnItemClickListener);
-        listView.setAdapter(new LVAdapterRSSSubscription(mContext, RSSFeedConstants.feeds));
-        Functions.setActionBarTitle(mActivity, mContext.getString(R.string.drawer_feed));
+
+        String link = ServerUrls.getInstance().FEEDS;
+        String fileName = Constants.Filenames.INFO_FEED;
+        Integer dataType = Constants.DATA_TYPE_FEED_INFO;
+        boolean mFileExists = false;
+
+        if (fileName != null) {
+            String json = Functions.offlineDataReader(mContext, fileName);
+            if (json != null && !json.isEmpty()) {
+                mFileExists = true;
+                ApiUtil.onSubscriptionDataResult(json, mContext, listView);
+            }
+        }
+
+        ApiUtil.makeApiCall(
+                link,
+                mContext,
+                dataType,
+                listView,
+                null,
+                fileName,
+                mFileExists
+        );
+
+        Functions.setActionBarTitle(mActivity, mContext.getString(R.string.title_subscription));
         return rootView;
     }
 

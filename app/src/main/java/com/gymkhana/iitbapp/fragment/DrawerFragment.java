@@ -10,14 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.gymkhana.iitbapp.R;
 import com.gymkhana.iitbapp.items.GenericItem;
 import com.gymkhana.iitbapp.lvadapter.LVAdapterDrawer;
 import com.gymkhana.iitbapp.util.AuthFunctions;
-import com.gymkhana.iitbapp.util.SharedPreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,8 +123,8 @@ public class DrawerFragment extends Fragment {
                     getString(R.string.drawer_timetable),
                     DRAWER_TAG_TIMETABLE));
             mDrawerListView.add(new GenericItem(
-                    R.drawable.drawer_icon_about,
-                    getString(R.string.drawer_about),
+                    R.drawable.drawer_icon_settings,
+                    getString(R.string.drawer_settings),
                     DRAWER_TAG_ABOUT));
             mDrawerListView.add(new GenericItem(
                     R.drawable.drawer_icon_login,
@@ -151,7 +148,7 @@ public class DrawerFragment extends Fragment {
                     getString(R.string.drawer_notices),
                     DRAWER_TAG_NOTICES));
             mDrawerListView.add(new GenericItem(
-                    R.drawable.drawer_icon_news,
+                    R.drawable.drawer_icon_feed,
                     getString(R.string.drawer_feed),
                     DRAWER_TAG_FEED));
             mDrawerListView.add(new GenericItem(
@@ -163,31 +160,15 @@ public class DrawerFragment extends Fragment {
                     getString(R.string.drawer_timetable),
                     DRAWER_TAG_TIMETABLE));
             mDrawerListView.add(new GenericItem(
-                    R.drawable.drawer_icon_about,
-                    getString(R.string.drawer_about),
+                    R.drawable.drawer_icon_settings,
+                    getString(R.string.drawer_settings),
                     DRAWER_TAG_ABOUT));
-            mDrawerListView.add(new GenericItem(
-                    R.drawable.drawer_icon_login,
-                    getString(R.string.drawer_logout),
-                    DRAWER_TAG_LOGOUT));
         }
 
         GenericItem[] darray = new GenericItem[mDrawerListView.size()];
         mDrawerListView.toArray(darray);
 
         LVAdapterDrawer LVAdapterDrawer = new LVAdapterDrawer(getActivity(), darray);
-
-        RelativeLayout rl = (RelativeLayout) mDrawerLayout.findViewById(R.id.drawer_title);
-        rl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-        TextView name = (TextView) rl.findViewById(R.id.name);
-
-        name.setText(SharedPreferenceManager.load(getActivity(),
-                SharedPreferenceManager.Tags.NAME));
 
         mListView = (ListView) mDrawerLayout.findViewById(R.id.drawer_listview);
 

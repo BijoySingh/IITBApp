@@ -15,19 +15,20 @@ import android.widget.TextView;
 
 import com.gymkhana.iitbapp.MainActivity;
 import com.gymkhana.iitbapp.R;
-import com.gymkhana.iitbapp.feed.RSSFeedConstants;
-import com.gymkhana.iitbapp.fragment.RSSFragment;
+import com.gymkhana.iitbapp.items.FeedSubscriptionItem;
 import com.gymkhana.iitbapp.util.SharedPreferenceManager;
 import com.rey.material.widget.Switch;
 
+import java.util.List;
+
 /*Listview adapter for the navigation drawer listview*/
 
-public class LVAdapterRSSSubscription extends ArrayAdapter<RSSFeedConstants.Feed> {
+public class LVAdapterRSSSubscription extends ArrayAdapter<FeedSubscriptionItem> {
     private final Context mContext;
-    private final RSSFeedConstants.Feed[] mValues;
+    private final List<FeedSubscriptionItem> mValues;
     private final Integer mLayoutId;
 
-    public LVAdapterRSSSubscription(Context context, RSSFeedConstants.Feed[] values) {
+    public LVAdapterRSSSubscription(Context context, List<FeedSubscriptionItem> values) {
         super(context, R.layout.feed_list_item_layout, values);
         this.mLayoutId = R.layout.feed_list_item_layout;
         this.mContext = context;
@@ -37,7 +38,7 @@ public class LVAdapterRSSSubscription extends ArrayAdapter<RSSFeedConstants.Feed
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        final RSSFeedConstants.Feed data = mValues[position];
+        final FeedSubscriptionItem data = mValues.get(position);
 
         int layout = mLayoutId;
 
@@ -61,7 +62,7 @@ public class LVAdapterRSSSubscription extends ArrayAdapter<RSSFeedConstants.Feed
 
             viewHolder.logoImage.setImageResource(R.drawable.feed_options_icon);
             viewHolder.status.setVisibility(View.VISIBLE);
-            if (SharedPreferenceManager.load(mContext, data.feed_id).contentEquals(SharedPreferenceManager.Tags.FALSE)) {
+            if (SharedPreferenceManager.load(mContext, data.prefKey()).contentEquals(SharedPreferenceManager.Tags.FALSE)) {
                 viewHolder.status.setChecked(false);
             } else {
                 viewHolder.status.setChecked(true);
@@ -71,7 +72,6 @@ public class LVAdapterRSSSubscription extends ArrayAdapter<RSSFeedConstants.Feed
         View.OnClickListener openFeed = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RSSFragment.mFeed = data;
                 ((MainActivity) mContext).displayFragment(MainActivity.SHOW_FEED);
             }
         };
@@ -83,9 +83,9 @@ public class LVAdapterRSSSubscription extends ArrayAdapter<RSSFeedConstants.Feed
             @Override
             public void onCheckedChanged(Switch aSwitch, boolean b) {
                 if (b) {
-                    SharedPreferenceManager.save(mContext, data.feed_id, SharedPreferenceManager.Tags.TRUE);
+                    SharedPreferenceManager.save(mContext, data.prefKey(), SharedPreferenceManager.Tags.TRUE);
                 } else {
-                    SharedPreferenceManager.save(mContext, data.feed_id, SharedPreferenceManager.Tags.FALSE);
+                    SharedPreferenceManager.save(mContext, data.prefKey(), SharedPreferenceManager.Tags.FALSE);
                 }
             }
         });

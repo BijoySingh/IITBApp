@@ -3,14 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/backdrop"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_alignParentTop="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/iitb_material_background" />
-
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
@@ -24,15 +16,15 @@
         android:gravity="center_vertical"
         android:paddingLeft="16dp"
         android:text=""
-        android:textColor="@color/abc_primary_text_material_dark"
-        android:textSize="21sp"
+        android:textColor="@color/hint_text"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/face"
-        android:layout_width="48dp"
-        android:layout_height="64dp"
-        android:layout_marginLeft="8dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_margin="8dp"
         android:src="@drawable/ic_launcher" />
 
 </RelativeLayout>

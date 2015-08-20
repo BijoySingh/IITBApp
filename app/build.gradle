@@ -9,8 +9,8 @@ android {
         applicationId "com.gymkhana.iitbapp"
         minSdkVersion 11
         targetSdkVersion 21
-        versionCode 8
-        versionName "1.2.0"
+        versionCode 9
+        versionName "1.3.2"
     }
     buildTypes {
         release {

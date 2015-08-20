@@ -34,6 +34,15 @@ public class SharedPreferenceManager {
         return load(context, Tags.PASSWORD);
     }
 
+    public static final boolean getBoolean(Context context, String key, boolean defaultBoolean) {
+        String state = load(context, key);
+        if (state.contentEquals(Tags.TRUE))
+            return true;
+        if (state.contentEquals(Tags.FALSE))
+            return false;
+        return defaultBoolean;
+    }
+
     public static final class Tags {
         public static final String NAME = "NAME";
         public static final String USERNAME = "USERNAME";

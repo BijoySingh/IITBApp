@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.gymkhana.iitbapp.R;
 import com.gymkhana.iitbapp.database.TimetableDBHandler;
 import com.gymkhana.iitbapp.items.ApiItem;
+import com.gymkhana.iitbapp.items.FeedSubscriptionItem;
 import com.gymkhana.iitbapp.items.GenericItem;
 import com.gymkhana.iitbapp.items.InformationItem;
 import com.gymkhana.iitbapp.lvadapter.LVAdapterGeneric;
@@ -36,7 +37,9 @@ import org.json.JSONObject;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 /**
@@ -171,6 +174,8 @@ public class Functions {
             return ListItemCreator.createNewsItem(context, json);
         } else if (data_type.contentEquals(Constants.JSON_DATA_TYPE_NOTICE)) {
             return ListItemCreator.createNoticeItem(context, json);
+        } else if (data_type.contentEquals(Constants.JSON_DATA_TYPE_FEED)) {
+            return ListItemCreator.createFeedItem(context, json);
         }
         return null;
     }
@@ -186,6 +191,8 @@ public class Functions {
             return ListItemCreator.createNewsItem(context, json);
         } else if (data_type == Constants.DATA_TYPE_NOTICE) {
             return ListItemCreator.createNoticeItem(context, json);
+        } else if (data_type == Constants.DATA_TYPE_FEED) {
+            return ListItemCreator.createFeedItem(context, json);
         }
         return null;
     }
@@ -316,5 +323,43 @@ public class Functions {
                         Functions.makeToast(context, R.string.toast_timetable_deleted);
                     }
                 }).create().show();
+    }
+
+    public static List<FeedSubscriptionItem> getSubscriptions(final Context context) {
+        String fileName = Constants.Filenames.INFO_FEED;
+        if (fileName != null) {
+            String json = Functions.offlineDataReader(context, fileName);
+            if (json != null && !json.isEmpty()) {
+                return ApiUtil.getSubscriptionListFromJson(context, json);
+            }
+        }
+        return null;
+    }
+
+    public static Map<Integer, String> getSubscriptionMapping(final Context context) {
+        Map<Integer, String> mapping = new HashMap<>();
+
+        List<FeedSubscriptionItem> feeds = getSubscriptions(context);
+        for (FeedSubscriptionItem feed : feeds) {
+            mapping.put(feed.feed_id, feed.title);
+        }
+
+        return mapping;
+    }
+
+
+    public static boolean isNotifiableItem(Context context, ApiItem item) {
+        if (item.type.contentEquals(Constants.JSON_DATA_TYPE_FEED)) {
+            List<FeedSubscriptionItem> subscriptions = getSubscriptions(context);
+            for (FeedSubscriptionItem feed : subscriptions) {
+                if (feed.feed_id == item.feed_id) {
+                    if (SharedPreferenceManager.load(context, feed.prefKey()).contentEquals(SharedPreferenceManager.Tags.FALSE)) {
+                        return false;
+                    }
+                    return true;
+                }
+            }
+        }
+        return true;
     }
 }

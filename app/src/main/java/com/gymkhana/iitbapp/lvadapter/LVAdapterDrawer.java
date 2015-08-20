@@ -28,16 +28,6 @@ public class LVAdapterDrawer extends ArrayAdapter<GenericItem> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        String title = mValues[position].title;
-        if (title.contentEquals("")) {
-            LayoutInflater inflater = (LayoutInflater) mContext
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            View rowView;
-            rowView = inflater.inflate(R.layout.drawer_title_list_view, parent, false);
-
-            return rowView;
-        }
         LayoutInflater layoutInflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView;

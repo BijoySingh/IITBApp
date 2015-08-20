@@ -4,8 +4,10 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.text.Html;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
@@ -60,6 +62,14 @@ public class GCMNotificationIntentService extends GcmListenerService {
             String action = json.getString(Constants.Gcm.ACTION);
 
             ApiItem apiItem = Functions.getEventItem(getApplicationContext(), item, type);
+            if (!Functions.isNotifiableItem(this, apiItem)) {
+                Log.d(GCM_LOG_KEY, "Not a notifiable item");
+                return;
+            }
+
+            if (apiItem.type.contentEquals(Constants.JSON_DATA_TYPE_FEED)) {
+                apiItem.description = Html.fromHtml(apiItem.description).toString();
+            }
 
             Intent resultIntent = new Intent(this, ArticleActivity.class);
             resultIntent.putExtra(ArticleActivity.INTENT_ARTICLE, apiItem);
@@ -73,10 +83,13 @@ public class GCMNotificationIntentService extends GcmListenerService {
 
             NotificationCompat.Builder mNotificationBuilder = new NotificationCompat.Builder(this)
                     .setSmallIcon(R.drawable.notification_icon)
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
                     .setColor(apiItem.getAccentColor())
                     .setCategory(Notification.CATEGORY_SOCIAL)
                     .setContentTitle(apiItem.title)
                     .setContentText(apiItem.description)
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText(apiItem.description))
                     .setContentIntent(resultPendingIntent)
                     .setAutoCancel(true);
 

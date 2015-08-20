@@ -73,6 +73,13 @@ public class MenuFragment extends Fragment {
             link = ServerUrls.getInstance().NOTICES;
             dataType = Constants.DATA_TYPE_NOTICE;
             fileName = Constants.Filenames.NOTICE;
+        } else if (mMode == MainActivity.SHOW_FEED) {
+            title = mContext.getString(R.string.drawer_feed);
+            link = ServerUrls.getInstance().getFeedUrl(mContext);
+            if (link == null)
+                link = ServerUrls.getInstance().FEED_ENTRIES;
+            dataType = Constants.DATA_TYPE_FEED;
+            fileName = Constants.Filenames.FEED;
         }
 
         if (fileName != null) {

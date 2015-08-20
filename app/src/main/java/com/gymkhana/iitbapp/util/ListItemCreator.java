@@ -3,6 +3,7 @@ package com.gymkhana.iitbapp.util;
 import android.content.Context;
 
 import com.gymkhana.iitbapp.items.ApiItem;
+import com.gymkhana.iitbapp.items.FeedSubscriptionItem;
 import com.gymkhana.iitbapp.items.InformationItem;
 import com.gymkhana.iitbapp.items.TimestampItem;
 
@@ -89,6 +90,44 @@ public class ListItemCreator {
         e.source_name = source_json.getString(Constants.JSON_KEY_SOURCE_NAME);
         e.source_email = source_json.getString(Constants.JSON_KEY_SOURCE_EMAIL);
         e.source_designation = source_json.getString(Constants.JSON_KEY_SOURCE_DESIGNATION);
+        return e;
+    }
+
+    public static ApiItem createFeedItem(Context context, JSONObject json) throws Exception {
+        ApiItem e = new ApiItem();
+        e.type = Constants.JSON_DATA_TYPE_FEED;
+        e.title = Functions.correctUTFEncoding(json.getString(Constants.JSON_KEY_TITLE));
+        e.description = Functions.correctUTFEncoding(json.getString(Constants.JSON_KEY_CONTENT));
+        e.timestamp = json.getString(Constants.JSON_KEY_UPDATED);
+        e.article_time = new TimestampItem(context, e.timestamp);
+        e.id = json.getInt(Constants.JSON_KEY_ID);
+        e.feed_id = json.getInt(Constants.JSON_KEY_FEED_ID);
+        e.category = CategoryImages.Category.FEED;
+
+        e.image_links = new ArrayList<>();
+        JSONArray image_links = json.getJSONArray(Constants.JSON_KEY_IMAGE_LIST);
+        for (int i = 0; i < image_links.length(); i++) {
+            e.image_links.add(image_links.getString(i));
+        }
+
+        e.source_name = json.getString(Constants.JSON_KEY_AUTHOR);
+        e.source_email = json.getString(Constants.JSON_KEY_LINK);
+        e.source_designation = json.getString(Constants.JSON_KEY_LINK);
+
+        e.likes = json.getInt(Constants.JSON_KEY_LIKES);
+        e.views = json.getInt(Constants.JSON_KEY_VIEWS);
+        e.liked = json.getBoolean(Constants.JSON_KEY_LIKED);
+        e.viewed = json.getBoolean(Constants.JSON_KEY_VIEWED);
+        return e;
+    }
+
+    public static FeedSubscriptionItem createFeedInformation(Context context, JSONObject json) throws Exception {
+        FeedSubscriptionItem e = new FeedSubscriptionItem();
+        e.title = Functions.correctUTFEncoding(json.getString(Constants.JSON_KEY_TITLE));
+        e.description = Functions.correctUTFEncoding(json.getString(Constants.JSON_KEY_LINK));
+        e.feed_id = json.getInt(Constants.JSON_KEY_ID);
+        e.url = json.getString(Constants.JSON_KEY_LINK);
+        e.updated = json.getString(Constants.JSON_KEY_UPDATED);
         return e;
     }
 

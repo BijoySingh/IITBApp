@@ -9,6 +9,7 @@
 
     <string name="title_home">Home</string>
     <string name="title_timetable">Timetable</string>
+    <string name="title_subscription">Subscription</string>
 
     <string name="remove_timetable">Remove Timetable?</string>
     <string name="delete_database_message">All your stored courses will be removed from the
@@ -32,8 +33,8 @@
     <string name="input_course_location">Location</string>
     <string name="title_activity_article">Article</string>
 
-    <string name="feed_insight">Insight Feed</string>
-    <string name="feed_internship_portal">Internship Portal</string>
-    <string name="feed_placement_cell">Placement Cell</string>
+    <string name="feed_subscription">Subscriptions</string>
+    <string name="feed_subscription_details">Update or change the feeds you are subscribed to</string>
 
+    <string name="autofill">Automatically fill slot?</string>
 </resources>

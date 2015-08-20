@@ -13,11 +13,8 @@ import android.view.ViewGroup;
 
 import com.gymkhana.iitbapp.MainActivity;
 import com.gymkhana.iitbapp.R;
-import com.gymkhana.iitbapp.feed.RSSFeedConstants;
-import com.gymkhana.iitbapp.feed.RSSFeedConstants.Feed;
-import com.gymkhana.iitbapp.feed.RSSFeedFetcher;
-import com.gymkhana.iitbapp.feed.RSSFeedItem;
 import com.gymkhana.iitbapp.items.ApiItem;
+import com.gymkhana.iitbapp.items.FeedSubscriptionItem;
 import com.gymkhana.iitbapp.items.NowCardItem;
 import com.gymkhana.iitbapp.lvadapter.HomeRecyclerViewAdapter;
 import com.gymkhana.iitbapp.util.ApiUtil;
@@ -58,7 +55,7 @@ public class HomeFragment extends Fragment {
         addEventCard(isRefreshCall);
         addNewsCard(isRefreshCall);
         addNoticeCard(isRefreshCall);
-        addFeedCards(isRefreshCall);
+        addFeedCard(isRefreshCall);
     }
 
     @Override
@@ -157,67 +154,64 @@ public class HomeFragment extends Fragment {
         );
     }
 
-    public void addOfflineFeedCard(final NowCardMetaContent metaContent) {
-
-        String xml = Functions.offlineDataReader(mContext, metaContent.feed.filename());
-
-        if (xml != null || !xml.isEmpty()) {
-            addFeedCard(metaContent, RSSFeedFetcher.parseFeed(xml).getFeed(3));
-        }
-
-    }
-
     public void addFeedCards(boolean isRefreshCall) {
-        int unique_position = 3;
-        for (Feed feed : RSSFeedConstants.feeds) {
-            if (SharedPreferenceManager.load(mContext, feed.feed_id).contentEquals(SharedPreferenceManager.Tags.FALSE)) {
-                unique_position += 1;
-                continue;
-            }
+        List<FeedSubscriptionItem> feedList = Functions.getSubscriptions(mContext);
 
-            NowCardMetaContent metaContent = new NowCardMetaContent(
-                    feed.title,
-                    Constants.Colors.PRIMARY_DARK_FEED,
-                    Constants.DATA_TYPE_RSS,
-                    MainActivity.SHOW_FEED,
-                    R.drawable.drawer_icon_news,
-                    unique_position);
-            metaContent.setFeed(feed);
-            unique_position += 1;
+        int position = 3;
+        for (FeedSubscriptionItem feed : feedList) {
+            if (SharedPreferenceManager.getBoolean(mContext, feed.prefKey(), true)) {
+                NowCardMetaContent metaContent = new NowCardMetaContent(
+                        feed.title,
+                        Constants.Colors.PRIMARY_DARK_FEED,
+                        Constants.DATA_TYPE_FEED,
+                        MainActivity.SHOW_FEED,
+                        R.drawable.drawer_icon_feed, position);
 
-            if (!isRefreshCall) {
-                addOfflineFeedCard(metaContent);
-            }
-
-            String username = null, password = null;
-
-            if (feed.authenticated) {
-                username = SharedPreferenceManager.getUsername(mContext);
-                password = SharedPreferenceManager.getPassword(mContext);
-            }
-            RSSFeedFetcher.getFeedForHome(mContext, feed.url, username, password, this, metaContent, feed);
-        }
-    }
-
-    public void addFeedCard(NowCardMetaContent metaContent, List<RSSFeedItem> list) {
-        mSwipeRefreshLayout.setRefreshing(false);
-        if (list == null || list.isEmpty()) {
-            return;
-        }
-
-        NowCardItem nowCardItem = new NowCardItem(metaContent, list);
-
-        int position = 0;
-        for (NowCardItem card : mCards) {
-            if (card.mUniqueId == metaContent.uniqueLocation) {
-                mCards.set(position, nowCardItem);
-                mAdapter.notifyItemChanged(position);
-                return;
+                if (!isRefreshCall) {
+                    addOfflineCard(
+                            metaContent,
+                            Constants.DATA_TYPE_FEED,
+                            feed.filename()
+                    );
+                }
+                addOnlineCard(
+                        metaContent,
+                        ServerUrls.getInstance().FEED_ENTRIES + "?id=" + feed.feed_id,
+                        Constants.DATA_TYPE_FEED,
+                        feed.filename()
+                );
             }
             position++;
         }
-        mCards.add(nowCardItem);
-        mAdapter.notifyItemInserted(mCards.size());
+    }
+
+    // This adds a single card with the feed
+    public void addFeedCard(boolean isRefreshCall) {
+        String link = ServerUrls.getInstance().getFeedUrl(mContext);
+
+        if (link == null) {
+            return;
+        }
+
+        NowCardMetaContent metaContent = new NowCardMetaContent(
+                getString(R.string.drawer_feed),
+                Constants.Colors.PRIMARY_DARK_FEED,
+                Constants.DATA_TYPE_FEED, MainActivity.SHOW_FEED,
+                R.drawable.drawer_icon_news, 3);
+        if (!isRefreshCall) {
+            addOfflineCard(
+                    metaContent,
+                    Constants.DATA_TYPE_FEED,
+                    Constants.Filenames.FEED
+            );
+        }
+
+        addOnlineCard(
+                metaContent,
+                link,
+                Constants.DATA_TYPE_FEED,
+                Constants.Filenames.FEED
+        );
     }
 
     public void addCard(NowCardMetaContent metaContent, List<ApiItem> list) {
@@ -272,7 +266,7 @@ public class HomeFragment extends Fragment {
         public Integer type;
         public String title, description;
         public Integer color, fragmentId, iconResource, uniqueLocation;
-        public Feed feed;
+        public FeedSubscriptionItem feed;
 
         public NowCardMetaContent(String title, Integer color, Integer type, Integer fragmentId,
                                   Integer iconResource, int uniqueLocation) {
@@ -284,7 +278,7 @@ public class HomeFragment extends Fragment {
             this.uniqueLocation = uniqueLocation;
         }
 
-        public void setFeed(Feed feed) {
+        public void setFeed(FeedSubscriptionItem feed) {
             this.feed = feed;
         }
 

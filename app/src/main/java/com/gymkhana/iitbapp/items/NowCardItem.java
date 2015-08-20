@@ -1,6 +1,5 @@
 package com.gymkhana.iitbapp.items;
 
-import com.gymkhana.iitbapp.feed.RSSFeedConstants;
 import com.gymkhana.iitbapp.fragment.HomeFragment;
 
 import java.util.List;
@@ -12,7 +11,7 @@ public class NowCardItem<T> {
     public String mTitle, mDescription;
     public List<T> mData;
     public Integer mIconResource, mColor, mType, mFragmentId, mUniqueId;
-    public RSSFeedConstants.Feed mFeed;
+    public FeedSubscriptionItem mFeed;
 
     public NowCardItem(String mTitle, String mDescription, List<T> mData) {
         this.mTitle = mTitle;

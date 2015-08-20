@@ -41,13 +41,19 @@
     <string name="settings_about_us_title">About Us</string>
     <string name="settings_about_us_description">About IITBApp project developers</string>
 
+  <string name="settings_feed_title">Subscription</string>
+  <string name="settings_feed_description">Feed that you are subscribed to</string>
+
   <string name="settings_report_bug">Report a Bug</string>
   <string name="settings_report_bug_description">Help us fix it quickly</string>
 
     <string name="settings_rate_title">Rate Us</string>
     <string name="settings_rate_description">Give us your valuable feedback</string>
 
-    <string name="developer_bijoy">Bijoy Singh</string>
+  <string name="settings_logout_title">Logout</string>
+  <string name="settings_logout_description">Logout from IITBApp</string>
+
+  <string name="developer_bijoy">Bijoy Singh</string>
     <string name="developer_dheerendra">Dheerendra Rathore</string>
     <string name="developer_aman">Aman Gour</string>
     <string name="developer_ranveer">Ranveer Aggarwal</string>

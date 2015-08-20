@@ -15,10 +15,7 @@ import android.widget.TextView;
 import com.gymkhana.iitbapp.MainActivity;
 import com.gymkhana.iitbapp.R;
 import com.gymkhana.iitbapp.activity.ArticleActivity;
-import com.gymkhana.iitbapp.activity.RSSViewerActivity;
-import com.gymkhana.iitbapp.feed.RSSFeedItem;
 import com.gymkhana.iitbapp.fragment.HomeFragment;
-import com.gymkhana.iitbapp.fragment.RSSFragment;
 import com.gymkhana.iitbapp.items.ApiItem;
 import com.gymkhana.iitbapp.items.NowCardItem;
 import com.gymkhana.iitbapp.util.Constants;
@@ -55,10 +52,6 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         View.OnClickListener showFragment = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (data.mType == Constants.DATA_TYPE_RSS) {
-                    RSSFragment.mFeed = data.mFeed;
-
-                }
                 ((MainActivity) mContext).displayFragment(data.mFragmentId);
             }
         };
@@ -81,31 +74,20 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         for (final Object object : data.mData) {
             NowCardListItem item = new NowCardListItem(mContext);
 
-            if (data.mType == Constants.DATA_TYPE_RSS) {
-                final RSSFeedItem rssFeedItem = (RSSFeedItem) object;
-                item.setTitle(rssFeedItem.title);
-                item.setDescription(Html.fromHtml(rssFeedItem.description.trim()).toString());
-                item.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent article = new Intent(mContext, RSSViewerActivity.class);
-                        article.putExtra(RSSViewerActivity.INTENT_RSS, rssFeedItem);
-                        mContext.startActivity(article);
-                    }
-                });
-            } else {
-                final ApiItem apiItem = (ApiItem) object;
-                item.setTitle(apiItem.title);
-                item.setDescription(apiItem.description.trim());
-                item.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent article = new Intent(mContext, ArticleActivity.class);
-                        article.putExtra(ArticleActivity.INTENT_ARTICLE, apiItem);
-                        mContext.startActivity(article);
-                    }
-                });
-            }
+
+            final ApiItem apiItem = (ApiItem) object;
+            item.setTitle(apiItem.title);
+            item.setDescription(apiItem.description.trim());
+            if (data.mType == Constants.DATA_TYPE_FEED)
+                item.setDescription(Html.fromHtml(apiItem.description.trim()).toString());
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent article = new Intent(mContext, ArticleActivity.class);
+                    article.putExtra(ArticleActivity.INTENT_ARTICLE, apiItem);
+                    mContext.startActivity(article);
+                }
+            });
 
             holder.content.addView(item);
             if (++count == MAX_COUNT) {

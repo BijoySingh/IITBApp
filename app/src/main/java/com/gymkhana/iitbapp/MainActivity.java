@@ -1,14 +1,11 @@
 package com.gymkhana.iitbapp;
 
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -20,13 +17,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.gymkhana.iitbapp.activity.LoginActivity;
-import com.gymkhana.iitbapp.feed.RSSFeedService;
 import com.gymkhana.iitbapp.fragment.DrawerFragment;
+import com.gymkhana.iitbapp.fragment.FeedSubscriptionFragment;
 import com.gymkhana.iitbapp.fragment.GenericListFragment;
 import com.gymkhana.iitbapp.fragment.HomeFragment;
 import com.gymkhana.iitbapp.fragment.MenuFragment;
-import com.gymkhana.iitbapp.fragment.RSSFragment;
-import com.gymkhana.iitbapp.fragment.RSSSubscriptionFragment;
 import com.gymkhana.iitbapp.items.GenericItem;
 import com.gymkhana.iitbapp.util.AuthFunctions;
 import com.gymkhana.iitbapp.util.Functions;
@@ -36,6 +31,8 @@ import com.gymkhana.iitbapp.util.SharedPreferenceManager;
 public class MainActivity extends ActionBarActivity implements DrawerFragment.OnFragmentInteractionListener {
 
     public static String FRAME_TYPE_KEY = "FRAME_TYPE";
+    public static String FRAGMENT_KEY = "FRAGMENT_TYPE";
+
     public static Integer SHOW_HOME = 0;
     public static Integer SHOW_EVENTS = 1;
     public static Integer SHOW_NEWS = 2;
@@ -59,6 +56,20 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
         firstTimeSetup();
         ListContent.resetVariables();
 
+        int startState = SHOW_INFORMATION;
+        if (AuthFunctions.isUserLoggedIn(mContext)) {
+            startState = SHOW_HOME;
+        }
+
+        try {
+            Integer tempState = getIntent().getExtras().getInt(FRAGMENT_KEY);
+            if (tempState != null) {
+                startState = tempState;
+            }
+        } catch (Exception e) {
+            ;
+        }
+
         Functions.setActionBar(this);
         Functions.setActionBarTitle(this, getString(R.string.title_home));
 
@@ -69,6 +80,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mDrawerFragment.mDrawerLayout.closeDrawers();
                 GenericItem glvi = (GenericItem) parent.getItemAtPosition(position);
                 if (glvi.tag == DrawerFragment.DRAWER_TAG_HOME) {
                     displayFragment(SHOW_HOME);
@@ -81,7 +93,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
                 } else if (glvi.tag == DrawerFragment.DRAWER_TAG_INFORMATION) {
                     displayFragment(SHOW_INFORMATION);
                 } else if (glvi.tag == DrawerFragment.DRAWER_TAG_FEED) {
-                    displayFragment(SHOW_FEED_PREFERENCES);
+                    displayFragment(SHOW_FEED);
                 } else if (glvi.tag == DrawerFragment.DRAWER_TAG_TIMETABLE) {
                     displayFragment(SHOW_TIMETABLE);
                 } else if (glvi.tag == DrawerFragment.DRAWER_TAG_ABOUT) {
@@ -96,11 +108,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
             }
         });
 
-        if (AuthFunctions.isUserLoggedIn(mContext)) {
-            displayFragment(MainActivity.SHOW_HOME);
-        } else {
-            displayFragment(MainActivity.SHOW_INFORMATION);
-        }
+        displayFragment(startState);
     }
 
     public void displayFragment(int position) {
@@ -134,7 +142,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
                     ListContent.mTimetableOnItemClickListener;
             fragment = new GenericListFragment();
         } else if (position == SHOW_ABOUT) {
-            GenericListFragment.mTitle = getString(R.string.drawer_about);
+            GenericListFragment.mTitle = getString(R.string.drawer_settings);
             ListContent.SettingsFragmentData(mContext);
             GenericListFragment.mList = ListContent.mSettingsList;
             GenericListFragment.mOnItemClickListener =
@@ -147,9 +155,10 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
             GenericListFragment.mOnItemClickListener = null;
             fragment = new GenericListFragment();
         } else if (position == SHOW_FEED) {
-            fragment = new RSSFragment();
+            fragment = new MenuFragment();
+            bundle.putInt(FRAME_TYPE_KEY, SHOW_FEED);
         } else if (position == SHOW_FEED_PREFERENCES) {
-            fragment = new RSSSubscriptionFragment();
+            fragment = new FeedSubscriptionFragment();
         }
 
         fragment.setArguments(bundle);
@@ -170,8 +179,6 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
         //super.onBackPressed();
         if (mFragmentPosition == SHOW_DEVELOPERS) {
             displayFragment(SHOW_ABOUT);
-        } else if (mFragmentPosition == SHOW_FEED) {
-            displayFragment(SHOW_FEED_PREFERENCES);
         } else if (mFragmentPosition != SHOW_HOME) {
             displayFragment(SHOW_HOME);
         } else {
@@ -191,21 +198,6 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
                 SharedPreferenceManager.Tags.FIRST_TIME).contentEquals(getString(R.string.app_version))) {
             // This is the first time setup
         }
-    }
-
-    public void setupRecurringAlarm() {
-        if (SharedPreferenceManager.load(mContext, SharedPreferenceManager.Tags.ALARM)
-                .contentEquals(SharedPreferenceManager.Tags.TRUE)) {
-            return;
-        }
-
-        int INTERVAL = 60 * 60 * 1000;
-        Intent intent = new Intent(mContext, RSSFeedService.class);
-        PendingIntent pending_intent = PendingIntent.getService(mContext, 0, intent, 0);
-
-        AlarmManager alarm_mgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        alarm_mgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME,
-                SystemClock.elapsedRealtime(), INTERVAL, pending_intent);
     }
 
     @Override

@@ -1,5 +1,11 @@
 package com.gymkhana.iitbapp.util;
 
+import android.content.Context;
+
+import com.gymkhana.iitbapp.items.FeedSubscriptionItem;
+
+import java.util.List;
+
 /**
  * Created by bijoy on 7/22/15.
  */
@@ -8,7 +14,7 @@ public class ServerUrls {
     public static final String DEBUG_URL = "http://gymkhana.iitb.ac.in/iitbapp_dev/";
     public String SERVER, GCM_REGISTER, GCM_UNREGISTER, IITB_HOME, ACADEMIC_CAL, API, USER,
             NEWS, EVENTS, NOTICES, PUBLIC_API, INFORMATION_API, DEPARTMENTS, CLUBS, CONTACTS, EMERGENCY,
-            AUTHENTICATE, LOGOUT, BUG, FEED;
+            AUTHENTICATE, LOGOUT, BUG, FEEDS, FEED_ENTRIES;
 
     private ServerUrls(String serverUrl) {
         SERVER = serverUrl;
@@ -24,7 +30,8 @@ public class ServerUrls {
         LOGOUT = USER + "logout/";
         EVENTS = API + "event/";
         NOTICES = API + "notice/";
-        FEED = API + "feed/";
+        FEEDS = API + "feeds/";
+        FEED_ENTRIES = API + "feeds/entries/";
         PUBLIC_API = SERVER + "public/api/";
         INFORMATION_API = PUBLIC_API + "information/";
         DEPARTMENTS = INFORMATION_API + "department/";
@@ -39,5 +46,22 @@ public class ServerUrls {
         } else {
             return new ServerUrls(DEBUG_URL);
         }
+    }
+
+    public String getFeedUrl(Context context) {
+        String link = FEED_ENTRIES;
+        String append = "?id=";
+        List<FeedSubscriptionItem> feedList = Functions.getSubscriptions(context);
+        if (feedList != null && !feedList.isEmpty()) {
+            for (FeedSubscriptionItem feed : feedList) {
+                if (!SharedPreferenceManager.load(context, feed.prefKey()).contentEquals(SharedPreferenceManager.Tags.FALSE)) {
+                    append += feed.feed_id + ",";
+                }
+            }
+            if (append.contentEquals("?id="))
+                return null;
+            link += append;
+        }
+        return link;
     }
 }

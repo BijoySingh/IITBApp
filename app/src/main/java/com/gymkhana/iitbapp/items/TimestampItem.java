@@ -54,6 +54,9 @@ public class TimestampItem implements Serializable {
         Integer hr = Integer.parseInt(hh);
         Integer min = Integer.parseInt(mm);
 
+        if (mm.length() == 1)
+            mm = "0" + mm;
+
         if (hr == 0 && min == 0) {
             return MIDNIGHT;
         } else if (hr == 0) {

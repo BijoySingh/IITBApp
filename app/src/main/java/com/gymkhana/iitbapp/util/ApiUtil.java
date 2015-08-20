@@ -1,6 +1,7 @@
 package com.gymkhana.iitbapp.util;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ListView;
@@ -15,11 +16,13 @@ import com.android.volley.toolbox.Volley;
 import com.gymkhana.iitbapp.R;
 import com.gymkhana.iitbapp.fragment.HomeFragment;
 import com.gymkhana.iitbapp.items.ApiItem;
+import com.gymkhana.iitbapp.items.FeedSubscriptionItem;
 import com.gymkhana.iitbapp.items.GenericItem;
 import com.gymkhana.iitbapp.items.InformationItem;
 import com.gymkhana.iitbapp.lvadapter.LVAdapterGeneric;
 import com.gymkhana.iitbapp.lvadapter.LVAdapterInformation;
 import com.gymkhana.iitbapp.lvadapter.LVAdapterMain;
+import com.gymkhana.iitbapp.lvadapter.LVAdapterRSSSubscription;
 
 import org.apache.http.HttpStatus;
 import org.json.JSONArray;
@@ -42,6 +45,7 @@ public class ApiUtil {
                                    final Integer iconResource,
                                    final String storeFile,
                                    final boolean fileExists) {
+        Log.d("API_UTIL", storeFile + " => " + link);
         StringRequest jsonRequest = new StringRequest
                 (Request.Method.GET, link, new Response
                         .Listener<String>() {
@@ -52,11 +56,12 @@ public class ApiUtil {
                                 dataType == Constants.DATA_TYPE_EVENT ||
                                 dataType == Constants.DATA_TYPE_NOTICE ||
                                 dataType == Constants.DATA_TYPE_ANY) {
-                            writeFile = onGetDataResult(response, dataType, context,
-                                    adapterView);
+                            writeFile = onGetDataResult(response, dataType, context, adapterView);
                         } else if (dataType == Constants.DATA_TYPE_INFORMATION) {
                             writeFile = onGetInformationResult(response,
                                     context, iconResource, adapterView, fileExists);
+                        } else if (dataType == Constants.DATA_TYPE_FEED_INFO) {
+                            writeFile = onSubscriptionDataResult(response, context, adapterView);
                         }
 
                         if (writeFile && storeFile != null) {
@@ -97,6 +102,7 @@ public class ApiUtil {
                                           final String storeFile,
                                           final HomeFragment homeFragment,
                                           final HomeFragment.NowCardMetaContent metaContent) {
+        Log.d("API_UTIL", storeFile + " => " + link);
         StringRequest jsonRequest = new StringRequest
                 (Request.Method.GET, link, new Response
                         .Listener<String>() {
@@ -106,7 +112,8 @@ public class ApiUtil {
 
                         if (dataType == Constants.DATA_TYPE_NEWS ||
                                 dataType == Constants.DATA_TYPE_EVENT ||
-                                dataType == Constants.DATA_TYPE_NOTICE) {
+                                dataType == Constants.DATA_TYPE_NOTICE ||
+                                dataType == Constants.DATA_TYPE_FEED) {
                             eventItems = getEventListFromJson(context, response, dataType);
                         }
 
@@ -145,8 +152,26 @@ public class ApiUtil {
         try {
             JSONObject jsonObject = new JSONObject(data);
             JSONArray jsonArray = jsonObject.getJSONArray(Constants.JSON_KEY_RESULTS);
-            List<ApiItem> lst =
-                    Functions.getEventItemList(context, jsonArray, dataType);
+            List<ApiItem> lst = Functions.getEventItemList(context, jsonArray, dataType);
+            return lst;
+        } catch (Exception e) {
+        }
+        return new ArrayList<>();
+    }
+
+    public static List<FeedSubscriptionItem> getSubscriptionListFromJson(Context context, String data) {
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            JSONArray json = jsonObject.getJSONArray(Constants.JSON_KEY_RESULTS);
+            List<FeedSubscriptionItem> lst = new ArrayList<>();
+
+            for (int i = 0; i < json.length(); i++) {
+                try {
+                    lst.add(ListItemCreator.createFeedInformation(context, json.getJSONObject(i)));
+                } catch (Exception e) {
+                    Log.e("PARSE_JSON_IITBAPP", "Error", e);
+                }
+            }
             return lst;
         } catch (Exception e) {
         }
@@ -176,8 +201,22 @@ public class ApiUtil {
         return false;
     }
 
-    public static boolean onGetDataResult(String data, Integer dataType, Context context, View
+    public static boolean onSubscriptionDataResult(String data, Context context, View
             adapterView) {
+        try {
+            List<FeedSubscriptionItem> lst = getSubscriptionListFromJson(context, data);
+            if (lst.isEmpty() || adapterView == null) {
+                return onCreateEmptyList(context, adapterView);
+            }
+            LVAdapterRSSSubscription lvAdapterMain = new LVAdapterRSSSubscription(context, lst);
+            ((ListView) adapterView).setAdapter(lvAdapterMain);
+            return true;
+        } catch (Exception e) {
+            return onCreateEmptyGrid(context, adapterView);
+        }
+    }
+
+    public static boolean onGetDataResult(String data, Integer dataType, Context context, View adapterView) {
         try {
             List<ApiItem> lst = getEventListFromJson(context, data, dataType);
             if (lst.isEmpty() || adapterView == null) {
@@ -190,7 +229,6 @@ public class ApiUtil {
             return onCreateEmptyGrid(context, adapterView);
         }
     }
-
 
     public static boolean onCreateEmptyView(Context context, View adapterView, boolean isGrid) {
         if (adapterView == null) {

@@ -6,7 +6,7 @@ package com.gymkhana.iitbapp.lvadapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +19,7 @@ import com.gymkhana.iitbapp.R;
 import com.gymkhana.iitbapp.items.ApiItem;
 import com.gymkhana.iitbapp.util.CategoryImages;
 import com.gymkhana.iitbapp.util.Constants;
+import com.gymkhana.iitbapp.util.Functions;
 import com.rey.material.widget.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
@@ -32,14 +33,14 @@ public class LVAdapterMain extends ArrayAdapter<ApiItem> {
     private final Context mContext;
     private final List<ApiItem> mValues;
     private final Integer mLayoutId;
-    private Map<Integer, Drawable> mImages;
+    private Map<Integer, String> mFeedMapping = new HashMap<>();
 
     public LVAdapterMain(Context context, List<ApiItem> values) {
         super(context, R.layout.grid_item_layout, values);
         this.mLayoutId = R.layout.grid_item_layout;
         this.mContext = context;
         this.mValues = values;
-        mImages = new HashMap<>();
+        this.mFeedMapping = Functions.getSubscriptionMapping(context);
     }
 
     @Override
@@ -130,6 +131,11 @@ public class LVAdapterMain extends ArrayAdapter<ApiItem> {
                 viewHolder.viewIcon.setVisibility(View.GONE);
                 viewHolder.views.setVisibility(View.GONE);
 
+            } else if (data.type.contentEquals(Constants.JSON_DATA_TYPE_FEED)) {
+                viewHolder.description.setText(Html.fromHtml(data.description.trim()).toString());
+                if (mFeedMapping.containsKey(data.feed_id))
+                    data.source_designation = mFeedMapping.get(data.feed_id);
+                viewHolder.sourceName.setText(data.source_name + ", " + data.source_designation);
             }
         }
         return convertView;

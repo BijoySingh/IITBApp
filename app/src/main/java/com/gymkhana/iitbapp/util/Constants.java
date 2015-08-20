@@ -13,6 +13,7 @@ public class Constants {
     public static final String JSON_DATA_TYPE_EVENT = "event";
     public static final String JSON_DATA_TYPE_NEWS = "news";
     public static final String JSON_DATA_TYPE_NOTICE = "notice";
+    public static final String JSON_DATA_TYPE_FEED = "feed";
 
     public static final Integer DATA_TYPE_EVENT = 0;
     public static final Integer DATA_TYPE_NEWS = 1;
@@ -20,6 +21,8 @@ public class Constants {
     public static final Integer DATA_TYPE_ANY = 3;
     public static final Integer DATA_TYPE_INFORMATION = 4;
     public static final Integer DATA_TYPE_RSS = 5;
+    public static final Integer DATA_TYPE_FEED = 6;
+    public static final Integer DATA_TYPE_FEED_INFO = 6;
 
     // Json Total Data
     public static final String JSON_KEY_RESULTS = "results";
@@ -38,14 +41,17 @@ public class Constants {
     public static final String JSON_KEY_CATEGORY = "category";
     public static final String JSON_KEY_TITLE = "title";
     public static final String JSON_KEY_DESCRIPTION = "description";
+
     // Source Json
     public static final String JSON_KEY_SOURCE_JSON = "posted_by";
     public static final String JSON_KEY_SOURCE_NAME = "name";
     public static final String JSON_KEY_SOURCE_DESIGNATION = "post";
     public static final String JSON_KEY_SOURCE_EMAIL = "email";
+
     // Events Json
     public static final String JSON_KEY_EVENT_TIMESTAMP = "event_time";
     public static final String JSON_KEY_LOCATION = "event_place";
+
     // Notice Json
     public static final String JSON_KEY_PRIORITY = "priority";
     public static final String JSON_KEY_EXPIRATION = "expiration_date";
@@ -54,22 +60,24 @@ public class Constants {
     public static final String JSON_KEY_LINK = "link";
     public static final String JSON_KEY_EMAIL = "email";
 
+    //Feed Json
+    public static final String JSON_KEY_CONTENT = "content";
+    public static final String JSON_KEY_AUTHOR = "author";
+    public static final String JSON_KEY_UPDATED = "updated";
+    public static final String JSON_KEY_FEED_ID = "feed_config";
+
     public static final Integer LOGIN_REQUEST_CODE = 0;
     public static final Integer LOGIN_LOG_INTO = 1;
     public static final Integer LOGIN_LDAP_LOGIN = 2;
 
     public static final String PACKAGE_NAME_INSTIMAP = "in.designlabs.instimap";
 
-    public static final String NOTICE_PRIORITY_LOW = "0";
-    public static final String NOTICE_PRIORITY_MEDIUM = "1";
-    public static final String NOTICE_PRIORITY_HIGH = "2";
-    public static final String NOTICE_PRIORITY_URGENT = "3";
-
     public static final class Article {
         public static final String REQUEST_USER = "user";
         public static final String REQUEST_CONTENT_ID = "content_id";
         public static final String REQUEST_NEWS = "news";
         public static final String REQUEST_EVENT = "event";
+        public static final String REQUEST_ENTRY = "entry";
         public static final String REQUEST_GUID = "guid";
 
         public static final String RESPONSE_VIEWED = "viewed";
@@ -90,6 +98,8 @@ public class Constants {
         public static final String NEWS = "cache_news.txt";
         public static final String EVENT = "cache_event.txt";
         public static final String NOTICE = "cache_notice.txt";
+        public static final String FEED = "cache_feed.txt";
+        public static final String INFO_FEED = "cache_info_feed.txt";
         public static final String INFO_GROUPS = "cache_info_groups.txt";
         public static final String INFO_DEPARTMENT = "cache_info_departments.txt";
         public static final String INFO_CONTACTS = "cache_info_contacts.txt";
@@ -123,11 +133,6 @@ public class Constants {
 
         public static final int PRIMARY_DARK_FEED = Color.parseColor("#00838F");
         public static final int PRIMARY_FEED = Color.parseColor("#0097A7");
-
-        public static final int NOTICE_LOW = Color.parseColor("#FF9800");
-        public static final int NOTICE_MEDIUM = Color.parseColor("#F57C00");
-        public static final int NOTICE_HIGH = Color.parseColor("#E64A19");
-        public static final int NOTICE_URGENT = Color.parseColor("#D32F2F");
     }
 
     public static final class User {

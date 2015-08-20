@@ -46,6 +46,7 @@
                     android:background="@drawable/article_title_bg_gradient"
                     android:padding="16sp"
                     android:textColor="@color/white"
+                    android:textIsSelectable="true"
                     android:textSize="32sp"/>
             </RelativeLayout>
 
@@ -78,6 +79,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/secondary_text"
+                        android:textIsSelectable="true"
                         android:textSize="18sp"/>
 
                     <TextView
@@ -85,6 +87,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/hint_text"
+                        android:textIsSelectable="true"
                         android:textSize="14sp"/>
 
                 </LinearLayout>
@@ -126,6 +129,7 @@
                 android:paddingRight="21sp"
                 android:paddingTop="6sp"
                 android:textColor="@color/secondary_text"
+                android:textIsSelectable="true"
                 android:textSize="16sp"/>
 
             <RelativeLayout

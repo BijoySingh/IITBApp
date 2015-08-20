@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -20,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.gymkhana.iitbapp.MainActivity;
 import com.gymkhana.iitbapp.R;
 import com.gymkhana.iitbapp.items.ApiItem;
 import com.gymkhana.iitbapp.items.TimestampItem;
@@ -75,9 +77,14 @@ public class ArticleActivity extends ActionBarActivity {
         mViewHolder.likePanel = (RelativeLayout) findViewById(R.id.panel);
         mViewHolder.horizontalScrollView =
                 (HorizontalScrollView) findViewById(R.id.horizontal_scroll_view);
+        mViewHolder.eventLogo = (ImageView) findViewById(R.id.event_logo);
 
         mViewHolder.title.setText(mArticle.title);
-        mViewHolder.description.setText(mArticle.description);
+        if (mArticle.type.contentEquals(Constants.JSON_DATA_TYPE_FEED)) {
+            mViewHolder.description.setText(Html.fromHtml(mArticle.description));
+        } else {
+            mViewHolder.description.setText(mArticle.description);
+        }
         mViewHolder.categoryImage.setIcon(
                 mContext.getResources().getDrawable(CategoryImages.getDrawable(mArticle.category)),
                 false
@@ -125,6 +132,22 @@ public class ArticleActivity extends ActionBarActivity {
             }
             mViewHolder.addToCalendar.setVisibility(View.GONE);
             mViewHolder.likePanel.setVisibility(View.GONE);
+        } else if (mArticle.type.contentEquals(Constants.JSON_DATA_TYPE_FEED)) {
+            mViewHolder.eventLayout.setVisibility(View.VISIBLE);
+            mViewHolder.eventLogo.setImageResource(R.drawable.feed_options_icon);
+            mViewHolder.eventDate.setText(getString(R.string.feed_subscription));
+            mViewHolder.eventTime.setText(getString(R.string.feed_subscription_details));
+            mViewHolder.eventLocation.setText("");
+            mViewHolder.addToCalendar.setImageResource(R.drawable.drawer_icon_feed);
+            mViewHolder.addToCalendar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent mainIntent = new Intent(mContext, MainActivity.class);
+                    mainIntent.putExtra(MainActivity.FRAGMENT_KEY, MainActivity.SHOW_FEED_PREFERENCES);
+                    startActivity(mainIntent);
+                    finish();
+                }
+            });
         }
 
         mViewHolder.articleTime.setText(mArticle.article_time.time);
@@ -241,6 +264,8 @@ public class ArticleActivity extends ActionBarActivity {
             return ServerUrls.getInstance().EVENTS;
         } else if (mArticle.type.contentEquals(Constants.JSON_DATA_TYPE_NEWS)) {
             return ServerUrls.getInstance().NEWS;
+        } else if (mArticle.type.contentEquals(Constants.JSON_DATA_TYPE_FEED)) {
+            return ServerUrls.getInstance().FEEDS;
         } else {
             return null;
         }
@@ -253,6 +278,8 @@ public class ArticleActivity extends ActionBarActivity {
                 params.put(Constants.Article.REQUEST_EVENT, mArticle.id);
             } else if (mArticle.type.contentEquals(Constants.JSON_DATA_TYPE_NEWS)) {
                 params.put(Constants.Article.REQUEST_NEWS, mArticle.id);
+            } else if (mArticle.type.contentEquals(Constants.JSON_DATA_TYPE_FEED)) {
+                params.put(Constants.Article.REQUEST_ENTRY, mArticle.id);
             } else {
                 return null;
             }
@@ -283,7 +310,7 @@ public class ArticleActivity extends ActionBarActivity {
 
     public class EventViewHolder {
         FloatingActionButton categoryImage;
-        ImageView addToCalendar, likeIcon, viewIcon;
+        ImageView addToCalendar, likeIcon, viewIcon, eventLogo;
         TextView title, description, sourceName, sourceDesignation, likes, views;
         TextView eventTime, eventDate, eventLocation;
         TextView articleTime, articleDate;

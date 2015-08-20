@@ -53,6 +53,10 @@ public class ListContent {
                 context.getString(R.string.settings_about_iitbapp_title),
                 context.getString(R.string.settings_about_iitbapp_description)));
         mSettingsList.add(new GenericItem(
+                R.drawable.settings_feed,
+                context.getString(R.string.settings_feed_title),
+                context.getString(R.string.settings_feed_description)));
+        mSettingsList.add(new GenericItem(
                 R.drawable.settings_about_us,
                 context.getString(R.string.settings_about_us_title),
                 context.getString(R.string.settings_about_us_description)));
@@ -64,6 +68,12 @@ public class ListContent {
                 R.drawable.settings_feedback,
                 context.getString(R.string.settings_rate_title),
                 context.getString(R.string.settings_rate_description)));
+        if (AuthFunctions.isUserLoggedIn(context)) {
+            mSettingsList.add(new GenericItem(
+                    R.drawable.settings_logout,
+                    context.getString(R.string.settings_logout_title),
+                    context.getString(R.string.settings_logout_description)));
+        }
 
         mSettingsOnItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
@@ -74,14 +84,20 @@ public class ListContent {
                     case 0:
                         return;
                     case 1:
-                        ((MainActivity) context).displayFragment(MainActivity.SHOW_DEVELOPERS);
+                        ((MainActivity) context).displayFragment(MainActivity.SHOW_FEED_PREFERENCES);
                         return;
                     case 2:
-                        BugReportFunctions.showDialog(context);
+                        ((MainActivity) context).displayFragment(MainActivity.SHOW_DEVELOPERS);
                         return;
                     case 3:
+                        BugReportFunctions.showDialog(context);
+                        return;
+                    case 4:
                         intent = Functions.openAppStore(context.getPackageName());
                         break;
+                    case 5:
+                        AuthFunctions.logout(context);
+                        return;
                 }
                 context.startActivity(intent);
             }
