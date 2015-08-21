@@ -226,6 +226,7 @@ public class ApiUtil {
             ((GridView) adapterView).setAdapter(lvAdapterMain);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return onCreateEmptyGrid(context, adapterView);
         }
     }

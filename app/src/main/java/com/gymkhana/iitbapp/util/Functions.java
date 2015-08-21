@@ -333,7 +333,7 @@ public class Functions {
                 return ApiUtil.getSubscriptionListFromJson(context, json);
             }
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public static Map<Integer, String> getSubscriptionMapping(final Context context) {
