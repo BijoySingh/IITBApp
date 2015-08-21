@@ -327,10 +327,15 @@ public class Functions {
 
     public static List<FeedSubscriptionItem> getSubscriptions(final Context context) {
         String fileName = Constants.Filenames.INFO_FEED;
+        String link = ServerUrls.getInstance().FEEDS;
+        Integer dataType = Constants.DATA_TYPE_FEED_INFO;
+
         if (fileName != null) {
             String json = Functions.offlineDataReader(context, fileName);
             if (json != null && !json.isEmpty()) {
                 return ApiUtil.getSubscriptionListFromJson(context, json);
+            } else {
+                ApiUtil.makeApiCall(link, context, dataType, null, null, fileName, false);
             }
         }
         return new ArrayList<>();

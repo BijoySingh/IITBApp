@@ -197,7 +197,7 @@ public class HomeFragment extends Fragment {
                 getString(R.string.drawer_feed),
                 Constants.Colors.PRIMARY_DARK_FEED,
                 Constants.DATA_TYPE_FEED, MainActivity.SHOW_FEED,
-                R.drawable.drawer_icon_news, 3);
+                R.drawable.drawer_icon_feed, 3);
         if (!isRefreshCall) {
             addOfflineCard(
                     metaContent,
