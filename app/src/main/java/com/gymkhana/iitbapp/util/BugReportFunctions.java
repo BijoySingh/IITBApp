@@ -80,7 +80,7 @@ public class BugReportFunctions {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("token-auth", SharedPreferenceManager.load(context, SharedPreferenceManager.Tags.USER_TOKEN));
+                params.put("token-auth", LocalData.load(context, LocalData.Tags.USER_TOKEN));
                 return params;
             }
         };
@@ -93,7 +93,7 @@ public class BugReportFunctions {
         map.put("android_version", mAndroidVersion);
         map.put("manufacturer", mManufacturer);
         map.put("device_id", mDevice);
-        map.put("user", SharedPreferenceManager.load(context, SharedPreferenceManager.Tags.USER_ID));
+        map.put("user", LocalData.load(context, LocalData.Tags.USER_ID));
         map.put("description", report);
 
         return new JSONObject(map);

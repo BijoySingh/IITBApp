@@ -88,7 +88,7 @@ public class ApiUtil {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("token-auth", SharedPreferenceManager.load(context, SharedPreferenceManager.Tags.USER_TOKEN));
+                params.put("token-auth", LocalData.load(context, LocalData.Tags.USER_TOKEN));
                 return params;
             }
         };
@@ -139,7 +139,7 @@ public class ApiUtil {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("token-auth", SharedPreferenceManager.load(context, SharedPreferenceManager.Tags.USER_TOKEN));
+                params.put("token-auth", LocalData.load(context, LocalData.Tags.USER_TOKEN));
                 return params;
             }
         };

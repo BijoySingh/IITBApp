@@ -11,7 +11,7 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.gymkhana.iitbapp.util.Constants;
-import com.gymkhana.iitbapp.util.SharedPreferenceManager;
+import com.gymkhana.iitbapp.util.LocalData;
 
 public class GCMRegisterIntentService extends IntentService {
 
@@ -32,11 +32,13 @@ public class GCMRegisterIntentService extends IntentService {
                 InstanceID instanceID = InstanceID.getInstance(this);
                 token = instanceID.getToken(Constants.GCM_SENDER_ID, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
             } catch (Exception e) {
-                Log.d(TAG, "Failed to complete token refresh", e);
+                Log.e(TAG, "Failed to complete token refresh", e);
             }
+
             if (!(token == null || token.isEmpty())) {
                 break;
             }
+
             try {
                 wait(backoff);
                 backoff *= factor;
@@ -47,14 +49,14 @@ public class GCMRegisterIntentService extends IntentService {
 
         if (token != null && !token.isEmpty()) {
             Log.i(TAG, "GCM Registration Token: " + token);
-            SharedPreferenceManager.save(
+            LocalData.save(
                     getBaseContext(),
-                    SharedPreferenceManager.Tags.REGISTRATION_ID,
+                    LocalData.Tags.REGISTRATION_ID,
                     token);
             sendRegistrationToServer(token);
         } else {
-            SharedPreferenceManager.save(getBaseContext(),
-                    SharedPreferenceManager.Tags.REGISTRATION_ID, SharedPreferenceManager.Tags.EMPTY);
+            LocalData.save(getBaseContext(),
+                    LocalData.Tags.REGISTRATION_ID, LocalData.Tags.EMPTY);
         }
     }
 

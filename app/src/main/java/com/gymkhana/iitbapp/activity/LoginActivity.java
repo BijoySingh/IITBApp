@@ -19,8 +19,8 @@ import com.gymkhana.iitbapp.R;
 import com.gymkhana.iitbapp.util.AuthFunctions;
 import com.gymkhana.iitbapp.util.Constants;
 import com.gymkhana.iitbapp.util.Functions;
+import com.gymkhana.iitbapp.util.LocalData;
 import com.gymkhana.iitbapp.util.ServerUrls;
-import com.gymkhana.iitbapp.util.SharedPreferenceManager;
 
 public class LoginActivity extends ActionBarActivity {
 
@@ -60,9 +60,9 @@ public class LoginActivity extends ActionBarActivity {
 
         if (mMode == Constants.LOGIN_LDAP_LOGIN) {
             mInput.setHint(getString(R.string.login_input_ldap));
-            mInput.setText(SharedPreferenceManager.load(mContext, SharedPreferenceManager.Tags.USERNAME));
+            mInput.setText(LocalData.load(mContext, LocalData.Tags.USERNAME));
             mPassword.setHint(getString(R.string.login_input_password));
-            mPassword.setText(SharedPreferenceManager.load(mContext, SharedPreferenceManager.Tags.PASSWORD));
+            mPassword.setText(LocalData.load(mContext, LocalData.Tags.PASSWORD));
 
             mLeftImage.setImageResource(R.drawable.link_icon);
             mLeftImage.setOnClickListener(getOnClickListener(Constants.ButtonTypes.IITB_HOME));

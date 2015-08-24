@@ -27,7 +27,7 @@ import com.gymkhana.iitbapp.service.GcmUtility;
 import com.gymkhana.iitbapp.util.AuthFunctions;
 import com.gymkhana.iitbapp.util.Functions;
 import com.gymkhana.iitbapp.util.ListContent;
-import com.gymkhana.iitbapp.util.SharedPreferenceManager;
+import com.gymkhana.iitbapp.util.LocalData;
 
 public class MainActivity extends ActionBarActivity implements DrawerFragment.OnFragmentInteractionListener {
 
@@ -194,19 +194,19 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
             startActivity(intent);
             finish();
         } else if (AuthFunctions.isUserLoggedIn(mContext) &&
-                (SharedPreferenceManager.load(mContext, SharedPreferenceManager.Tags.REGISTRATION_ID)
-                        .contentEquals(SharedPreferenceManager.Tags.EMPTY) ||
-                        !SharedPreferenceManager.getBoolean(mContext, SharedPreferenceManager.Tags.GCM_REGISTERED, false) ||
-                        !SharedPreferenceManager.getBoolean(mContext, SharedPreferenceManager.Tags.GCM_API_3, false))) {
-            SharedPreferenceManager.save(mContext, SharedPreferenceManager.Tags.GCM_API_3, SharedPreferenceManager.Tags.TRUE);
+                (LocalData.load(mContext, LocalData.Tags.REGISTRATION_ID)
+                        .contentEquals(LocalData.Tags.EMPTY) ||
+                        !LocalData.getBoolean(mContext, LocalData.Tags.GCM_REGISTERED, false) ||
+                        !LocalData.getBoolean(mContext, LocalData.Tags.GCM_API_3, false))) {
+            LocalData.save(mContext, LocalData.Tags.GCM_API_3, LocalData.Tags.TRUE);
             GcmUtility.registerInBackground(mContext);
         }
     }
 
     public void firstTimeSetup() {
-        if (!SharedPreferenceManager.load(
+        if (!LocalData.load(
                 mContext,
-                SharedPreferenceManager.Tags.FIRST_TIME).contentEquals(getString(R.string.app_version))) {
+                LocalData.Tags.FIRST_TIME).contentEquals(getString(R.string.app_version))) {
             // This is the first time setup
         }
     }

@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 /**
  * Created by bijoy on 7/23/15.
  */
-public class SharedPreferenceManager {
+public class LocalData {
     public static final String SHARED_PREFERENCES = "IITBAPP";
 
     //Load the data from the shared preferences

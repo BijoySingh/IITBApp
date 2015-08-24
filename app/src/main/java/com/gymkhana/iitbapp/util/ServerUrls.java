@@ -54,7 +54,7 @@ public class ServerUrls {
         List<FeedSubscriptionItem> feedList = Functions.getSubscriptions(context);
         if (feedList != null && !feedList.isEmpty()) {
             for (FeedSubscriptionItem feed : feedList) {
-                if (!SharedPreferenceManager.load(context, feed.prefKey()).contentEquals(SharedPreferenceManager.Tags.FALSE)) {
+                if (!LocalData.load(context, feed.prefKey()).contentEquals(LocalData.Tags.FALSE)) {
                     append += feed.feed_id + ",";
                 }
             }

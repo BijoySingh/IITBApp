@@ -28,8 +28,8 @@ import com.gymkhana.iitbapp.items.TimestampItem;
 import com.gymkhana.iitbapp.util.CategoryImages;
 import com.gymkhana.iitbapp.util.Constants;
 import com.gymkhana.iitbapp.util.Functions;
+import com.gymkhana.iitbapp.util.LocalData;
 import com.gymkhana.iitbapp.util.ServerUrls;
-import com.gymkhana.iitbapp.util.SharedPreferenceManager;
 import com.rey.material.widget.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
@@ -251,7 +251,7 @@ public class ArticleActivity extends ActionBarActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("token-auth", SharedPreferenceManager.load(context, SharedPreferenceManager.Tags.USER_TOKEN));
+                params.put("token-auth", LocalData.load(context, LocalData.Tags.USER_TOKEN));
                 return params;
             }
         };
@@ -285,7 +285,7 @@ public class ArticleActivity extends ActionBarActivity {
             }
 
             params.put(Constants.Article.REQUEST_USER,
-                    SharedPreferenceManager.load(mContext, SharedPreferenceManager.Tags.USER_ID));
+                    LocalData.load(mContext, LocalData.Tags.USER_ID));
             return params;
         } catch (Exception e) {
             e.printStackTrace();

@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.gymkhana.iitbapp.MainActivity;
 import com.gymkhana.iitbapp.R;
 import com.gymkhana.iitbapp.items.FeedSubscriptionItem;
-import com.gymkhana.iitbapp.util.SharedPreferenceManager;
+import com.gymkhana.iitbapp.util.LocalData;
 import com.rey.material.widget.Switch;
 
 import java.util.List;
@@ -62,7 +62,7 @@ public class LVAdapterRSSSubscription extends ArrayAdapter<FeedSubscriptionItem>
 
             viewHolder.logoImage.setImageResource(R.drawable.feed_options_icon);
             viewHolder.status.setVisibility(View.VISIBLE);
-            if (SharedPreferenceManager.load(mContext, data.prefKey()).contentEquals(SharedPreferenceManager.Tags.FALSE)) {
+            if (LocalData.load(mContext, data.prefKey()).contentEquals(LocalData.Tags.FALSE)) {
                 viewHolder.status.setChecked(false);
             } else {
                 viewHolder.status.setChecked(true);
@@ -83,9 +83,9 @@ public class LVAdapterRSSSubscription extends ArrayAdapter<FeedSubscriptionItem>
             @Override
             public void onCheckedChanged(Switch aSwitch, boolean b) {
                 if (b) {
-                    SharedPreferenceManager.save(mContext, data.prefKey(), SharedPreferenceManager.Tags.TRUE);
+                    LocalData.save(mContext, data.prefKey(), LocalData.Tags.TRUE);
                 } else {
-                    SharedPreferenceManager.save(mContext, data.prefKey(), SharedPreferenceManager.Tags.FALSE);
+                    LocalData.save(mContext, data.prefKey(), LocalData.Tags.FALSE);
                 }
             }
         });

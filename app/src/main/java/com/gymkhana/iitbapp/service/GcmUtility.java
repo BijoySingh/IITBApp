@@ -13,8 +13,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.gymkhana.iitbapp.util.LocalData;
 import com.gymkhana.iitbapp.util.ServerUrls;
-import com.gymkhana.iitbapp.util.SharedPreferenceManager;
 
 import org.json.JSONObject;
 
@@ -56,7 +56,7 @@ public class GcmUtility {
 
     private static Map<String, String> getParameters(Context context, final String registrationId) {
         Map<String, String> params = new HashMap<>();
-        params.put(PARAM_NAME, SharedPreferenceManager.load(context, SharedPreferenceManager.Tags.NAME));
+        params.put(PARAM_NAME, LocalData.load(context, LocalData.Tags.NAME));
         params.put(PARAM_REG_ID, registrationId);
         params.put(PARAM_DEV_ID, Settings.Secure.getString(context.getContentResolver(),
                 Settings.Secure.ANDROID_ID));
@@ -75,10 +75,10 @@ public class GcmUtility {
                         Log.d(GCM_LOG_KEY, response.toString());
                         try {
                             if (!response.has("error_message")) {
-                                SharedPreferenceManager.save(
+                                LocalData.save(
                                         context,
-                                        SharedPreferenceManager.Tags.GCM_REGISTERED,
-                                        SharedPreferenceManager.Tags.TRUE);
+                                        LocalData.Tags.GCM_REGISTERED,
+                                        LocalData.Tags.TRUE);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -98,10 +98,10 @@ public class GcmUtility {
     public static void unregistrationIdOnServer(final Context context) {
         // This is to ensure that the user is attempted to register
         // even if he couldnt de-register this time
-        SharedPreferenceManager.save(
+        LocalData.save(
                 context,
-                SharedPreferenceManager.Tags.GCM_REGISTERED,
-                SharedPreferenceManager.Tags.FALSE);
+                LocalData.Tags.GCM_REGISTERED,
+                LocalData.Tags.FALSE);
 
         Map<String, String> params = new HashMap<>();
         params.put(PARAM_DEV_ID, Settings.Secure.getString(context.getContentResolver(),

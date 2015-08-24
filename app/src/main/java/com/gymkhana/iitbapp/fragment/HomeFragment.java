@@ -20,8 +20,8 @@ import com.gymkhana.iitbapp.lvadapter.HomeRecyclerViewAdapter;
 import com.gymkhana.iitbapp.util.ApiUtil;
 import com.gymkhana.iitbapp.util.Constants;
 import com.gymkhana.iitbapp.util.Functions;
+import com.gymkhana.iitbapp.util.LocalData;
 import com.gymkhana.iitbapp.util.ServerUrls;
-import com.gymkhana.iitbapp.util.SharedPreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,7 +159,7 @@ public class HomeFragment extends Fragment {
 
         int position = 3;
         for (FeedSubscriptionItem feed : feedList) {
-            if (SharedPreferenceManager.getBoolean(mContext, feed.prefKey(), true)) {
+            if (LocalData.getBoolean(mContext, feed.prefKey(), true)) {
                 NowCardMetaContent metaContent = new NowCardMetaContent(
                         feed.title,
                         Constants.Colors.PRIMARY_DARK_FEED,

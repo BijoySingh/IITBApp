@@ -358,7 +358,7 @@ public class Functions {
             List<FeedSubscriptionItem> subscriptions = getSubscriptions(context);
             for (FeedSubscriptionItem feed : subscriptions) {
                 if (feed.feed_id == item.feed_id) {
-                    if (SharedPreferenceManager.load(context, feed.prefKey()).contentEquals(SharedPreferenceManager.Tags.FALSE)) {
+                    if (LocalData.load(context, feed.prefKey()).contentEquals(LocalData.Tags.FALSE)) {
                         return false;
                     }
                     return true;

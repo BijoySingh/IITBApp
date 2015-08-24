@@ -25,28 +25,28 @@ import java.util.Map;
  */
 public class AuthFunctions {
     public static void userLoggedIn(Context context) {
-        SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.LOGGED_IN, SharedPreferenceManager.Tags.TRUE);
+        LocalData.save(context, LocalData.Tags.LOGGED_IN, LocalData.Tags.TRUE);
     }
 
     public static void userOffline(Context context) {
-        SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.LOGGED_IN, SharedPreferenceManager.Tags.OFFLINE);
+        LocalData.save(context, LocalData.Tags.LOGGED_IN, LocalData.Tags.OFFLINE);
     }
 
     public static boolean isUserLoggedIn(Context context) {
-        return SharedPreferenceManager.load(
+        return LocalData.load(
                 context,
-                SharedPreferenceManager.Tags.LOGGED_IN).contentEquals(SharedPreferenceManager.Tags.TRUE);
+                LocalData.Tags.LOGGED_IN).contentEquals(LocalData.Tags.TRUE);
     }
 
     public static boolean isUserOffline(Context context) {
-        return SharedPreferenceManager.load(
+        return LocalData.load(
                 context,
-                SharedPreferenceManager.Tags.LOGGED_IN).contentEquals(SharedPreferenceManager.Tags.OFFLINE);
+                LocalData.Tags.LOGGED_IN).contentEquals(LocalData.Tags.OFFLINE);
     }
 
     public static void logoutUser(Context context) {
-        SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.NAME, SharedPreferenceManager.Tags.EMPTY);
-        SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.LOGGED_IN, SharedPreferenceManager.Tags.OFFLINE);
+        LocalData.save(context, LocalData.Tags.NAME, LocalData.Tags.EMPTY);
+        LocalData.save(context, LocalData.Tags.LOGGED_IN, LocalData.Tags.OFFLINE);
     }
 
     public static void sendLoginQuery(final Context context, final String username, final String password) {
@@ -110,7 +110,7 @@ public class AuthFunctions {
 
     public static void sendLogoutQuery(final Context context) {
         final Map<String, String> params = new HashMap<>();
-        params.put(Constants.Ldap.REQUEST_USER, SharedPreferenceManager.load(context, SharedPreferenceManager.Tags.USER_ID));
+        params.put(Constants.Ldap.REQUEST_USER, LocalData.load(context, LocalData.Tags.USER_ID));
         JSONObject jsonParams = new JSONObject(params);
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest
@@ -133,7 +133,7 @@ public class AuthFunctions {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("token-auth", SharedPreferenceManager.load(context, SharedPreferenceManager.Tags.USER_TOKEN));
+                params.put("token-auth", LocalData.load(context, LocalData.Tags.USER_TOKEN));
                 return params;
             }
         };
@@ -148,11 +148,11 @@ public class AuthFunctions {
                                              String id,
                                              String token,
                                              String password) {
-        SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.USERNAME, ldap);
-        SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.NAME, name);
-        SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.USER_ID, id);
-        SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.USER_TOKEN, token);
-        SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.PASSWORD, password);
+        LocalData.save(context, LocalData.Tags.USERNAME, ldap);
+        LocalData.save(context, LocalData.Tags.NAME, name);
+        LocalData.save(context, LocalData.Tags.USER_ID, id);
+        LocalData.save(context, LocalData.Tags.USER_TOKEN, token);
+        LocalData.save(context, LocalData.Tags.PASSWORD, password);
     }
 
     public static void loginUtil(Context context) {
