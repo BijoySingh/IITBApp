@@ -26,17 +26,23 @@
         android:theme="@style/AppTheme">
 
         <receiver
-            android:name="com.gymkhana.iitbapp.service.GcmBroadcastReceiver"
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <category android:name="com.gymkhana.iitbapp"/>
+                <category android:name="com.gymkhana.iitbapp.service"/>
             </intent-filter>
         </receiver>
 
-        <service android:name="com.gymkhana.iitbapp.service.GCMNotificationIntentService" />
+        <service
+            android:name="com.gymkhana.iitbapp.service.GCMNotificationIntentService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+            </intent-filter>
+        </service>
+
         <service android:name="com.gymkhana.iitbapp.service.GCMRegisterIntentService"/>
 
         <service

@@ -20,8 +20,10 @@ import com.gymkhana.iitbapp.items.ApiItem;
 import com.gymkhana.iitbapp.util.CategoryImages;
 import com.gymkhana.iitbapp.util.Constants;
 import com.gymkhana.iitbapp.util.Functions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.imageaware.ImageAware;
+import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.rey.material.widget.FloatingActionButton;
-import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +35,7 @@ public class LVAdapterMain extends ArrayAdapter<ApiItem> {
     private final Context mContext;
     private final List<ApiItem> mValues;
     private final Integer mLayoutId;
+    private final ImageLoader imageLoader;
     private Map<Integer, String> mFeedMapping = new HashMap<>();
 
     public LVAdapterMain(Context context, List<ApiItem> values) {
@@ -41,6 +44,7 @@ public class LVAdapterMain extends ArrayAdapter<ApiItem> {
         this.mContext = context;
         this.mValues = values;
         this.mFeedMapping = Functions.getSubscriptionMapping(context);
+        imageLoader = Functions.loadImageLoader(context);
     }
 
     @Override
@@ -84,9 +88,9 @@ public class LVAdapterMain extends ArrayAdapter<ApiItem> {
 
             if (data.image_links != null && !data.image_links.isEmpty()) {
                 viewHolder.eventImage.setVisibility(View.VISIBLE);
-                Picasso.with(mContext)
-                        .load(data.image_links.get(0))
-                        .into(viewHolder.eventImage);
+                ImageAware imageAware = new ImageViewAware(viewHolder.eventImage, false);
+                imageLoader.displayImage(data.image_links.get(0), imageAware);
+                viewHolder.eventImage.setTag(data.image_links.get(0));
             } else {
                 viewHolder.eventImage.setVisibility(View.GONE);
             }

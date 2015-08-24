@@ -30,8 +30,8 @@ import com.gymkhana.iitbapp.util.Constants;
 import com.gymkhana.iitbapp.util.Functions;
 import com.gymkhana.iitbapp.util.LocalData;
 import com.gymkhana.iitbapp.util.ServerUrls;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rey.material.widget.FloatingActionButton;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -47,6 +47,7 @@ public class ArticleActivity extends ActionBarActivity {
     private ApiItem mArticle;
     private Context mContext;
     private EventViewHolder mViewHolder = new EventViewHolder();
+    private ImageLoader mImageLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class ArticleActivity extends ActionBarActivity {
         mArticle = (ApiItem) getIntent().getSerializableExtra(INTENT_ARTICLE);
 
         mContext = this;
+        mImageLoader = Functions.loadImageLoader(mContext);
 
         mViewHolder.title = (TextView) findViewById(R.id.title);
         mViewHolder.description = (TextView) findViewById(R.id.description);
@@ -103,7 +105,7 @@ public class ArticleActivity extends ActionBarActivity {
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     (int) Functions.convertDpToPixel(320, mContext)
             ));
-            Picasso.with(mContext).load(link).into(imageView);
+            mImageLoader.displayImage(link, imageView);
             mViewHolder.scrollLayout.addView(imageView);
         }
 

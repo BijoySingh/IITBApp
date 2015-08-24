@@ -29,6 +29,11 @@ import com.gymkhana.iitbapp.items.FeedSubscriptionItem;
 import com.gymkhana.iitbapp.items.GenericItem;
 import com.gymkhana.iitbapp.items.InformationItem;
 import com.gymkhana.iitbapp.lvadapter.LVAdapterGeneric;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.rey.material.widget.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -48,6 +53,8 @@ import java.util.concurrent.Callable;
  * All the functions here are static functions and form the basis of the app
  */
 public class Functions {
+
+    private static ImageLoader mImageLoader;
 
     //It store the filedata into the file given by the filename
     public static void offlineDataWriter(Context context, String filename, String filedata) {
@@ -108,7 +115,6 @@ public class Functions {
     public static void setActionBar(ActionBarActivity activity) {
         setActionBar(activity, R.color.actionbar_500, R.color.actionbar_700);
     }
-
 
     //Setup the actionbar of the activity
     public static void setActionBarWithColor(ActionBarActivity activity,
@@ -291,7 +297,6 @@ public class Functions {
         context.startActivity(intent);
     }
 
-
     public static Intent openAppStore(String packageName) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -350,6 +355,29 @@ public class Functions {
         }
 
         return mapping;
+    }
+
+    public static ImageLoader loadImageLoader(Context context) {
+        if (mImageLoader != null)
+            return mImageLoader;
+
+        DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
+                .cacheOnDisk(true)
+                .cacheInMemory(true)
+                .build();
+
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+        config.threadPriority(Thread.NORM_PRIORITY - 2);
+        config.defaultDisplayImageOptions(displayImageOptions);
+        config.denyCacheImageMultipleSizesInMemory();
+        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+        config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
+        config.tasksProcessingOrder(QueueProcessingType.LIFO);
+        config.writeDebugLogs(); // Remove for release app
+        ImageLoader.getInstance().init(config.build());
+
+        mImageLoader = ImageLoader.getInstance();
+        return mImageLoader;
     }
 
 
