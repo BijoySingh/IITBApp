@@ -3,7 +3,6 @@ package com.gymkhana.iitbapp.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -50,7 +49,6 @@ public class AuthFunctions {
         SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.LOGGED_IN, SharedPreferenceManager.Tags.OFFLINE);
     }
 
-
     public static void sendLoginQuery(final Context context, final String username, final String password) {
         final Map<String, String> params = new HashMap<>();
         params.put(Constants.Ldap.REQUEST_USERNAME, username);
@@ -76,11 +74,6 @@ public class AuthFunctions {
                                 String user_token = response.getString(Constants.Ldap.RESPONSE_USER_TOKEN);
                                 String id = ((Integer) response.getInt(Constants.Ldap.RESPONSE_USER_ID)).toString();
 
-                                try {
-                                    GcmUtility.registerInBackground(context);
-                                } catch (Exception e) {
-                                    Log.e("LOGIN_FUNCTIONS", "GCM FAILED", e);
-                                }
                                 storeLoginInformation(context, ldap, name, id, user_token, password);
                                 loginUtil(context);
                             }

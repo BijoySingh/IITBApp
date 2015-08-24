@@ -24,19 +24,35 @@ public class GCMRegisterIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.i(TAG, "GCM Registration Service Started");
-        try {
-            InstanceID instanceID = InstanceID.getInstance(this);
-            String token = instanceID.getToken(Constants.GCM_SENDER_ID, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+        String token = null;
 
+        int backoff = 1, factor = 2, rounds = 10;
+        for (int round = 0; round < rounds; round++) {
+            try {
+                InstanceID instanceID = InstanceID.getInstance(this);
+                token = instanceID.getToken(Constants.GCM_SENDER_ID, GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+            } catch (Exception e) {
+                Log.d(TAG, "Failed to complete token refresh", e);
+            }
+            if (!(token == null || token.isEmpty())) {
+                break;
+            }
+            try {
+                wait(backoff);
+                backoff *= factor;
+            } catch (Exception e) {
+                ;
+            }
+        }
+
+        if (token != null && !token.isEmpty()) {
             Log.i(TAG, "GCM Registration Token: " + token);
             SharedPreferenceManager.save(
                     getBaseContext(),
                     SharedPreferenceManager.Tags.REGISTRATION_ID,
                     token);
-
             sendRegistrationToServer(token);
-        } catch (Exception e) {
-            Log.d(TAG, "Failed to complete token refresh", e);
+        } else {
             SharedPreferenceManager.save(getBaseContext(),
                     SharedPreferenceManager.Tags.REGISTRATION_ID, SharedPreferenceManager.Tags.EMPTY);
         }

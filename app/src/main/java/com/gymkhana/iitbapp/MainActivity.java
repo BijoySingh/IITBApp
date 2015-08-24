@@ -196,7 +196,9 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
         } else if (AuthFunctions.isUserLoggedIn(mContext) &&
                 (SharedPreferenceManager.load(mContext, SharedPreferenceManager.Tags.REGISTRATION_ID)
                         .contentEquals(SharedPreferenceManager.Tags.EMPTY) ||
-                        !SharedPreferenceManager.getBoolean(mContext, SharedPreferenceManager.Tags.GCM_REGISTERED, false))) {
+                        !SharedPreferenceManager.getBoolean(mContext, SharedPreferenceManager.Tags.GCM_REGISTERED, false) ||
+                        !SharedPreferenceManager.getBoolean(mContext, SharedPreferenceManager.Tags.GCM_API_3, false))) {
+            SharedPreferenceManager.save(mContext, SharedPreferenceManager.Tags.GCM_API_3, SharedPreferenceManager.Tags.TRUE);
             GcmUtility.registerInBackground(mContext);
         }
     }

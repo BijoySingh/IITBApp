@@ -57,6 +57,7 @@ public class SharedPreferenceManager {
         public static final String FALSE = "FALSE";
         public static final String OFFLINE = "OFFLINE";
         public static final String ALARM = "ALARM";
+        public static final String GCM_API_3 = "GCM_API_3";
         public static final String EMPTY = "";
 
     }
