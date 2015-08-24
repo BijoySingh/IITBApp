@@ -23,6 +23,7 @@ import com.gymkhana.iitbapp.fragment.GenericListFragment;
 import com.gymkhana.iitbapp.fragment.HomeFragment;
 import com.gymkhana.iitbapp.fragment.MenuFragment;
 import com.gymkhana.iitbapp.items.GenericItem;
+import com.gymkhana.iitbapp.service.GcmUtility;
 import com.gymkhana.iitbapp.util.AuthFunctions;
 import com.gymkhana.iitbapp.util.Functions;
 import com.gymkhana.iitbapp.util.ListContent;
@@ -192,9 +193,11 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
             Intent intent = new Intent(mContext, LoginActivity.class);
             startActivity(intent);
             finish();
-        } else if (SharedPreferenceManager.load(mContext, SharedPreferenceManager.Tags.REGISTRATION_ID).contentEquals(SharedPreferenceManager.Tags.EMPTY) ||
-                !SharedPreferenceManager.getBoolean(mContext, SharedPreferenceManager.Tags.GCM_REGISTERED, false)) {
-
+        } else if (AuthFunctions.isUserLoggedIn(mContext) &&
+                (SharedPreferenceManager.load(mContext, SharedPreferenceManager.Tags.REGISTRATION_ID)
+                        .contentEquals(SharedPreferenceManager.Tags.EMPTY) ||
+                        !SharedPreferenceManager.getBoolean(mContext, SharedPreferenceManager.Tags.GCM_REGISTERED, false))) {
+            GcmUtility.registerInBackground(mContext);
         }
     }
 

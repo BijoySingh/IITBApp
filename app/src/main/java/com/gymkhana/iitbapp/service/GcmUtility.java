@@ -32,8 +32,6 @@ public class GcmUtility {
     private static final String PARAM_DEV_ID = "dev_id";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
-    private static String registrationId;
-
     public static void registerInBackground(final Context context) {
         Log.d(GCM_LOG_KEY, "REGISTER IN BACKGROUND");
         if (checkPlayServices(context)) {
@@ -98,6 +96,13 @@ public class GcmUtility {
 
 
     public static void unregistrationIdOnServer(final Context context) {
+        // This is to ensure that the user is attempted to register
+        // even if he couldnt de-register this time
+        SharedPreferenceManager.save(
+                context,
+                SharedPreferenceManager.Tags.GCM_REGISTERED,
+                SharedPreferenceManager.Tags.FALSE);
+
         Map<String, String> params = new HashMap<>();
         params.put(PARAM_DEV_ID, Settings.Secure.getString(context.getContentResolver(),
                 Settings.Secure.ANDROID_ID));
@@ -109,11 +114,7 @@ public class GcmUtility {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            SharedPreferenceManager.save(
-                                    context,
-                                    SharedPreferenceManager.Tags.GCM_REGISTERED,
-                                    SharedPreferenceManager.Tags.FALSE);
-
+                            ;
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
