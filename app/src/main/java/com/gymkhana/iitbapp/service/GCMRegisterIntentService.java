@@ -42,8 +42,7 @@ public class GCMRegisterIntentService extends IntentService {
             try {
                 wait(backoff);
                 backoff *= factor;
-            } catch (Exception e) {
-                ;
+            } catch (InterruptedException e) {
             }
         }
 
