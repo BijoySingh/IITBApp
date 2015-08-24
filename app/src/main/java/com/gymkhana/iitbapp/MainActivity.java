@@ -53,6 +53,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = this;
+        startupFunctions();
         firstTimeSetup();
         ListContent.resetVariables();
 
@@ -186,13 +187,18 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
         }
     }
 
-    public void firstTimeSetup() {
+    public void startupFunctions() {
         if (!(AuthFunctions.isUserLoggedIn(mContext) || AuthFunctions.isUserOffline(mContext))) {
             Intent intent = new Intent(mContext, LoginActivity.class);
             startActivity(intent);
             finish();
-        }
+        } else if (SharedPreferenceManager.load(mContext, SharedPreferenceManager.Tags.REGISTRATION_ID).contentEquals(SharedPreferenceManager.Tags.EMPTY) ||
+                !SharedPreferenceManager.getBoolean(mContext, SharedPreferenceManager.Tags.GCM_REGISTERED, false)) {
 
+        }
+    }
+
+    public void firstTimeSetup() {
         if (!SharedPreferenceManager.load(
                 mContext,
                 SharedPreferenceManager.Tags.FIRST_TIME).contentEquals(getString(R.string.app_version))) {

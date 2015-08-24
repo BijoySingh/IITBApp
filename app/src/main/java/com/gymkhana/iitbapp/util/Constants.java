@@ -7,7 +7,7 @@ import android.graphics.Color;
  * This class contains all the core static final variables in the app
  */
 public class Constants {
-    public static final Boolean PRODUCTION_MODE = true;
+    public static final Boolean PRODUCTION_MODE = false;
     public static final String GCM_SENDER_ID = "";
 
     public static final String JSON_DATA_TYPE_EVENT = "event";

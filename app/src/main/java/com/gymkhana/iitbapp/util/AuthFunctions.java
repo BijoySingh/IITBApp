@@ -77,8 +77,7 @@ public class AuthFunctions {
                                 String id = ((Integer) response.getInt(Constants.Ldap.RESPONSE_USER_ID)).toString();
 
                                 try {
-                                    GcmUtility.registerInBackground(context, SharedPreferenceManager.load
-                                            (context, email));
+                                    GcmUtility.registerInBackground(context);
                                 } catch (Exception e) {
                                     Log.e("LOGIN_FUNCTIONS", "GCM FAILED", e);
                                 }

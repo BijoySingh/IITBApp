@@ -24,6 +24,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+
         <receiver
             android:name="com.gymkhana.iitbapp.service.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
@@ -36,6 +37,15 @@
         </receiver>
 
         <service android:name="com.gymkhana.iitbapp.service.GCMNotificationIntentService" />
+        <service android:name="com.gymkhana.iitbapp.service.GCMRegisterIntentService"/>
+
+        <service
+            android:name=".service.GCMInstanceIdService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID"/>
+            </intent-filter>
+        </service>
 
         <activity
             android:name="com.gymkhana.iitbapp.MainActivity"

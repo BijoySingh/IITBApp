@@ -1,9 +1,9 @@
 package com.gymkhana.iitbapp.service;
 
+import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.provider.Settings;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -11,14 +11,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.gymkhana.iitbapp.util.Constants;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.gymkhana.iitbapp.util.ServerUrls;
 import com.gymkhana.iitbapp.util.SharedPreferenceManager;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,43 +30,33 @@ public class GcmUtility {
     private static final String PARAM_NAME = "name";
     private static final String PARAM_REG_ID = "reg_id";
     private static final String PARAM_DEV_ID = "dev_id";
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
-    public static GoogleCloudMessaging googleCloudMessaging;
-    public static String registrationId;
+    private static String registrationId;
 
-    public static void registerInBackground(final Context context, final String emailID) {
+    public static void registerInBackground(final Context context) {
         Log.d(GCM_LOG_KEY, "REGISTER IN BACKGROUND");
-
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... params) {
-                try {
-                    if (googleCloudMessaging == null) {
-                        googleCloudMessaging = GoogleCloudMessaging
-                                .getInstance(context);
-                    }
-                    registrationId = googleCloudMessaging
-                            .register(Constants.GCM_SENDER_ID);
-                    return registrationId;
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                    return null;
-                }
-            }
-
-            @Override
-            protected void onPostExecute(String msg) {
-                if (registrationId != null && !TextUtils.isEmpty(registrationId)) {
-                    storeRegistrationIdOnServer(context);
-                    SharedPreferenceManager.save(context, SharedPreferenceManager.Tags.REGISTRATION_ID, registrationId);
-                } else {
-                    Log.d(GCM_LOG_KEY, "NULL REGISTRATION ID");
-                }
-            }
-        }.execute();
+        if (checkPlayServices(context)) {
+            Intent intent = new Intent(context, GCMRegisterIntentService.class);
+            context.startService(intent);
+        }
     }
 
-    private static Map<String, String> getParameters(Context context) {
+    private static boolean checkPlayServices(Context context) {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, (Activity) context, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i(GCM_LOG_KEY, "This device is not supported.");
+            }
+            return false;
+        }
+        Log.i(GCM_LOG_KEY, "This device is supported.");
+        return true;
+    }
+
+    private static Map<String, String> getParameters(Context context, final String registrationId) {
         Map<String, String> params = new HashMap<>();
         params.put(PARAM_NAME, SharedPreferenceManager.load(context, SharedPreferenceManager.Tags.NAME));
         params.put(PARAM_REG_ID, registrationId);
@@ -78,8 +67,8 @@ public class GcmUtility {
         return params;
     }
 
-    private static void storeRegistrationIdOnServer(final Context context) {
-        JSONObject params = new JSONObject(getParameters(context));
+    public static void storeRegistrationIdOnServer(final Context context, final String registrationId) {
+        JSONObject params = new JSONObject(getParameters(context, registrationId));
         JsonObjectRequest jsonRequest = new JsonObjectRequest
                 (Request.Method.POST, ServerUrls.getInstance().GCM_REGISTER, params, new Response
                         .Listener<JSONObject>() {
