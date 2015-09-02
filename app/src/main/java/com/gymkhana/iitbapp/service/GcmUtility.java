@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -13,6 +14,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.gymkhana.iitbapp.R;
+import com.gymkhana.iitbapp.util.Functions;
 import com.gymkhana.iitbapp.util.LocalData;
 import com.gymkhana.iitbapp.util.ServerUrls;
 
@@ -79,6 +82,7 @@ public class GcmUtility {
                                         context,
                                         LocalData.Tags.GCM_REGISTERED,
                                         LocalData.Tags.TRUE);
+                                return;
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -87,9 +91,20 @@ public class GcmUtility {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Functions.makeToast(context, context.getString(R.string.toast_register));
+                        Log.d(GCM_LOG_KEY, Functions.showVolleyError(error));
                         error.printStackTrace();
                     }
-                });
+
+                }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token-auth", LocalData.load(context, LocalData.Tags.USER_TOKEN));
+                return params;
+            }
+        };
 
         Volley.newRequestQueue(context).add(jsonRequest);
     }
@@ -123,8 +138,17 @@ public class GcmUtility {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
+                        Log.d(GCM_LOG_KEY, Functions.showVolleyError(error));
                     }
-                });
+                }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token-auth", LocalData.load(context, LocalData.Tags.USER_TOKEN));
+                return params;
+            }
+        };
 
         Volley.newRequestQueue(context).add(jsonRequest);
     }

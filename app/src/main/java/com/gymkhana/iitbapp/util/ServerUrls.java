@@ -18,8 +18,8 @@ public class ServerUrls {
 
     private ServerUrls(String serverUrl) {
         SERVER = serverUrl;
-        GCM_REGISTER = SERVER + "gcm/v1/device/register/";
-        GCM_UNREGISTER = SERVER + "gcm/v1/device/unregister/";
+        GCM_REGISTER = SERVER + "api/pns/register/";
+        GCM_UNREGISTER = SERVER + "api/pns/deregister/";
         IITB_HOME = "http://www.iitb.ac.in/";
         ACADEMIC_CAL = IITB_HOME + "newacadhome/toacadcalender.jsp";
         API = SERVER + "api/";

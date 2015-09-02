@@ -4,5 +4,6 @@
     <string name="toast_no_data">Could Not Fetch Data</string>
     <string name="toast_timetable_deleted">Timetable Cleared</string>
     <string name="toast_item_removed">Item Removed</string>
+    <string name="toast_register">Could Not Register for Notifications</string>
     <string name="toast_failed_ldap">Incorrect LDAP username or password</string>
 </resources>

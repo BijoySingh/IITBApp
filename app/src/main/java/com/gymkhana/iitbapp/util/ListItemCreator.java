@@ -128,6 +128,21 @@ public class ListItemCreator {
         e.feed_id = json.getInt(Constants.JSON_KEY_ID);
         e.url = json.getString(Constants.JSON_KEY_LINK);
         e.updated = json.getString(Constants.JSON_KEY_UPDATED);
+
+        /*
+            JSONArray categories = json.getJSONArray(Constants.JSON_KEY_CATEGORIES);
+            for (int i = 0; i < categories.length(); i++) {
+                JSONObject category = categories.getJSONObject(i);
+                e.categories.add(new CategoryItem(
+                        category.getInt(Constants.JSON_KEY_ID),
+                        category.getInt(Constants.JSON_KEY_FEED_ID),
+                        category.getString(Constants.JSON_KEY_TERM),
+                        category.getString(Constants.JSON_KEY_SCHEME),
+                        category.getString(Constants.JSON_KEY_LABEL)
+                ));
+            }
+        */
+
         return e;
     }
 

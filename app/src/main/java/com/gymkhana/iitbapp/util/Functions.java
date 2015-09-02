@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.gymkhana.iitbapp.R;
 import com.gymkhana.iitbapp.database.TimetableDBHandler;
 import com.gymkhana.iitbapp.items.ApiItem;
@@ -394,5 +395,13 @@ public class Functions {
             }
         }
         return true;
+    }
+
+    public static String showVolleyError(VolleyError error) {
+        if (error != null && error.networkResponse != null && error.networkResponse.data != null) {
+            return new String(error.networkResponse.data);
+        }
+
+        return error.getMessage();
     }
 }
