@@ -1,6 +1,9 @@
 package com.gymkhana.iitbapp.items;
 
+import android.text.Html;
+
 import com.gymkhana.iitbapp.util.Constants;
+import com.gymkhana.iitbapp.util.Functions;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -38,6 +41,14 @@ public class ApiItem implements Serializable {
 
         Calendar current = Calendar.getInstance();
         return current.compareTo(timestampItem.calender) > 0;
+    }
+
+    public String getNotificationDescription() {
+        if (type.contentEquals(Constants.JSON_DATA_TYPE_FEED)) {
+            return Html.fromHtml(Functions.correctUTFEncoding(description)).toString();
+        }
+
+        return description;
     }
 
     public int getAccentColor() {

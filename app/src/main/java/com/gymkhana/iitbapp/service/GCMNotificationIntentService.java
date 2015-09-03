@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.text.Html;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
@@ -67,10 +66,6 @@ public class GCMNotificationIntentService extends GcmListenerService {
                 return;
             }
 
-            if (apiItem.type.contentEquals(Constants.JSON_DATA_TYPE_FEED)) {
-                apiItem.description = Html.fromHtml(apiItem.description).toString();
-            }
-
             Intent resultIntent = new Intent(this, ArticleActivity.class);
             resultIntent.putExtra(ArticleActivity.INTENT_ARTICLE, apiItem);
             PendingIntent resultPendingIntent =
@@ -87,7 +82,7 @@ public class GCMNotificationIntentService extends GcmListenerService {
                     .setColor(apiItem.getAccentColor())
                     .setCategory(Notification.CATEGORY_SOCIAL)
                     .setContentTitle(apiItem.title)
-                    .setContentText(apiItem.description)
+                    .setContentText(apiItem.getNotificationDescription())
                     .setStyle(new NotificationCompat.BigTextStyle()
                             .bigText(apiItem.description))
                     .setContentIntent(resultPendingIntent)
