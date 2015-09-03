@@ -97,7 +97,7 @@ public class LVAdapterFeeds extends ArrayAdapter<FeedSubscriptionItem> {
         holder.categories.removeAllViewsInLayout();
         for (final FeedCategoryItem object : data.categories) {
             FeedSubListItem item = new FeedSubListItem(mContext);
-            item.setup(object.label, object.subscribed);
+            item.setup(object.term, object.subscribed);
             holder.categories.addView(item);
         }
 

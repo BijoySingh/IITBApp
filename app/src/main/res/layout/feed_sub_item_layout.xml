@@ -5,10 +5,10 @@
               android:background="@drawable/panel_background"
               android:gravity="center_vertical"
               android:orientation="horizontal"
-              android:paddingBottom="8dp"
-              android:paddingLeft="16dp"
-              android:paddingRight="16dp"
-              android:paddingTop="8dp">
+              android:paddingBottom="4dp"
+              android:paddingLeft="32dp"
+              android:paddingRight="32dp"
+              android:paddingTop="4dp">
 
     <TextView
         android:id="@+id/title"
