@@ -18,7 +18,6 @@ import android.widget.ListView;
 
 import com.gymkhana.iitbapp.activity.LoginActivity;
 import com.gymkhana.iitbapp.fragment.DrawerFragment;
-import com.gymkhana.iitbapp.fragment.FeedSubscriptionFragment;
 import com.gymkhana.iitbapp.fragment.GenericListFragment;
 import com.gymkhana.iitbapp.fragment.HomeFragment;
 import com.gymkhana.iitbapp.fragment.MenuFragment;
@@ -159,8 +158,6 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.On
         } else if (position == SHOW_FEED) {
             fragment = new MenuFragment();
             bundle.putInt(FRAME_TYPE_KEY, SHOW_FEED);
-        } else if (position == SHOW_FEED_PREFERENCES) {
-            fragment = new FeedSubscriptionFragment();
         }
 
         fragment.setArguments(bundle);
