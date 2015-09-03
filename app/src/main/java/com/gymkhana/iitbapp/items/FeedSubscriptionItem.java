@@ -12,7 +12,7 @@ public class FeedSubscriptionItem implements Serializable {
     public String url;
     public String updated;
     public Integer feed_config;
-    public List<CategoryItem> categories = new ArrayList<>();
+    public List<FeedCategoryItem> categories = new ArrayList<>();
 
     public String prefKey() {
         return "FEED_PREF" + feed_config;

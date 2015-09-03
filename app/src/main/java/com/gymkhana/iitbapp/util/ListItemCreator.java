@@ -3,7 +3,7 @@ package com.gymkhana.iitbapp.util;
 import android.content.Context;
 
 import com.gymkhana.iitbapp.items.ApiItem;
-import com.gymkhana.iitbapp.items.CategoryItem;
+import com.gymkhana.iitbapp.items.FeedCategoryItem;
 import com.gymkhana.iitbapp.items.FeedSubscriptionItem;
 import com.gymkhana.iitbapp.items.InformationItem;
 import com.gymkhana.iitbapp.items.TimestampItem;
@@ -134,7 +134,7 @@ public class ListItemCreator {
         JSONArray categories = json.getJSONArray(Constants.JsonKeys.CATEGORIES);
         for (int i = 0; i < categories.length(); i++) {
             JSONObject category = categories.getJSONObject(i);
-            e.categories.add(new CategoryItem(
+            e.categories.add(new FeedCategoryItem(
                     category.getInt(Constants.JsonKeys.ID),
                     category.getInt(Constants.JsonKeys.FEED_CONFIG),
                     category.getString(Constants.JsonKeys.TERM),

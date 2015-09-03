@@ -3,12 +3,12 @@ package com.gymkhana.iitbapp.items;
 /**
  * Created by bijoy on 9/2/15.
  */
-public class CategoryItem {
+public class FeedCategoryItem {
     public Integer id, feed_config;
     public String term, scheme, label;
     public Boolean subscribed;
 
-    public CategoryItem(Integer id, Integer feed_config, String term, String scheme, String label, Boolean subscribed) {
+    public FeedCategoryItem(Integer id, Integer feed_config, String term, String scheme, String label, Boolean subscribed) {
         this.id = id;
         this.feed_config = feed_config;
         this.term = term;
