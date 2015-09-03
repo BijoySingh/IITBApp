@@ -140,7 +140,8 @@ public class ListItemCreator {
                     category.getString(Constants.JsonKeys.TERM),
                     category.getString(Constants.JsonKeys.SCHEME),
                     category.getString(Constants.JsonKeys.LABEL),
-                    category.getBoolean(Constants.JsonKeys.SUBSCRIBED)
+                    true
+                    //category.getBoolean(Constants.JsonKeys.SUBSCRIBED)
             ));
         }
 

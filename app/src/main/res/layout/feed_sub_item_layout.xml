@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/panel_background"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              android:paddingBottom="8dp"
+              android:paddingLeft="16dp"
+              android:paddingRight="16dp"
+              android:paddingTop="8dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0sp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text=""
+        android:textColor="@color/secondary_text"
+        android:textSize="16dp"/>
+
+    <com.rey.material.widget.Switch
+        android:id="@+id/subscribed"
+        style="@style/Material.Widget.Switch"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:checked="false"
+        android:gravity="center"/>
+
+</LinearLayout>

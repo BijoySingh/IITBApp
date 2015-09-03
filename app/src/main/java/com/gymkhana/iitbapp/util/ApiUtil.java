@@ -19,10 +19,10 @@ import com.gymkhana.iitbapp.items.ApiItem;
 import com.gymkhana.iitbapp.items.FeedSubscriptionItem;
 import com.gymkhana.iitbapp.items.GenericItem;
 import com.gymkhana.iitbapp.items.InformationItem;
+import com.gymkhana.iitbapp.lvadapter.LVAdapterFeeds;
 import com.gymkhana.iitbapp.lvadapter.LVAdapterGeneric;
 import com.gymkhana.iitbapp.lvadapter.LVAdapterInformation;
 import com.gymkhana.iitbapp.lvadapter.LVAdapterMain;
-import com.gymkhana.iitbapp.lvadapter.LVAdapterRSSSubscription;
 
 import org.apache.http.HttpStatus;
 import org.json.JSONArray;
@@ -207,7 +207,7 @@ public class ApiUtil {
             if (lst.isEmpty() || adapterView == null) {
                 return onCreateEmptyList(context, adapterView);
             }
-            LVAdapterRSSSubscription lvAdapterMain = new LVAdapterRSSSubscription(context, lst);
+            LVAdapterFeeds lvAdapterMain = new LVAdapterFeeds(context, lst);
             ((ListView) adapterView).setAdapter(lvAdapterMain);
             return true;
         } catch (Exception e) {

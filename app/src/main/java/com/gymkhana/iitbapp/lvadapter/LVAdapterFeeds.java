@@ -23,12 +23,12 @@ import java.util.List;
 
 /*Listview adapter for the navigation drawer listview*/
 
-public class LVAdapterRSSSubscription extends ArrayAdapter<FeedSubscriptionItem> {
+public class LVAdapterFeeds extends ArrayAdapter<FeedSubscriptionItem> {
     private final Context mContext;
     private final List<FeedSubscriptionItem> mValues;
     private final Integer mLayoutId;
 
-    public LVAdapterRSSSubscription(Context context, List<FeedSubscriptionItem> values) {
+    public LVAdapterFeeds(Context context, List<FeedSubscriptionItem> values) {
         super(context, R.layout.feed_list_item_layout, values);
         this.mLayoutId = R.layout.feed_list_item_layout;
         this.mContext = context;
