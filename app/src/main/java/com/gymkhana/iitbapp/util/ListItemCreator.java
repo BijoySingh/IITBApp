@@ -1,6 +1,7 @@
 package com.gymkhana.iitbapp.util;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.gymkhana.iitbapp.items.ApiItem;
 import com.gymkhana.iitbapp.items.FeedCategoryItem;
@@ -123,6 +124,8 @@ public class ListItemCreator {
     }
 
     public static FeedSubscriptionItem createFeedInformation(Context context, JSONObject json) throws Exception {
+        Log.d("FEED", json.toString());
+
         FeedSubscriptionItem e = new FeedSubscriptionItem();
         e.title = Functions.correctUTFEncoding(json.getString(Constants.JsonKeys.TITLE));
         e.description = Functions.correctUTFEncoding(json.getString(Constants.JsonKeys.LINK));
@@ -140,8 +143,7 @@ public class ListItemCreator {
                     category.getString(Constants.JsonKeys.TERM),
                     category.getString(Constants.JsonKeys.SCHEME),
                     category.getString(Constants.JsonKeys.LABEL),
-                    true
-                    //category.getBoolean(Constants.JsonKeys.SUBSCRIBED)
+                    category.getBoolean(Constants.JsonKeys.SUBSCRIBED)
             ));
         }
 

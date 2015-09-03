@@ -74,6 +74,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/BackTheme"></activity>
         <activity
+            android:name="com.gymkhana.iitbapp.activity.FeedSubscriptionActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackTheme"></activity>
+        <activity
             android:name="com.gymkhana.iitbapp.activity.IitbTimetableActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"

@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 
 import com.gymkhana.iitbapp.MainActivity;
 import com.gymkhana.iitbapp.R;
+import com.gymkhana.iitbapp.activity.FeedSubscriptionActivity;
 import com.gymkhana.iitbapp.activity.IitbTimetableActivity;
 import com.gymkhana.iitbapp.activity.InformationActivity;
 import com.gymkhana.iitbapp.activity.LoginActivity;
@@ -84,8 +85,8 @@ public class ListContent {
                     case 0:
                         return;
                     case 1:
-                        ((MainActivity) context).displayFragment(MainActivity.SHOW_FEED_PREFERENCES);
-                        return;
+                        intent = new Intent(context, FeedSubscriptionActivity.class);
+                        break;
                     case 2:
                         ((MainActivity) context).displayFragment(MainActivity.SHOW_DEVELOPERS);
                         return;

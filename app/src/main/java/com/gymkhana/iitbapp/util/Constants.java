@@ -76,7 +76,7 @@ public class Constants {
         public static final String TERM = "term";
         public static final String SCHEME = "scheme";
         public static final String LABEL = "label";
-        public static final String SUBSCRIBED = "label";
+        public static final String SUBSCRIBED = "subscribed";
     }
 
     public static final class Article {

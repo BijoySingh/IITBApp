@@ -21,7 +21,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.gymkhana.iitbapp.MainActivity;
 import com.gymkhana.iitbapp.R;
 import com.gymkhana.iitbapp.items.ApiItem;
 import com.gymkhana.iitbapp.items.TimestampItem;
@@ -144,10 +143,8 @@ public class ArticleActivity extends ActionBarActivity {
             mViewHolder.addToCalendar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent mainIntent = new Intent(mContext, MainActivity.class);
-                    mainIntent.putExtra(MainActivity.FRAGMENT_KEY, MainActivity.SHOW_FEED_PREFERENCES);
-                    startActivity(mainIntent);
-                    finish();
+                    Intent feedIntent = new Intent(mContext, FeedSubscriptionActivity.class);
+                    startActivity(feedIntent);
                 }
             });
         }
