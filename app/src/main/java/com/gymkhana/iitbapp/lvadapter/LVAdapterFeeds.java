@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,14 +23,15 @@ import com.gymkhana.iitbapp.util.LocalData;
 import com.gymkhana.iitbapp.views.FeedSubListItem;
 import com.rey.material.widget.Switch;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*Listview adapter for the navigation drawer listview*/
 
 public class LVAdapterFeeds extends ArrayAdapter<FeedSubscriptionItem> {
     private final Context mContext;
-    private final List<FeedSubscriptionItem> mValues;
     private final Integer mLayoutId;
+    public List<FeedSubscriptionItem> mValues;
 
     public LVAdapterFeeds(Context context, List<FeedSubscriptionItem> values) {
         super(context, R.layout.feed_list_item_layout, values);
@@ -39,7 +41,7 @@ public class LVAdapterFeeds extends ArrayAdapter<FeedSubscriptionItem> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         final FeedSubscriptionItem data = mValues.get(position);
 
@@ -98,10 +100,40 @@ public class LVAdapterFeeds extends ArrayAdapter<FeedSubscriptionItem> {
         for (final FeedCategoryItem object : data.categories) {
             FeedSubListItem item = new FeedSubListItem(mContext);
             item.setup(object.term, object.subscribed);
+            item.mSubscribed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    setSubscription(position, object.id, b);
+                }
+            });
             holder.categories.addView(item);
         }
 
         return convertView;
+    }
+
+    public List<Integer> getSubscriptions() {
+        List<Integer> lst = new ArrayList<>();
+        for (FeedSubscriptionItem feed : mValues) {
+            for (FeedCategoryItem item : feed.categories) {
+                if (item.subscribed) {
+                    lst.add(item.id);
+                }
+            }
+        }
+        return lst;
+    }
+
+    private void setSubscription(int position, int category_id, boolean subscribed) {
+        FeedSubscriptionItem item = mValues.get(position);
+        for (int i = 0; i < item.categories.size(); i++) {
+            if (item.categories.get(i).id == category_id) {
+                FeedCategoryItem categoryItem = item.categories.get(i);
+                categoryItem.subscribed = subscribed;
+                mValues.get(position).categories.set(i, categoryItem);
+                return;
+            }
+        }
     }
 
     public class GenericViewHolder {

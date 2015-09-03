@@ -5,18 +5,16 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.gymkhana.iitbapp.R;
-import com.rey.material.widget.Switch;
+import com.rey.material.widget.CheckBox;
 
 /**
  * Created by bijoy on 9/3/15.
  */
 public class FeedSubListItem extends LinearLayout {
 
-    TextView mTitle;
-    Switch mSubscribed;
+    public CheckBox mSubscribed;
 
     public FeedSubListItem(Context context) {
         super(context);
@@ -37,21 +35,12 @@ public class FeedSubListItem extends LinearLayout {
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rootView = mInflater.inflate(R.layout.feed_sub_item_layout, this, true);
 
-        mTitle = (TextView) rootView.findViewById(R.id.title);
-        mSubscribed = (Switch) rootView.findViewById(R.id.subscribed);
-    }
-
-    public void setTitle(String text) {
-        mTitle.setText(text);
-    }
-
-    public void setSubscribed(Boolean subscribed) {
-        mSubscribed.setChecked(subscribed);
+        mSubscribed = (CheckBox) rootView.findViewById(R.id.subscribed);
     }
 
     public void setup(String title, Boolean subscribed) {
-        setTitle(title);
-        setSubscribed(subscribed);
+        mSubscribed.setCheckedImmediately(subscribed);
+        mSubscribed.setText(title);
     }
 
 }

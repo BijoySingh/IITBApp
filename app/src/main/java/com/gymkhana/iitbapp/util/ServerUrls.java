@@ -14,7 +14,7 @@ public class ServerUrls {
     public static final String DEBUG_URL = "http://gymkhana.iitb.ac.in/iitbapp_dev/";
     public String SERVER, GCM_REGISTER, GCM_UNREGISTER, IITB_HOME, ACADEMIC_CAL, API, USER,
             NEWS, EVENTS, NOTICES, PUBLIC_API, INFORMATION_API, DEPARTMENTS, CLUBS, CONTACTS, EMERGENCY,
-            AUTHENTICATE, LOGOUT, BUG, FEEDS, FEED_ENTRIES;
+            AUTHENTICATE, LOGOUT, BUG, FEEDS, FEED_ENTRIES, FEED_SUBSCRIBE;
 
     private ServerUrls(String serverUrl) {
         SERVER = serverUrl;
@@ -38,6 +38,7 @@ public class ServerUrls {
         CLUBS = INFORMATION_API + "club/";
         CONTACTS = INFORMATION_API + "contact/";
         EMERGENCY = INFORMATION_API + "emergency_contact/";
+        FEED_SUBSCRIBE = FEEDS + "subscribe/";
     }
 
     public static final ServerUrls getInstance() {
