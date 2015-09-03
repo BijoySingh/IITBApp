@@ -35,7 +35,7 @@ public class FeedSubListItem extends LinearLayout {
 
     public void init(Context context) {
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rootView = mInflater.inflate(R.layout.now_card_list_item, this, true);
+        View rootView = mInflater.inflate(R.layout.feed_sub_item_layout, this, true);
 
         mTitle = (TextView) rootView.findViewById(R.id.title);
         mSubscribed = (Switch) rootView.findViewById(R.id.subscribed);
