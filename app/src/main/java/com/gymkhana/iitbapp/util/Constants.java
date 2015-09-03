@@ -8,7 +8,7 @@ import android.graphics.Color;
  */
 public class Constants {
     public static final Boolean PRODUCTION_MODE = false;
-    public static final String GCM_SENDER_ID = "";
+    public static final String GCM_SENDER_ID = "388067495650";
 
     public static final String JSON_DATA_TYPE_EVENT = "event";
     public static final String JSON_DATA_TYPE_NEWS = "news";
@@ -26,55 +26,58 @@ public class Constants {
 
     // Json Total Data
     public static final String JSON_KEY_RESULTS = "results";
-    public static final String JSON_KEY_COUNT = "count";
-    public static final String JSON_KEY_NEXT = "next";
-    public static final String JSON_KEY_PREVIOUS = "previous";
-
-    // News Json
-    public static final String JSON_KEY_ID = "id";
-    public static final String JSON_KEY_LIKES = "likes";
-    public static final String JSON_KEY_VIEWS = "views";
-    public static final String JSON_KEY_LIKED = "liked";
-    public static final String JSON_KEY_VIEWED = "viewed";
-    public static final String JSON_KEY_IMAGE_LIST = "images";
-    public static final String JSON_KEY_TIMESTAMP = "time";
-    public static final String JSON_KEY_CATEGORY = "category";
-    public static final String JSON_KEY_TITLE = "title";
-    public static final String JSON_KEY_DESCRIPTION = "description";
-
-    // Source Json
-    public static final String JSON_KEY_SOURCE_JSON = "posted_by";
-    public static final String JSON_KEY_SOURCE_NAME = "name";
-    public static final String JSON_KEY_SOURCE_DESIGNATION = "post";
-    public static final String JSON_KEY_SOURCE_EMAIL = "email";
-
-    // Events Json
-    public static final String JSON_KEY_EVENT_TIMESTAMP = "event_time";
-    public static final String JSON_KEY_LOCATION = "event_place";
-
-    // Notice Json
-    public static final String JSON_KEY_PRIORITY = "priority";
-    public static final String JSON_KEY_EXPIRATION = "expiration_date";
-    public static final String JSON_KEY_PHONE = "phone";
-    public static final String JSON_KEY_FACEBOOK = "facebook";
-    public static final String JSON_KEY_LINK = "link";
-    public static final String JSON_KEY_EMAIL = "email";
-
-    //Feed Json
-    public static final String JSON_KEY_CONTENT = "content";
-    public static final String JSON_KEY_AUTHOR = "author";
-    public static final String JSON_KEY_UPDATED = "updated";
-    public static final String JSON_KEY_FEED_ID = "feed_config";
-    public static final String JSON_KEY_CATEGORIES = "categories";
-    public static final String JSON_KEY_TERM = "term";
-    public static final String JSON_KEY_SCHEME = "scheme";
-    public static final String JSON_KEY_LABEL = "label";
-
     public static final Integer LOGIN_REQUEST_CODE = 0;
     public static final Integer LOGIN_LOG_INTO = 1;
     public static final Integer LOGIN_LDAP_LOGIN = 2;
-
     public static final String PACKAGE_NAME_INSTIMAP = "in.designlabs.instimap";
+
+    //Feed Json
+    public static final class JsonKeys {
+        public static final String COUNT = "count";
+        public static final String NEXT = "next";
+        public static final String PREVIOUS = "previous";
+
+        // News Json
+        public static final String ID = "id";
+        public static final String LIKES = "likes";
+        public static final String VIEWS = "views";
+        public static final String LIKED = "liked";
+        public static final String VIEWED = "viewed";
+        public static final String IMAGE_LIST = "images";
+        public static final String TIMESTAMP = "time";
+        public static final String CATEGORY = "category";
+        public static final String TITLE = "title";
+        public static final String DESCRIPTION = "description";
+
+        // Source Json
+        public static final String SOURCE_JSON = "posted_by";
+        public static final String SOURCE_NAME = "name";
+        public static final String SOURCE_DESIGNATION = "post";
+        public static final String SOURCE_EMAIL = "email";
+
+        // Events Json
+        public static final String EVENT_TIMESTAMP = "event_time";
+        public static final String LOCATION = "event_place";
+
+        // Notice Json
+        public static final String PRIORITY = "priority";
+        public static final String EXPIRATION = "expiration_date";
+        public static final String PHONE = "phone";
+        public static final String FACEBOOK = "facebook";
+        public static final String LINK = "link";
+        public static final String EMAIL = "email";
+
+        // Feed Json
+        public static final String CONTENT = "content";
+        public static final String AUTHOR = "author";
+        public static final String UPDATED = "updated";
+        public static final String FEED_CONFIG = "feed_config";
+        public static final String CATEGORIES = "categories";
+        public static final String TERM = "term";
+        public static final String SCHEME = "scheme";
+        public static final String LABEL = "label";
+        public static final String SUBSCRIBED = "label";
+    }
 
     public static final class Article {
         public static final String REQUEST_USER = "user";

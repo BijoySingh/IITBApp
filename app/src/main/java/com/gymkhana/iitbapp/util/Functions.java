@@ -352,7 +352,7 @@ public class Functions {
 
         List<FeedSubscriptionItem> feeds = getSubscriptions(context);
         for (FeedSubscriptionItem feed : feeds) {
-            mapping.put(feed.feed_id, feed.title);
+            mapping.put(feed.feed_config, feed.title);
         }
 
         return mapping;
@@ -386,7 +386,7 @@ public class Functions {
         if (item.type.contentEquals(Constants.JSON_DATA_TYPE_FEED)) {
             List<FeedSubscriptionItem> subscriptions = getSubscriptions(context);
             for (FeedSubscriptionItem feed : subscriptions) {
-                if (feed.feed_id == item.feed_id) {
+                if (feed.feed_config == item.feed_id) {
                     if (LocalData.load(context, feed.prefKey()).contentEquals(LocalData.Tags.FALSE)) {
                         return false;
                     }

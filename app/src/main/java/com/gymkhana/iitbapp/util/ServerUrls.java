@@ -55,7 +55,7 @@ public class ServerUrls {
         if (feedList != null && !feedList.isEmpty()) {
             for (FeedSubscriptionItem feed : feedList) {
                 if (!LocalData.load(context, feed.prefKey()).contentEquals(LocalData.Tags.FALSE)) {
-                    append += feed.feed_id + ",";
+                    append += feed.feed_config + ",";
                 }
             }
             if (append.contentEquals("?id="))

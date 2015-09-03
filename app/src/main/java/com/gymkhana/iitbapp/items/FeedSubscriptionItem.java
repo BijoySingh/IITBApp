@@ -11,15 +11,15 @@ public class FeedSubscriptionItem implements Serializable {
     public String title, description;
     public String url;
     public String updated;
-    public Integer feed_id;
+    public Integer feed_config;
     public List<CategoryItem> categories = new ArrayList<>();
 
     public String prefKey() {
-        return "FEED_PREF" + feed_id;
+        return "FEED_PREF" + feed_config;
     }
 
     public String filename() {
-        return "cache_feed_" + feed_id + ".txt";
+        return "cache_feed_" + feed_config + ".txt";
     }
 
 }

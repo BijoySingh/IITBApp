@@ -176,7 +176,7 @@ public class HomeFragment extends Fragment {
                 }
                 addOnlineCard(
                         metaContent,
-                        ServerUrls.getInstance().FEED_ENTRIES + "?id=" + feed.feed_id,
+                        ServerUrls.getInstance().FEED_ENTRIES + "?id=" + feed.feed_config,
                         Constants.DATA_TYPE_FEED,
                         feed.filename()
                 );
