@@ -1,5 +1,6 @@
 package com.gymkhana.iitbapp.util;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -403,5 +405,10 @@ public class Functions {
         }
 
         return error.getMessage();
+    }
+
+    @TargetApi(16)
+    public static String getEscapedHtml(String html) {
+        return Html.escapeHtml(html);
     }
 }

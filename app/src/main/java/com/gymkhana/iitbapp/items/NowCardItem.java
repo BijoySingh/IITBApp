@@ -1,5 +1,7 @@
 package com.gymkhana.iitbapp.items;
 
+import android.view.View;
+
 import com.gymkhana.iitbapp.fragment.HomeFragment;
 
 import java.util.List;
@@ -12,6 +14,7 @@ public class NowCardItem<T> {
     public List<T> mData;
     public Integer mIconResource, mColor, mType, mFragmentId, mUniqueId;
     public FeedSubscriptionItem mFeed;
+    public View.OnClickListener mSettingsOnClickListener;
 
     public NowCardItem(String mTitle, String mDescription, List<T> mData) {
         this.mTitle = mTitle;
@@ -33,11 +36,24 @@ public class NowCardItem<T> {
         this.mData = mData;
         this.mUniqueId = metaContent.uniqueLocation;
         this.mFeed = metaContent.feed;
+        this.mSettingsOnClickListener = metaContent.clickListener;
     }
 
     public NowCardItem(String mTitle, List<T> mData) {
         this.mTitle = mTitle;
         this.mData = mData;
+    }
+
+    public View.OnClickListener getSettingsOnClickListener() {
+        if (mSettingsOnClickListener == null) {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            };
+        }
+        return mSettingsOnClickListener;
     }
 
     public static final class CardTypes {

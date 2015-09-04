@@ -55,7 +55,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
                 ((MainActivity) mContext).displayFragment(data.mFragmentId);
             }
         };
-        holder.titlebar.setOnClickListener(showFragment);
+        //holder.titlebar.setOnClickListener(showFragment);
         holder.showMore.setOnClickListener(showFragment);
 
         holder.description.setText(data.mDescription);
@@ -67,6 +67,13 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         }
         if (data.mIconResource != null) {
             holder.logo.setImageResource(data.mIconResource);
+        }
+
+        holder.settings.setOnClickListener(data.getSettingsOnClickListener());
+        if (data.mSettingsOnClickListener != null) {
+            holder.settings.setVisibility(View.VISIBLE);
+        } else {
+            holder.settings.setVisibility(View.GONE);
         }
 
         holder.content.removeAllViewsInLayout();
@@ -105,7 +112,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
 
         LinearLayout content, titlebar, showMore;
         TextView title, description;
-        ImageView logo;
+        ImageView logo, settings;
 
         public ViewHolder(View v) {
             super(v);
@@ -115,6 +122,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             title = (TextView) v.findViewById(R.id.title);
             description = (TextView) v.findViewById(R.id.description);
             logo = (ImageView) v.findViewById(R.id.logo);
+            settings = (ImageView) v.findViewById(R.id.settings_icon);
         }
     }
 

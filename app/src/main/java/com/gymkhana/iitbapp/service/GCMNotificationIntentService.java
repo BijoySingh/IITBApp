@@ -84,7 +84,7 @@ public class GCMNotificationIntentService extends GcmListenerService {
                     .setContentTitle(apiItem.title)
                     .setContentText(apiItem.getNotificationDescription())
                     .setStyle(new NotificationCompat.BigTextStyle()
-                            .bigText(apiItem.description))
+                            .bigText(apiItem.getNotificationDescription()))
                     .setContentIntent(resultPendingIntent)
                     .setAutoCancel(true);
 

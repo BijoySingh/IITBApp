@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.gymkhana.iitbapp.MainActivity;
 import com.gymkhana.iitbapp.R;
 import com.gymkhana.iitbapp.items.FeedCategoryItem;
 import com.gymkhana.iitbapp.items.FeedSubscriptionItem;
@@ -74,16 +73,6 @@ public class LVAdapterFeeds extends ArrayAdapter<FeedSubscriptionItem> {
                 holder.status.setChecked(true);
             }
         }
-
-        View.OnClickListener openFeed = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity) mContext).displayFragment(MainActivity.SHOW_FEED);
-            }
-        };
-        holder.title.setOnClickListener(openFeed);
-        holder.subtitle.setOnClickListener(openFeed);
-        holder.logoImage.setOnClickListener(openFeed);
 
         holder.status.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
             @Override

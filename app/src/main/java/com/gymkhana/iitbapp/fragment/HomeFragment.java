@@ -3,6 +3,7 @@ package com.gymkhana.iitbapp.fragment;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.gymkhana.iitbapp.MainActivity;
 import com.gymkhana.iitbapp.R;
+import com.gymkhana.iitbapp.activity.FeedSubscriptionActivity;
 import com.gymkhana.iitbapp.items.ApiItem;
 import com.gymkhana.iitbapp.items.FeedSubscriptionItem;
 import com.gymkhana.iitbapp.items.NowCardItem;
@@ -95,7 +97,7 @@ public class HomeFragment extends Fragment {
                 getString(R.string.drawer_events),
                 Constants.Colors.PRIMARY_DARK_EVENT,
                 Constants.DATA_TYPE_EVENT, MainActivity.SHOW_EVENTS,
-                R.drawable.drawer_icon_events, 0);
+                R.drawable.drawer_icon_events, 0, null);
         if (!isRefreshCall) {
             addOfflineCard(
                     metaContent,
@@ -116,7 +118,7 @@ public class HomeFragment extends Fragment {
                 getString(R.string.drawer_notices),
                 Constants.Colors.PRIMARY_NOTICES,
                 Constants.DATA_TYPE_NOTICE, MainActivity.SHOW_NOTICES,
-                R.drawable.drawer_icon_notice, 1);
+                R.drawable.drawer_icon_notice, 1, null);
 
         if (!isRefreshCall) {
             addOfflineCard(
@@ -138,7 +140,7 @@ public class HomeFragment extends Fragment {
                 getString(R.string.drawer_news),
                 Constants.Colors.PRIMARY_DARK_NEWS,
                 Constants.DATA_TYPE_NEWS, MainActivity.SHOW_NEWS,
-                R.drawable.drawer_icon_news, 2);
+                R.drawable.drawer_icon_news, 2, null);
         if (!isRefreshCall) {
             addOfflineCard(
                     metaContent,
@@ -165,7 +167,7 @@ public class HomeFragment extends Fragment {
                         Constants.Colors.PRIMARY_DARK_FEED,
                         Constants.DATA_TYPE_FEED,
                         MainActivity.SHOW_FEED,
-                        R.drawable.drawer_icon_feed, position);
+                        R.drawable.drawer_icon_feed, position, null);
 
                 if (!isRefreshCall) {
                     addOfflineCard(
@@ -197,7 +199,13 @@ public class HomeFragment extends Fragment {
                 getString(R.string.drawer_feed),
                 Constants.Colors.PRIMARY_DARK_FEED,
                 Constants.DATA_TYPE_FEED, MainActivity.SHOW_FEED,
-                R.drawable.drawer_icon_feed, 3);
+                R.drawable.drawer_icon_feed, 3, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, FeedSubscriptionActivity.class);
+                startActivity(intent);
+            }
+        });
         if (!isRefreshCall) {
             addOfflineCard(
                     metaContent,
@@ -267,15 +275,17 @@ public class HomeFragment extends Fragment {
         public String title, description;
         public Integer color, fragmentId, iconResource, uniqueLocation;
         public FeedSubscriptionItem feed;
+        public View.OnClickListener clickListener;
 
         public NowCardMetaContent(String title, Integer color, Integer type, Integer fragmentId,
-                                  Integer iconResource, int uniqueLocation) {
+                                  Integer iconResource, int uniqueLocation, View.OnClickListener listener) {
             this.title = title;
             this.color = color;
             this.type = type;
             this.fragmentId = fragmentId;
             this.iconResource = iconResource;
             this.uniqueLocation = uniqueLocation;
+            this.clickListener = listener;
         }
 
         public void setFeed(FeedSubscriptionItem feed) {

@@ -3,7 +3,6 @@ package com.gymkhana.iitbapp.items;
 import android.text.Html;
 
 import com.gymkhana.iitbapp.util.Constants;
-import com.gymkhana.iitbapp.util.Functions;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -43,13 +42,15 @@ public class ApiItem implements Serializable {
         return current.compareTo(timestampItem.calender) > 0;
     }
 
+
     public String getNotificationDescription() {
         if (type.contentEquals(Constants.JSON_DATA_TYPE_FEED)) {
-            return Functions.correctUTFEncoding(Html.fromHtml(description).toString());
+            return Html.fromHtml(description).toString();
         }
 
         return description;
     }
+
 
     public int getAccentColor() {
         return getPrimaryColor();
