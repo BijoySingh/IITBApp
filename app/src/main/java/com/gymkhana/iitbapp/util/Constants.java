@@ -24,15 +24,13 @@ public class Constants {
     public static final Integer DATA_TYPE_FEED = 6;
     public static final Integer DATA_TYPE_FEED_INFO = 6;
 
-    // Json Total Data
-    public static final String JSON_KEY_RESULTS = "results";
     public static final Integer LOGIN_REQUEST_CODE = 0;
     public static final Integer LOGIN_LOG_INTO = 1;
     public static final Integer LOGIN_LDAP_LOGIN = 2;
     public static final String PACKAGE_NAME_INSTIMAP = "in.designlabs.instimap";
 
-    //Feed Json
     public static final class JsonKeys {
+        public static final String RESULTS = "results";
         public static final String COUNT = "count";
         public static final String NEXT = "next";
         public static final String PREVIOUS = "previous";

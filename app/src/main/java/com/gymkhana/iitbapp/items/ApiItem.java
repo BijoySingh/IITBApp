@@ -45,7 +45,7 @@ public class ApiItem implements Serializable {
 
     public String getNotificationDescription() {
         if (type.contentEquals(Constants.JSON_DATA_TYPE_FEED)) {
-            return Html.fromHtml(Functions.correctUTFEncoding(description)).toString();
+            return Functions.correctUTFEncoding(Html.fromHtml(description).toString());
         }
 
         return description;

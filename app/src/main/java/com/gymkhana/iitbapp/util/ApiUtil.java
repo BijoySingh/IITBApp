@@ -150,7 +150,7 @@ public class ApiUtil {
             dataType) {
         try {
             JSONObject jsonObject = new JSONObject(data);
-            JSONArray jsonArray = jsonObject.getJSONArray(Constants.JSON_KEY_RESULTS);
+            JSONArray jsonArray = jsonObject.getJSONArray(Constants.JsonKeys.RESULTS);
             List<ApiItem> lst = Functions.getEventItemList(context, jsonArray, dataType);
             return lst;
         } catch (Exception e) {
@@ -161,7 +161,7 @@ public class ApiUtil {
     public static List<FeedSubscriptionItem> getSubscriptionListFromJson(Context context, String data) {
         try {
             JSONObject jsonObject = new JSONObject(data);
-            JSONArray json = jsonObject.getJSONArray(Constants.JSON_KEY_RESULTS);
+            JSONArray json = jsonObject.getJSONArray(Constants.JsonKeys.RESULTS);
             List<FeedSubscriptionItem> lst = new ArrayList<>();
 
             for (int i = 0; i < json.length(); i++) {
@@ -184,7 +184,7 @@ public class ApiUtil {
                                                  boolean fileExists) {
         try {
             JSONObject jsonObject = new JSONObject(data);
-            JSONArray jsonArray = jsonObject.getJSONArray(Constants.JSON_KEY_RESULTS);
+            JSONArray jsonArray = jsonObject.getJSONArray(Constants.JsonKeys.RESULTS);
             List<InformationItem> lst =
                     Functions.getInformationItemList(context, jsonArray, iconResource);
             if (lst.isEmpty() || adapterView == null) {
