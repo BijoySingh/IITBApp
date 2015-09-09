@@ -52,7 +52,6 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
-
     private void createCards(boolean isRefreshCall) {
         addEventCard(isRefreshCall);
         addNewsCard(isRefreshCall);

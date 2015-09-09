@@ -7,6 +7,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -37,6 +38,8 @@ import java.util.Map;
  * Created by Bijoy on 6/21/2015.
  */
 public class ApiUtil {
+
+    private static final Integer TIMEOUT = 5000;
 
     public static void makeApiCall(String link,
                                    final Context context,
@@ -109,6 +112,8 @@ public class ApiUtil {
                     public void onResponse(String response) {
                         List<ApiItem> eventItems = new ArrayList<>();
 
+                        Log.d("API_UTIL", storeFile + " => " + response);
+
                         if (dataType == Constants.DATA_TYPE_NEWS ||
                                 dataType == Constants.DATA_TYPE_EVENT ||
                                 dataType == Constants.DATA_TYPE_NOTICE ||
@@ -142,6 +147,11 @@ public class ApiUtil {
                 return params;
             }
         };
+
+        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(
+                ApiUtil.TIMEOUT,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         Volley.newRequestQueue(context).add(jsonRequest);
     }

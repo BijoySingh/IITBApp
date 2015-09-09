@@ -5,6 +5,7 @@ import android.text.Html;
 import com.gymkhana.iitbapp.util.Constants;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class ApiItem implements Serializable {
     public List<String> image_links;
     public TimestampItem article_time, event_time, expiration_time;
     public boolean liked, viewed;
+    public List<FeedCategoryItem> categories;
 
     public boolean hasExpired() {
         TimestampItem timestampItem;
@@ -49,6 +51,14 @@ public class ApiItem implements Serializable {
         }
 
         return description;
+    }
+
+    public List<String> getCategories() {
+        List<String> string_categories = new ArrayList<>();
+        for (FeedCategoryItem item : categories) {
+            string_categories.add(item.term);
+        }
+        return string_categories;
     }
 
 

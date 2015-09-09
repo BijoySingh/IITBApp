@@ -107,6 +107,17 @@ public class ListItemCreator {
         e.category = CategoryImages.Category.FEED;
 
         e.image_links = new ArrayList<>();
+        e.categories = new ArrayList<>();
+
+        try {
+            JSONArray feed_categories = json.getJSONArray(Constants.JsonKeys.CATEGORIES);
+            for (int i = 0; i < feed_categories.length(); i++) {
+                e.categories.add(new FeedCategoryItem(feed_categories.getJSONObject(i)));
+            }
+        } catch (Exception exception) {
+            Log.e("FEED", "Parse Error", exception);
+        }
+
         JSONArray image_links = json.getJSONArray(Constants.JsonKeys.IMAGE_LIST);
         for (int i = 0; i < image_links.length(); i++) {
             e.image_links.add(image_links.getString(i));
@@ -124,7 +135,6 @@ public class ListItemCreator {
     }
 
     public static FeedSubscriptionItem createFeedInformation(Context context, JSONObject json) throws Exception {
-        Log.d("FEED", json.toString());
 
         FeedSubscriptionItem e = new FeedSubscriptionItem();
         e.title = Functions.correctUTFEncoding(json.getString(Constants.JsonKeys.TITLE));
@@ -137,14 +147,7 @@ public class ListItemCreator {
         JSONArray categories = json.getJSONArray(Constants.JsonKeys.CATEGORIES);
         for (int i = 0; i < categories.length(); i++) {
             JSONObject category = categories.getJSONObject(i);
-            e.categories.add(new FeedCategoryItem(
-                    category.getInt(Constants.JsonKeys.ID),
-                    category.getInt(Constants.JsonKeys.FEED_CONFIG),
-                    category.getString(Constants.JsonKeys.TERM),
-                    category.getString(Constants.JsonKeys.SCHEME),
-                    category.getString(Constants.JsonKeys.LABEL),
-                    category.getBoolean(Constants.JsonKeys.SUBSCRIBED)
-            ));
+            e.categories.add(new FeedCategoryItem(category));
         }
 
         return e;

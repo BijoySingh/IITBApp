@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -47,6 +48,7 @@ public class ArticleActivity extends ActionBarActivity {
     private Context mContext;
     private EventViewHolder mViewHolder = new EventViewHolder();
     private ImageLoader mImageLoader;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +121,7 @@ public class ArticleActivity extends ActionBarActivity {
             mViewHolder.eventTime.setText(mArticle.event_time.time);
             mViewHolder.eventDate.setText(mArticle.event_time.date);
             mViewHolder.eventLocation.setText(mArticle.event_location);
-            mViewHolder.addToCalendar.setOnClickListener(new View.OnClickListener() {
+            mViewHolder.eventLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     addCalendarEvent();
@@ -140,13 +142,19 @@ public class ArticleActivity extends ActionBarActivity {
             mViewHolder.eventTime.setText(getString(R.string.feed_subscription_details));
             mViewHolder.eventLocation.setText("");
             mViewHolder.addToCalendar.setImageResource(R.drawable.drawer_icon_feed);
-            mViewHolder.addToCalendar.setOnClickListener(new View.OnClickListener() {
+
+            View.OnClickListener goToFeed = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent feedIntent = new Intent(mContext, FeedSubscriptionActivity.class);
                     startActivity(feedIntent);
                 }
-            });
+            };
+            mViewHolder.eventLayout.setOnClickListener(goToFeed);
+            String categories = TextUtils.join(", ", mArticle.getCategories());
+            mViewHolder.sourceDesignation.setText(categories);
+            mViewHolder.sourceDesignation.setTextColor(mArticle.getAccentColor());
+            mViewHolder.sourceDesignation.setOnClickListener(goToFeed);
         }
 
         mViewHolder.articleTime.setText(mArticle.article_time.time);
