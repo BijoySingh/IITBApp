@@ -404,7 +404,7 @@ public class Functions {
             return new String(error.networkResponse.data);
         }
 
-        return error.getMessage();
+        return "error";
     }
 
     @TargetApi(16)

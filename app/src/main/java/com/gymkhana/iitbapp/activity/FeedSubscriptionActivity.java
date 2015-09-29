@@ -99,7 +99,7 @@ public class FeedSubscriptionActivity extends ActionBarActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Functions.makeToast(context, "Could Not Update Subscriptions");
-                        Log.d(FeedSubscriptionActivity.class.getSimpleName(), Functions.showVolleyError(error));
+                        Log.d(FeedSubscriptionActivity.class.getName(), Functions.showVolleyError(error));
                         error.printStackTrace();
                     }
                 }) {
