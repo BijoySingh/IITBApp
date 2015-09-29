@@ -79,7 +79,7 @@ public class FeedSubscriptionActivity extends ActionBarActivity {
         JSONObject params = new JSONObject(map);
         String url = ServerUrls.getInstance().FEED_SUBSCRIBE;
 
-        Log.d(FeedSubscriptionActivity.class.getSimpleName(), "Updating Subscriptions => " + url + " => " + params.toString());
+        Log.d("FEED_SUBSCRIPTION", "Updating Subscriptions => " + url + " => " + params.toString());
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest
                 (Request.Method.POST, url, params, new
@@ -99,7 +99,7 @@ public class FeedSubscriptionActivity extends ActionBarActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Functions.makeToast(context, "Could Not Update Subscriptions");
-                        Log.d(FeedSubscriptionActivity.class.getName(), Functions.showVolleyError(error));
+                        Log.d("FEED_SUBSCRIPTION", Functions.showVolleyError(error));
                         error.printStackTrace();
                     }
                 }) {
