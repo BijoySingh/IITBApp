@@ -34,14 +34,14 @@ public class AuthFunctions {
 
     public static boolean isUserLoggedIn(Context context) {
         return LocalData.load(
-                context,
-                LocalData.Tags.LOGGED_IN).contentEquals(LocalData.Tags.TRUE);
+            context,
+            LocalData.Tags.LOGGED_IN).contentEquals(LocalData.Tags.TRUE);
     }
 
     public static boolean isUserOffline(Context context) {
         return LocalData.load(
-                context,
-                LocalData.Tags.LOGGED_IN).contentEquals(LocalData.Tags.OFFLINE);
+            context,
+            LocalData.Tags.LOGGED_IN).contentEquals(LocalData.Tags.OFFLINE);
     }
 
     public static void logoutUser(Context context) {
@@ -56,40 +56,40 @@ public class AuthFunctions {
         JSONObject jsonParams = new JSONObject(params);
 
         StringRequest jsonRequest = new StringRequest
-                (Request.Method.POST, ServerUrls.getInstance().AUTHENTICATE, new Response
-                        .Listener<String>() {
-                    @Override
-                    public void onResponse(String result) {
-                        LoginActivity.enableLogin();
-                        try {
-                            JSONObject response = new JSONObject(result);
-                            if (response.getBoolean(Constants.Ldap.RESPONSE_ERROR)) {
-                                Functions.makeToast(
-                                        context,
-                                        response.getString(Constants.Ldap.RESPONSE_ERROR_MESSAGE));
-                            } else {
-                                String ldap = response.getString(Constants.Ldap.RESPONSE_LDAP);
-                                String name = response.getString(Constants.Ldap.RESPONSE_NAME);
-                                String email = response.getString(Constants.Ldap.RESPONSE_EMAIL);
-                                String user_token = response.getString(Constants.Ldap.RESPONSE_USER_TOKEN);
-                                String id = ((Integer) response.getInt(Constants.Ldap.RESPONSE_USER_ID)).toString();
+            (Request.Method.POST, ServerUrls.getInstance().AUTHENTICATE, new Response
+                .Listener<String>() {
+                @Override
+                public void onResponse(String result) {
+                    LoginActivity.enableLogin();
+                    try {
+                        JSONObject response = new JSONObject(result);
+                        if (response.getBoolean(Constants.Ldap.RESPONSE_ERROR)) {
+                            Functions.makeToast(
+                                context,
+                                response.getString(Constants.Ldap.RESPONSE_ERROR_MESSAGE));
+                        } else {
+                            String ldap = response.getString(Constants.Ldap.RESPONSE_LDAP);
+                            String name = response.getString(Constants.Ldap.RESPONSE_NAME);
+                            String email = response.getString(Constants.Ldap.RESPONSE_EMAIL);
+                            String user_token = response.getString(Constants.Ldap.RESPONSE_USER_TOKEN);
+                            String id = ((Integer) response.getInt(Constants.Ldap.RESPONSE_USER_ID)).toString();
 
-                                storeLoginInformation(context, ldap, name, id, user_token, password);
-                                loginUtil(context);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Functions.makeToast(context, "Unknown Error Occured");
+                            storeLoginInformation(context, ldap, name, id, user_token, password);
+                            loginUtil(context);
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Functions.makeToast(context, "Unknown Error Occured");
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        LoginActivity.enableLogin();
-                        error.printStackTrace();
-                        Functions.makeToast(context, "Server Error");
-                    }
-                }) {
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    LoginActivity.enableLogin();
+                    error.printStackTrace();
+                    Functions.makeToast(context, "Server Error");
+                }
+            }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
@@ -114,22 +114,22 @@ public class AuthFunctions {
         JSONObject jsonParams = new JSONObject(params);
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest
-                (Request.Method.POST, ServerUrls.getInstance().LOGOUT, jsonParams, new Response
-                        .Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject result) {
-                        try {
-                            ;
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+            (Request.Method.POST, ServerUrls.getInstance().LOGOUT, jsonParams, new Response
+                .Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject result) {
+                    try {
+                        ;
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                }) {
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
