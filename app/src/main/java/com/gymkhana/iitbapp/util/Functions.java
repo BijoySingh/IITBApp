@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -109,18 +110,18 @@ public class Functions {
     }
 
     //Sets the actionbar title
-    public static void setActionBarTitle(ActionBarActivity activity, String title) {
+    public static void setActionBarTitle(AppCompatActivity activity, String title) {
         ActionBar ab = activity.getSupportActionBar();
         ab.setTitle(title);
     }
 
     //Setup the actionbar of the activity
-    public static void setActionBar(ActionBarActivity activity) {
+    public static void setActionBar(AppCompatActivity activity) {
         setActionBar(activity, R.color.actionbar_500, R.color.actionbar_700);
     }
 
     //Setup the actionbar of the activity
-    public static void setActionBarWithColor(ActionBarActivity activity,
+    public static void setActionBarWithColor(AppCompatActivity activity,
                                              int actionbarColor,
                                              int navigationColor) {
         ActionBar ab = activity.getSupportActionBar();
@@ -137,7 +138,7 @@ public class Functions {
     }
 
     //Setup the actionbar of the activity
-    public static void setActionBar(ActionBarActivity activity,
+    public static void setActionBar(AppCompatActivity activity,
                                     int action_bar_color_resource,
                                     int navigation_bar_color_resource) {
         setActionBarWithColor(activity,
@@ -146,7 +147,7 @@ public class Functions {
     }
 
     //Hide the actionbar of the activity
-    public static void hideActionBar(ActionBarActivity activity) {
+    public static void hideActionBar(AppCompatActivity activity) {
         ActionBar ab = activity.getSupportActionBar();
         ab.hide();
     }

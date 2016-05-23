@@ -3,7 +3,7 @@ package com.gymkhana.iitbapp.activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.bijoysingh.starter.util.FileManager;
 import com.gymkhana.iitbapp.R;
 import com.gymkhana.iitbapp.lvadapter.LVAdapterFeeds;
 import com.gymkhana.iitbapp.util.ApiUtil;
@@ -29,7 +30,10 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressLint("NewApi")
-public class FeedSubscriptionActivity extends ActionBarActivity {
+/**
+ * This activity contains the list of feed subscriptions
+ */
+public class FeedSubscriptionActivity extends AppCompatActivity {
 
     public ListView mListView;
     private Context mContext;
@@ -47,29 +51,35 @@ public class FeedSubscriptionActivity extends ActionBarActivity {
 
         Functions.setActionBar(this);
         Functions.setActionBarTitle(this, mContext.getString(R.string.title_subscription));
-        getSupportActionBar().setHomeButtonEnabled(true);
+
+        try {
+            getSupportActionBar().setHomeButtonEnabled(true);
+        } catch (NullPointerException e) {
+            Log.e(FeedSubscriptionActivity.class.getSimpleName(), e.getMessage(), e);
+        }
 
         boolean mFileExists = false;
 
-        if (fileName != null) {
-            String json = Functions.offlineDataReader(mContext, fileName);
-            if (json != null && !json.isEmpty()) {
-                mFileExists = true;
-                ApiUtil.onSubscriptionDataResult(json, mContext, mListView);
-            }
+        String json = FileManager.read(mContext, fileName);
+        if (!json.isEmpty()) {
+            mFileExists = true;
+            ApiUtil.onSubscriptionDataResult(json, mContext, mListView);
         }
 
         ApiUtil.makeApiCall(
-                link,
-                mContext,
-                dataType,
-                mListView,
-                null,
-                fileName,
-                mFileExists
+            link,
+            mContext,
+            dataType,
+            mListView,
+            null,
+            fileName,
+            mFileExists
         );
     }
 
+    /**
+     * Sends the subscription update online to server
+     */
     public void uploadSubscriptions(final Context context) {
 
         Map<String, Object> map = new HashMap<>();
@@ -82,27 +92,27 @@ public class FeedSubscriptionActivity extends ActionBarActivity {
         Log.d("FEED_SUBSCRIPTION", "Updating Subscriptions => " + url + " => " + params.toString());
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest
-                (Request.Method.POST, url, params, new
-                        Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject result) {
-                                try {
-                                    if (result.has("count")) {
-                                        return;
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                Functions.makeToast(context, "Could Not Update Subscriptions");
-                            }
-                        }, new Response.ErrorListener() {
+            (Request.Method.POST, url, params, new
+                Response.Listener<JSONObject>() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void onResponse(JSONObject result) {
+                        try {
+                            if (result.has("count")) {
+                                return;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         Functions.makeToast(context, "Could Not Update Subscriptions");
-                        Log.d("FEED_SUBSCRIPTION", Functions.showVolleyError(error));
-                        error.printStackTrace();
                     }
-                }) {
+                }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Functions.makeToast(context, "Could Not Update Subscriptions");
+                    Log.d("FEED_SUBSCRIPTION", Functions.showVolleyError(error));
+                    error.printStackTrace();
+                }
+            }) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
