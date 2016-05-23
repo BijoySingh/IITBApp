@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ListView;
 
@@ -13,7 +14,7 @@ import com.gymkhana.iitbapp.util.Constants;
 import com.gymkhana.iitbapp.util.Functions;
 
 @SuppressLint("NewApi")
-public class InformationActivity extends ActionBarActivity {
+public class InformationActivity extends AppCompatActivity {
 
     public static String mTitle = "";
     public static String mLink;
@@ -30,7 +31,6 @@ public class InformationActivity extends ActionBarActivity {
 
         Functions.setActionBar(this);
         Functions.setActionBarTitle(this, mTitle);
-
         getSupportActionBar().setHomeButtonEnabled(true);
 
         ListView listView = (ListView) findViewById(R.id.list);
@@ -38,7 +38,7 @@ public class InformationActivity extends ActionBarActivity {
 
         if (mFileName != null) {
             String json = Functions.offlineDataReader(mContext, mFileName);
-            if (json != null && !json.isEmpty()) {
+            if (!json.isEmpty()) {
                 ApiUtil.onGetInformationResult(json, mContext, mIconResource, listView,
                         false);
                 mFileExists = true;
