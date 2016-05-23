@@ -2,12 +2,13 @@ package com.gymkhana.iitbapp.activity;
 
 /**
  * Created by Bijoy on 5/27/2015.
+ * Login Activity
  */
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,7 +23,7 @@ import com.gymkhana.iitbapp.util.Functions;
 import com.gymkhana.iitbapp.util.LocalData;
 import com.gymkhana.iitbapp.util.ServerUrls;
 
-public class LoginActivity extends ActionBarActivity {
+public class LoginActivity extends AppCompatActivity {
 
     public static boolean loginEnabled = true;
     public static ProgressBar progressBar;
@@ -58,7 +59,7 @@ public class LoginActivity extends ActionBarActivity {
         mCenterText = (TextView) findViewById(R.id.login_center_txt);
         mRightText = (TextView) findViewById(R.id.login_right_txt);
 
-        if (mMode == Constants.LOGIN_LDAP_LOGIN) {
+        if (mMode.equals(Constants.LOGIN_LDAP_LOGIN)) {
             mInput.setHint(getString(R.string.login_input_ldap));
             mInput.setText(LocalData.load(mContext, LocalData.Tags.USERNAME));
             mPassword.setHint(getString(R.string.login_input_password));
@@ -77,7 +78,7 @@ public class LoginActivity extends ActionBarActivity {
             mCenterText.setText(getString(R.string.login_login));
             mRightText.setText(getString(R.string.login_offline));
 
-        } else if (mMode == Constants.LOGIN_REQUEST_CODE) {
+        } else if (mMode.equals(Constants.LOGIN_REQUEST_CODE)) {
             mInput.setHint(getString(R.string.login_input_ldap));
             mPassword.setVisibility(View.GONE);
 
@@ -94,7 +95,7 @@ public class LoginActivity extends ActionBarActivity {
             mCenterText.setText(getString(R.string.login_request_code));
             mRightText.setText(getString(R.string.login_offline));
 
-        } else if (mMode == Constants.LOGIN_LOG_INTO) {
+        } else if (mMode.equals(Constants.LOGIN_LOG_INTO)) {
             mInput.setHint(getString(R.string.login_input_request));
             mPassword.setVisibility(View.GONE);
 
@@ -146,9 +147,9 @@ public class LoginActivity extends ActionBarActivity {
             if (loginEnabled && checkNonEmpty()) {
                 disableLogin();
                 AuthFunctions.sendLoginQuery(
-                        mContext,
-                        mInput.getText().toString(),
-                        mPassword.getText().toString()
+                    mContext,
+                    mInput.getText().toString(),
+                    mPassword.getText().toString()
                 );
             }
         } else if (buttonType == Constants.ButtonTypes.LOGIN) {

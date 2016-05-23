@@ -10,8 +10,8 @@ import java.util.List;
  * Created by bijoy on 7/22/15.
  */
 public class ServerUrls {
-    public static final String DEFAULT_URL = "http://gymkhana.iitb.ac.in/iitbapp/";
-    public static final String DEBUG_URL = "http://gymkhana.iitb.ac.in/iitbapp_dev/";
+    public static final String DEFAULT_URL = "https://gymkhana.iitb.ac.in/iitbapp/";
+    public static final String DEBUG_URL = "https://gymkhana.iitb.ac.in/iitbapp_dev/";
     public String SERVER, GCM_REGISTER, GCM_UNREGISTER, IITB_HOME, ACADEMIC_CAL, API, USER,
             NEWS, EVENTS, NOTICES, PUBLIC_API, INFORMATION_API, DEPARTMENTS, CLUBS, CONTACTS, EMERGENCY,
             AUTHENTICATE, LOGOUT, BUG, FEEDS, FEED_ENTRIES, FEED_SUBSCRIBE;
