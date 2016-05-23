@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CalendarContract;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -22,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.bijoysingh.starter.util.LocaleManager;
 import com.gymkhana.iitbapp.R;
 import com.gymkhana.iitbapp.items.ApiItem;
 import com.gymkhana.iitbapp.items.TimestampItem;
@@ -38,17 +41,18 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ArticleActivity extends ActionBarActivity {
+/**
+ * Activity which displays the articles
+ */
+public class ArticleActivity extends AppCompatActivity {
 
-    public static String INTENT_ARTICLE = "ARTICLE";
-    private static String EVENT_TYPE = "vnd.android.cursor.item/event";
-    private static String EVENT_BEGIN_TIME = "beginTime";
-    private static String EVENT_END_TIME = "endTime";
+    public static final String INTENT_ARTICLE = "ARTICLE";
+    private static final String EVENT_TYPE = "vnd.android.cursor.item/event";
+    private static final String EVENT_BEGIN_TIME = "beginTime";
+    private static final String EVENT_END_TIME = "endTime";
     private ApiItem mArticle;
     private Context mContext;
     private EventViewHolder mViewHolder = new EventViewHolder();
-    private ImageLoader mImageLoader;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +62,9 @@ public class ArticleActivity extends ActionBarActivity {
         mArticle = (ApiItem) getIntent().getSerializableExtra(INTENT_ARTICLE);
 
         mContext = this;
-        mImageLoader = Functions.loadImageLoader(mContext);
+        ImageLoader imageLoader = Functions.loadImageLoader(mContext);
 
+        // Loads the variables in the view holder
         mViewHolder.title = (TextView) findViewById(R.id.title);
         mViewHolder.description = (TextView) findViewById(R.id.description);
         mViewHolder.sourceName = (TextView) findViewById(R.id.source);
@@ -79,9 +84,10 @@ public class ArticleActivity extends ActionBarActivity {
         mViewHolder.eventLayout = (RelativeLayout) findViewById(R.id.event_layout);
         mViewHolder.likePanel = (RelativeLayout) findViewById(R.id.panel);
         mViewHolder.horizontalScrollView =
-                (HorizontalScrollView) findViewById(R.id.horizontal_scroll_view);
+            (HorizontalScrollView) findViewById(R.id.horizontal_scroll_view);
         mViewHolder.eventLogo = (ImageView) findViewById(R.id.event_logo);
 
+        // Sets the values of the article
         mViewHolder.title.setText(mArticle.title);
         if (mArticle.type.contentEquals(Constants.JSON_DATA_TYPE_FEED)) {
             mViewHolder.description.setText(Html.fromHtml(mArticle.description));
@@ -89,13 +95,13 @@ public class ArticleActivity extends ActionBarActivity {
             mViewHolder.description.setText(mArticle.description);
         }
         mViewHolder.categoryImage.setIcon(
-                mContext.getResources().getDrawable(CategoryImages.getDrawable(mArticle.category)),
-                false
+            ContextCompat.getDrawable(this, CategoryImages.getDrawable(mArticle.category)),
+            false
         );
         mViewHolder.categoryImage.setBackgroundColor(mArticle.getAccentColor());
 
-        mViewHolder.likes.setText("" + mArticle.likes);
-        mViewHolder.views.setText("" + mArticle.views);
+        mViewHolder.likes.setText(LocaleManager.toString(mArticle.likes));
+        mViewHolder.views.setText(LocaleManager.toString(mArticle.views));
         mViewHolder.sourceName.setText(mArticle.source_name);
         mViewHolder.sourceDesignation.setText(mArticle.source_designation);
 
@@ -103,10 +109,10 @@ public class ArticleActivity extends ActionBarActivity {
             ImageView imageView = new ImageView(mContext);
             imageView.setAdjustViewBounds(true);
             imageView.setLayoutParams(new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    (int) Functions.convertDpToPixel(320, mContext)
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                (int) Functions.convertDpToPixel(320, mContext)
             ));
-            mImageLoader.displayImage(link, imageView);
+            imageLoader.displayImage(link, imageView);
             mViewHolder.scrollLayout.addView(imageView);
         }
 
@@ -185,12 +191,15 @@ public class ArticleActivity extends ActionBarActivity {
     public void hideNavigation() {
         Window window = getWindow();
         window.getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
         );
     }
 
+    /**
+     * Add the calendar event
+     */
     public void addCalendarEvent() {
         Intent intent = new Intent(Intent.ACTION_EDIT);
         intent.setType(EVENT_TYPE);
@@ -199,11 +208,14 @@ public class ArticleActivity extends ActionBarActivity {
         intent.putExtra(CalendarContract.Events.EVENT_LOCATION, mArticle.event_location);
         intent.putExtra(EVENT_BEGIN_TIME, mArticle.event_time.calender.getTimeInMillis());
         intent.putExtra(
-                EVENT_END_TIME,
-                mArticle.event_time.calender.getTimeInMillis() + TimestampItem.ONE_HOUR);
+            EVENT_END_TIME,
+            mArticle.event_time.calender.getTimeInMillis() + TimestampItem.ONE_HOUR);
         startActivity(intent);
     }
 
+    /**
+     * Like button setup
+     */
     private void setupLike() {
         if (mArticle.liked) {
             mViewHolder.likeIcon.setColorFilter(mArticle.getAccentColor());
@@ -212,6 +224,10 @@ public class ArticleActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * Interpret the server response for various clicks.
+     * @param jsonObject the server response
+     */
     private void interpretJSONResponse(JSONObject jsonObject) {
         try {
             mArticle.liked = jsonObject.getBoolean(Constants.Article.RESPONSE_LIKED);
@@ -220,40 +236,47 @@ public class ArticleActivity extends ActionBarActivity {
             mArticle.views = jsonObject.getInt(Constants.Article.RESPONSE_VIEWS);
 
             setupLike();
-            mViewHolder.likes.setText(mArticle.likes.toString());
-            mViewHolder.views.setText(mArticle.views.toString());
+            mViewHolder.likes.setText(LocaleManager.toString(mArticle.likes));
+            mViewHolder.views.setText(LocaleManager.toString(mArticle.views));
             if (mArticle.viewed)
                 mViewHolder.viewIcon.setColorFilter(mArticle.getAccentColor());
 
         } catch (Exception e) {
+            Log.e(ArticleActivity.class.getSimpleName(), e.getMessage(), e);
         }
     }
 
-    private void apiAction(final Context context, String url, JSONObject jsonParams, final int actionType) {
+    /**
+     * Send server request
+     */
+    private void apiAction(final Context context,
+                           String url,
+                           JSONObject jsonParams,
+                           final int actionType) {
         if (url == null || jsonParams == null) {
             return;
         }
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest
-                (Request.Method.POST, url, jsonParams, new
-                        Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject result) {
-                                try {
-                                    if (result.has("id")) {
-                                        interpretJSONResponse(result);
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
+            (Request.Method.POST, url, jsonParams, new
+                Response.Listener<JSONObject>() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        LoginActivity.enableLogin();
-                        error.printStackTrace();
+                    public void onResponse(JSONObject result) {
+                        try {
+                            if (result.has("id")) {
+                                interpretJSONResponse(result);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                }) {
+                }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    LoginActivity.enableLogin();
+                    error.printStackTrace();
+                }
+            }) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -292,7 +315,7 @@ public class ArticleActivity extends ActionBarActivity {
             }
 
             params.put(Constants.Article.REQUEST_USER,
-                    LocalData.load(mContext, LocalData.Tags.USER_ID));
+                LocalData.load(mContext, LocalData.Tags.USER_ID));
             return params;
         } catch (Exception e) {
             e.printStackTrace();
@@ -302,17 +325,17 @@ public class ArticleActivity extends ActionBarActivity {
 
     private void likeArticle() {
         apiAction(mContext, getActionBaseUrl() + Constants.Article.ACTION_URL_LIKE,
-                getActionParams(), Constants.Article.ACTION_LIKE);
+            getActionParams(), Constants.Article.ACTION_LIKE);
     }
 
     private void unlikeArticle() {
         apiAction(mContext, getActionBaseUrl() + Constants.Article.ACTION_URL_UNLIKE,
-                getActionParams(), Constants.Article.ACTION_UNLIKE);
+            getActionParams(), Constants.Article.ACTION_UNLIKE);
     }
 
     private void viewArticle() {
         apiAction(mContext, getActionBaseUrl() + Constants.Article.ACTION_URL_VIEW,
-                getActionParams(), Constants.Article.ACTION_VIEW);
+            getActionParams(), Constants.Article.ACTION_VIEW);
     }
 
     public class EventViewHolder {
