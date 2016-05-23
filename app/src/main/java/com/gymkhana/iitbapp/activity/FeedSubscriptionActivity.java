@@ -78,7 +78,7 @@ public class FeedSubscriptionActivity extends AppCompatActivity {
     }
 
     /**
-     * Sends the subscription update online to server
+     * Sends the subscription update online to serverd
      */
     public void uploadSubscriptions(final Context context) {
 

@@ -5,7 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -24,9 +25,8 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 @SuppressLint("NewApi")
-public class IitbTimetableActivity extends ActionBarActivity {
+public class IitbTimetableActivity extends AppCompatActivity {
 
-    public static ApiItem mArticle;
     private Context mContext;
 
     private Map<String, CourseDataItem> mData = new HashMap<>();
@@ -121,7 +121,7 @@ public class IitbTimetableActivity extends ActionBarActivity {
     private void highlightItem(final String tag) {
         LinearLayout linearLayout = mLayouts.get(tag);
         LinearLayout unitLayout = (LinearLayout) linearLayout.findViewById(R.id.unit_layout);
-        unitLayout.setBackgroundColor(getResources().getColor(R.color.timetable_highlighted));
+        unitLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.timetable_highlighted));
     }
 
     private void setupItem(final String tag) {
@@ -140,13 +140,13 @@ public class IitbTimetableActivity extends ActionBarActivity {
             linearLayout.setVisibility(View.VISIBLE);
             titleView.setText(mData.get(mDataKey).mName);
             descriptionView.setText(mData.get(mDataKey).mLocation);
-            unitLayout.setBackgroundColor(getResources().getColor(R.color.timetable_selected));
-            titleView.setTextColor(getResources().getColor(R.color.secondary_text));
+            unitLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.timetable_selected));
+            titleView.setTextColor(ContextCompat.getColor(this, R.color.secondary_text));
             increaseVisibility(mDataKey);
         } else {
-            unitLayout.setBackgroundColor(getResources().getColor(R.color.white));
+            unitLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
             titleView.setText(tag);
-            titleView.setTextColor(getResources().getColor(R.color.hint_text));
+            titleView.setTextColor(ContextCompat.getColor(this, R.color.hint_text));
             descriptionView.setText("");
         }
 
@@ -155,35 +155,35 @@ public class IitbTimetableActivity extends ActionBarActivity {
             public void onClick(View v) {
                 if (isCourse) {
                     Functions.createMaterialDialog(
-                            mContext,
-                            mData.get(mDataKey).mName,
-                            mData.get(mDataKey).mLocation,
-                            getString(R.string.slot) + " " + mData.get(mDataKey).mSlotTag,
-                            getString(R.string.remove),
-                            R.drawable.ic_today_white_48dp,
-                            new Callable<Void>() {
-                                public Void call() {
-                                    mTimetableDBHandler.deleteItem(mData.get(mDataKey).mSlotTag);
-                                    Functions.makeToast(mContext, R.string.toast_item_removed);
-                                    resetUi();
-                                    return null;
-                                }
+                        mContext,
+                        mData.get(mDataKey).mName,
+                        mData.get(mDataKey).mLocation,
+                        getString(R.string.slot) + " " + mData.get(mDataKey).mSlotTag,
+                        getString(R.string.remove),
+                        R.drawable.ic_today_white_48dp,
+                        new Callable<Void>() {
+                            public Void call() {
+                                mTimetableDBHandler.deleteItem(mData.get(mDataKey).mSlotTag);
+                                Functions.makeToast(mContext, R.string.toast_item_removed);
+                                resetUi();
+                                return null;
                             }
+                        }
                     ).show();
                 } else {
                     Functions.createMaterialDialog(
-                            mContext,
-                            mIitbTimetableUtil.mTimings.get(tag).getDay(),
-                            mIitbTimetableUtil.mTimings.get(tag).getRange(),
-                            getString(R.string.slot) + " " + mDataKey,
-                            getString(R.string.set),
-                            R.drawable.ic_today_white_48dp,
-                            new Callable<Void>() {
-                                public Void call() {
-                                    createCourseDialog(mDataKey);
-                                    return null;
-                                }
+                        mContext,
+                        mIitbTimetableUtil.mTimings.get(tag).getDay(),
+                        mIitbTimetableUtil.mTimings.get(tag).getRange(),
+                        getString(R.string.slot) + " " + mDataKey,
+                        getString(R.string.set),
+                        R.drawable.ic_today_white_48dp,
+                        new Callable<Void>() {
+                            public Void call() {
+                                createCourseDialog(mDataKey);
+                                return null;
                             }
+                        }
                     ).show();
                 }
             }
@@ -212,8 +212,8 @@ public class IitbTimetableActivity extends ActionBarActivity {
             mLayouts.get("TuesdaySet").setVisibility(View.GONE);
             mLayouts.get("FridaySet").setVisibility(View.GONE);
         } else if (parentSlot.contentEquals("X1") ||
-                parentSlot.contentEquals("X2") ||
-                parentSlot.contentEquals("X3")) {
+            parentSlot.contentEquals("X2") ||
+            parentSlot.contentEquals("X3")) {
             mLayouts.get("LX").setVisibility(View.GONE);
         } else if (parentSlot.contentEquals("LX")) {
             mLayouts.get("WednesdaySet").setVisibility(View.GONE);
@@ -227,7 +227,6 @@ public class IitbTimetableActivity extends ActionBarActivity {
     private void setupItems() {
         for (Map.Entry entry : mLayouts.entrySet()) {
             String key = (String) entry.getKey();
-            LinearLayout linearLayout = (LinearLayout) entry.getValue();
             setupItem(key);
         }
     }
@@ -248,9 +247,9 @@ public class IitbTimetableActivity extends ActionBarActivity {
 
     private void createCourseDialog(final String tag) {
         final Dialog dialog = Functions.getTransparentDialog(
-                mContext,
-                R.layout.course_dialog_layout,
-                Color.WHITE);
+            mContext,
+            R.layout.course_dialog_layout,
+            Color.WHITE);
         final EditText name = (EditText) dialog.findViewById(R.id.course_name);
         final EditText location = (EditText) dialog.findViewById(R.id.course_location);
 
@@ -275,7 +274,7 @@ public class IitbTimetableActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     CourseDataItem courseDataItem =
-                            mTimetableDBHandler.updateCourse(name.getText().toString(), location.getText().toString(), tag);
+                        mTimetableDBHandler.updateCourse(name.getText().toString(), location.getText().toString(), tag);
 
                     if (courseDataItem != null) {
                         mData.put(courseDataItem.mSlotTag, courseDataItem);
@@ -295,7 +294,7 @@ public class IitbTimetableActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     CourseDataItem courseDataItem =
-                            mTimetableDBHandler.insertCourse(name.getText().toString(), location.getText().toString(), tag);
+                        mTimetableDBHandler.insertCourse(name.getText().toString(), location.getText().toString(), tag);
 
                     if (courseDataItem != null) {
                         mData.put(courseDataItem.mSlotTag, courseDataItem);
